@@ -44,7 +44,7 @@ public class PaymentRequest {
     /**
      * Products/items in this payment request
      */
-    private List<Item> items;
+    private List items;
 
     /**
      * Uri to where the PagSeguro payment page should redirect the user after the payment information is processed.
@@ -101,7 +101,7 @@ public class PaymentRequest {
      * Initializes a new instance of the PaymentRequest class
      */
     public PaymentRequest() {
-        items = new ArrayList<>();
+        items = new ArrayList();
     }
 
     /**
@@ -159,6 +159,27 @@ public class PaymentRequest {
         sender.setPhone(new Phone(areaCode, number));
         return this;
     }
+    
+    /**
+     * Sets the Sender, party that will be sending the money
+     * @param name
+     * @param email
+     * @param areaCode
+     * @param number
+     * @param documentType
+     * @param documentValue
+     * @return
+     */
+    public PaymentRequest setSender(String name, String email, String areaCode, String number, String documentType, String documentValue) {
+        if (sender == null) {
+            sender = new Sender();
+        }
+        sender.setName(name);
+        sender.setEmail(email);
+        sender.setPhone(new Phone(areaCode, number));
+        sender.addDocument(documentType, documentValue);
+        return this;
+    }
 
     /**
      * Sets the Sender phone number, phone of the party that will be sending the money
@@ -201,7 +222,7 @@ public class PaymentRequest {
      * @return the items/products list in this payment request
      * @see Item
      */
-    public List<Item> getItems() {
+    public List getItems() {
         return items;
     }
 
@@ -213,7 +234,7 @@ public class PaymentRequest {
      * @param items
      * @return
      */
-    public PaymentRequest setItems(List<Item> items) {
+    public PaymentRequest setItems(List items) {
         this.items = items;
         return this;
     }
@@ -233,7 +254,7 @@ public class PaymentRequest {
     public void addItem(String id, String description, Integer quantity, BigDecimal amount, Long weight,
             BigDecimal shippingCost) {
         if (items == null) {
-            items = new ArrayList<>();
+            items = new ArrayList();
         }
         items.add(new Item(id, description, quantity, amount, weight, shippingCost));
     }
@@ -247,7 +268,7 @@ public class PaymentRequest {
      */
     public void addItem(Item item) {
         if (items == null) {
-            items = new ArrayList<>();
+            items = new ArrayList();
         }
         items.add(item);
     }
@@ -514,6 +535,15 @@ public class PaymentRequest {
 	 * @param value
 	 */
 	public void addSenderDocument(String type, Long value){
+		this.getSender().addDocument(type, value);
+	}
+	
+	/**
+	 * Add document for sender documents list
+	 * @param type
+	 * @param value
+	 */
+	public void addSenderDocument(String type, String value){
 		this.getSender().addDocument(type, value);
 	}
 	

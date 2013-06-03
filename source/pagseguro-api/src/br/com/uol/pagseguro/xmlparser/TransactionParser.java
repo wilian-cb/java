@@ -46,7 +46,6 @@ import br.com.uol.pagseguro.domain.TransactionStatus;
 import br.com.uol.pagseguro.domain.TransactionType;
 import br.com.uol.pagseguro.logs.Logger;
 import br.com.uol.pagseguro.logs.PagSeguroLoggerFactory;
-import br.com.uol.pagseguro.properties.PagSeguroSystem;
 import br.com.uol.pagseguro.service.TransactionSearchService;
 import br.com.uol.pagseguro.util.DateParserUTC;
 
@@ -79,7 +78,6 @@ public class TransactionParser {
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         
         InputSource is = new InputSource(xmlInputStream);
-//        is.setEncoding(PagSeguroSystem.getPagSeguroEncoding());
         Document doc = dBuilder.parse(is);
         		
         String tagValue = null;
@@ -190,7 +188,7 @@ public class TransactionParser {
         Element itemsElement = XMLParserUtils.getElement("items", transactionElement);
         if (itemsElement != null) {
             List itElements = XMLParserUtils.getElements("item", itemsElement);
-            List<Item> items = new ArrayList<>();
+            List items = new ArrayList();
             
             for (int i = 0; i < itElements.size(); i++) {
                 Element itElement = (Element) itElements.get(i);
@@ -286,7 +284,7 @@ public class TransactionParser {
                     // setting <transaction><sender><documents><document><value>
                     tagValue = XMLParserUtils.getTagValue("value", docElement);
                     if (tagValue != null) {
-                        senderDocument.setValue(Long.parseLong(tagValue));
+                        senderDocument.setValue(new Long(tagValue));
                     }
                     
                     // adding document for sender documents list

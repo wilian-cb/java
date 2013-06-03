@@ -24,7 +24,6 @@ import br.com.uol.pagseguro.domain.AccountCredentials;
 import br.com.uol.pagseguro.domain.TransactionSearchResult;
 import br.com.uol.pagseguro.domain.TransactionSummary;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
-import br.com.uol.pagseguro.properties.PagSeguroConfig;
 import br.com.uol.pagseguro.service.TransactionSearchService;
 
 public class SearchTransactionByDate {

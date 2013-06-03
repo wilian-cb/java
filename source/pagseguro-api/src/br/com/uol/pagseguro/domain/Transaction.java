@@ -104,7 +104,7 @@ public class Transaction {
      * item/product list in this transaction
      * @see Item
      */
-    private List<Item> items;
+    private List items;
 
     /**
      * Payer information, who is sending money
@@ -353,14 +353,14 @@ public class Transaction {
      * @return the items/products count in this transaction
      */
     public Integer getItemCount() {
-        return itemCount == null ? 0 : itemCount;
+        return itemCount == null ? new Integer(0) : itemCount;
     }
     
     /**
      * @return the items/products list in this transaction
      * @see Item
      */
-    public List<Item> getItems() {
+    public List getItems() {
         return items;
     }
 
@@ -370,7 +370,7 @@ public class Transaction {
      * 
      * @param items
      */
-    public void setItems(List<Item> items) {
+    public void setItems(List items) {
         this.items = items;
     }
 

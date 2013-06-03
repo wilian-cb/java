@@ -36,7 +36,7 @@ public class Sender {
 	private Phone phone;
 
 	/** Sender documents */
-	private List<SenderDocument> documents;
+	private List documents;
 	
 	/**
 	 * Initializes a new instance of the Sender class 
@@ -96,9 +96,9 @@ public class Sender {
 	 * Gets sender documents list
 	 * @return the sender documents list
 	 */
-	public List<SenderDocument> getDocuments() {
+	public List getDocuments() {
 		if (documents == null) {
-			documents = new ArrayList<SenderDocument>();
+			documents = new ArrayList();
 		}
 		return documents;
 	}
@@ -107,7 +107,7 @@ public class Sender {
 	 * Sets the sender documents list
 	 * @param documents
 	 */
-	public void setDocuments(List<SenderDocument> documents) {
+	public void setDocuments(List documents) {
 		this.documents = documents;
 	}
 
@@ -128,7 +128,15 @@ public class Sender {
 		this.getDocuments().add(new SenderDocument(type, value));
 	}
 
-	@Override
+	/**
+	 * Add a document for sender documents list
+	 * @param type
+	 * @param value
+	 */
+	public void addDocument(String type, String value){
+		this.getDocuments().add(new SenderDocument(type, value));
+	}
+	
 	public String toString() {
 		return "Sender [name=" + name + ", email=" + email + ", phone=" + phone
 				+ ", documents=" + documents + "]";

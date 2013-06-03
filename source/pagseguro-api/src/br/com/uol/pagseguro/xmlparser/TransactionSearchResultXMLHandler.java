@@ -34,9 +34,6 @@ import org.xml.sax.helpers.DefaultHandler;
 import br.com.uol.pagseguro.domain.Transaction;
 import br.com.uol.pagseguro.domain.TransactionSearchResult;
 import br.com.uol.pagseguro.domain.TransactionSummary;
-import br.com.uol.pagseguro.logs.PagSeguroDummyLogger;
-import br.com.uol.pagseguro.logs.Logger;
-import br.com.uol.pagseguro.logs.PagSeguroLoggerFactory;
 import br.com.uol.pagseguro.util.DateParserUTC;
 
 /**

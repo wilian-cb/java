@@ -28,7 +28,7 @@ public class StringUtil {
 	 * @param String endChars
 	 * @return String
 	 */
-	public static String truncateValue(String value, Integer limit, String endChars){
+	public static String truncateValue(String value, int limit, String endChars){
 		if (!value.equals(null) && value.length() > limit)
 			value = value.substring(0, limit - endChars.length()) + endChars;
 		return value;
@@ -50,7 +50,7 @@ public class StringUtil {
 	 * @param String endChars
 	 * @return String
 	 */
-	public static String formatString(String value, Integer limit, String endChars){
+	public static String formatString(String value, int limit, String endChars){
 		return StringUtil.truncateValue(StringUtil.removeExtraSpaces(value), limit, endChars);
 	}
 

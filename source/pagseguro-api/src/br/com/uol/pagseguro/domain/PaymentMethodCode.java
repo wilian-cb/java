@@ -178,7 +178,7 @@ public final class PaymentMethodCode {
     /**
      * The values map
      */
-    private static final Map<Integer, Object> VALUE_MAP = new HashMap<>();
+    private static final Map VALUE_MAP = new HashMap();
 
     static {
         VALUE_MAP.put(new Integer(VISA_CREDIT_CARD.getValue()), VISA_CREDIT_CARD);
@@ -214,10 +214,10 @@ public final class PaymentMethodCode {
 
     public static PaymentMethodCode fromValue(Integer value) {
 
-        Iterator<Integer> i = VALUE_MAP.keySet().iterator();
+        Iterator i = VALUE_MAP.keySet().iterator();
 
         while (i.hasNext()) {
-            Integer type = i.next();
+            Integer type = (Integer) i.next();
             if (type.intValue() == value.intValue()) {
                 return (PaymentMethodCode) VALUE_MAP.get(type);
             }

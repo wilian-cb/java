@@ -13,17 +13,22 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package br.com.uol.pagseguro.domain;
 
-import java.util.Map;
-
-/**
- * Abstract class that represents a PagSeguro credential
- */
-public abstract class Credentials {
+package br.com.uol.pagseguro.util;
 
 /**
- * @return a map of name value pairs that compose this set of credentials
+ * Class that represents util number functions 
  */
-	public abstract Map getAttributes();
+public class NumberUtil {
+
+	/**
+	 * Get only numbers from a string value
+	 * @param value
+	 * @return
+	 */
+	public static Long getOnlyNumbers(String value){
+		return new Long(value.replaceAll("\\D+", ""));
+	}
+	
 }
+

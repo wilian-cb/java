@@ -20,7 +20,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import br.com.uol.pagseguro.domain.Credentials;
-import br.com.uol.pagseguro.domain.HttpError;
 import br.com.uol.pagseguro.domain.Transaction;
 import br.com.uol.pagseguro.domain.TransactionSearchResult;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;

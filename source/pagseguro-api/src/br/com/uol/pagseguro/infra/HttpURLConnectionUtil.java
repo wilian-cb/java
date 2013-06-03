@@ -102,7 +102,7 @@ public class HttpURLConnectionUtil {
 			if (responseCode != HttpURLConnection.HTTP_OK) {
 				if (responseCode == HttpURLConnection.HTTP_BAD_REQUEST) {
 
-					List<Error> errors = ErrorsParser.readErrosXml(connection.getErrorStream());
+					List errors = ErrorsParser.readErrosXml(connection.getErrorStream());
 					log(errors);
 
 					throw new PagSeguroServiceException(errors, HttpError.fromValue(responseCode));
@@ -157,11 +157,11 @@ public class HttpURLConnectionUtil {
 		return getHttpURLConnection(HTTP_METHOD_GET, urlPath, contentType, null);
 	}
 
-	private static void log(List<Error> errors) {
+	private static void log(List errors) {
 		String print = "HTTP: " + HttpsURLConnection.HTTP_BAD_REQUEST + ". Validation error in PagSeguro webservice: \n";
 
 		for (int i = 0; i < errors.size(); i++) {
-			Error error = errors.get(i);
+			Error error = (Error) errors.get(i);
 			print += "> ";
 			print += error.getCode() + " - " + error.getMessage();
 			print += "\n";
@@ -170,8 +170,8 @@ public class HttpURLConnectionUtil {
 		log.error(print);
 	}
 	
-	private static List<Error> generateErrorsList(Exception e){
-		List<Error> errors = new ArrayList<>();
+	private static List generateErrorsList(Exception e){
+		List errors = new ArrayList();
 		errors.add(new Error(null, e.getMessage()));
 		
 		return errors;

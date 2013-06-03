@@ -34,6 +34,7 @@ import org.xml.sax.SAXException;
 
 import br.com.uol.pagseguro.domain.Item;
 import br.com.uol.pagseguro.domain.PaymentRequest;
+import br.com.uol.pagseguro.domain.SenderDocument;
 import br.com.uol.pagseguro.logs.Logger;
 import br.com.uol.pagseguro.logs.PagSeguroDummyLogger;
 import br.com.uol.pagseguro.logs.PagSeguroLoggerFactory;
@@ -103,9 +104,12 @@ public class PaymentParser {
                 	
                 	Element documents = doc.createElement("documents");
                 	
-                	for (br.com.uol.pagseguro.domain.SenderDocument pagseguroDocument : paymentRequest.getSender().getDocuments()) {
-						Element document = XMLParserUtils.createElement(doc, "document", null);
+            		for(int i = 0; i < paymentRequest.getSender().getDocuments().size(); i++){
+                		
+                		Element document = XMLParserUtils.createElement(doc, "document", null);
 						
+                		SenderDocument pagseguroDocument = (SenderDocument) paymentRequest.getSender().getDocuments().get(i);
+                		
 						if (pagseguroDocument.getType() != null){
 							Element documentType = XMLParserUtils.createElement(doc, "type", pagseguroDocument.getType());
 							document.appendChild(documentType);

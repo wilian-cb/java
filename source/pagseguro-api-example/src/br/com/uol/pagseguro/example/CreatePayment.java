@@ -20,7 +20,6 @@ import java.net.URL;
 
 import br.com.uol.pagseguro.domain.AccountCredentials;
 import br.com.uol.pagseguro.domain.Currency;
-import br.com.uol.pagseguro.domain.Documents;
 import br.com.uol.pagseguro.domain.PaymentRequest;
 import br.com.uol.pagseguro.domain.ShippingType;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
@@ -39,27 +38,21 @@ public class CreatePayment {
         paymentRequest.setCurrency(Currency.BRL);
 
         // Add an item for this payment request
-        paymentRequest.addItem("0001", "Notebook Prata", new Integer(1), new BigDecimal("2430.00"),
-                new Long(1000), null);
+        paymentRequest.addItem("0001", "Notebook Prata", new Integer(1), new BigDecimal("2430.00"), new Long(1000), null);
 
         // Add another item for this payment request
-        paymentRequest.addItem("0002", "Notebook Rosa", new Integer(2), new BigDecimal("2560.00"),
-                new Long(750), null);
+        paymentRequest.addItem("0002", "Notebook Rosa", new Integer(2), new BigDecimal("2560.00"), new Long(750), null);
        
         // Sets a reference code for this payment request, it's useful to identify this payment in future notifications.
         paymentRequest.setReference("REF1234");
 
         // Sets shipping information for this payment request
         paymentRequest.setShippingType(ShippingType.SEDEX);
-        paymentRequest.setShippingAddress("BRA", "SP", "São Paulo", "Jardim Paulistano", "01452002",
-                "Av. Brig. Faria Lima", "1384", "5o andar");
+        paymentRequest.setShippingAddress("BRA", "SP", "São Paulo", "Jardim Paulistano", "01452002", "Av. Brig. Faria Lima", "1384", "5o andar");
 
         // Sets your customer information.
-        paymentRequest.setSender("João   Comprador", "comprador@uol.com.br", "11", "56273440");
+        paymentRequest.setSender("João Comprador", "comprador@uol.com.br", "11", "56273440", "CPF", "888.263.551-18");
 
-        // Add a document for sender
-        paymentRequest.addSenderDocument(Documents.CPF, new Long("26242023318"));
-        
         // Sets notificationURL information
         paymentRequest.setNotificationURL("http://www.google.com.br");
         
