@@ -77,7 +77,7 @@ public class HttpURLConnectionUtil {
 			connection.setDoOutput(true);
 			connection.setDoInput(true);
 			connection.setRequestProperty("Content-type", contentType);
-			connection.setRequestProperty("lib-description", "java:" + PagSeguroSystem.getLibversion());
+			connection.setRequestProperty("lib-description", "java-v." + PagSeguroSystem.getLibversion());
 			connection.setRequestProperty("language-engine-description", "java:" + PagSeguroSystem.getLanguageEnginedescription());
 			
 			// adding module version to header request 

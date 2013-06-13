@@ -44,6 +44,14 @@ Mais informações estão disponíveis na [documentação oficial].
 Changelog
 ---------
 ---
+2.0.3
+ - Correção: Tratamento de exceção.
+ - Adicionado: Classe para manipulação de documentos do sender, ex. CPF.
+ - Adicionado: Agora é possível definir uma URL de notificação na requisição do checkout
+ - Atualização dos meios de pagamentos.
+
+ - Classes de domínios que representam pagamentos, notificações e transações.
+
 2.0.0 - 2.0.2
 
  - Classes de domínios que representam pagamentos, notificações e transações.

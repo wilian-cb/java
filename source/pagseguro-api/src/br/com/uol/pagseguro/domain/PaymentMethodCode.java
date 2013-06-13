@@ -119,6 +119,11 @@ public final class PaymentMethodCode {
      * Avista
      */
     public static final PaymentMethodCode AVISTA_CREDIT_CARD = new PaymentMethodCode(118);
+
+    /**
+     * GRANCARD
+     */
+    public static final PaymentMethodCode GRANDCARD_CREDIT_CARD = new PaymentMethodCode(119);
     
     /**
      * Bradesco - boleto
@@ -199,6 +204,7 @@ public final class PaymentMethodCode {
         VALUE_MAP.put(new Integer(CABAL_CREDIT_CARD.getValue()), CABAL_CREDIT_CARD);
         VALUE_MAP.put(new Integer(MAIS_CREDIT_CARD.getValue()), MAIS_CREDIT_CARD);
         VALUE_MAP.put(new Integer(AVISTA_CREDIT_CARD.getValue()), AVISTA_CREDIT_CARD);
+        VALUE_MAP.put(new Integer(GRANDCARD_CREDIT_CARD.getValue()), GRANDCARD_CREDIT_CARD);
         VALUE_MAP.put(new Integer(BRADESCO_BOLETO.getValue()), BRADESCO_BOLETO);
         VALUE_MAP.put(new Integer(SANTANDER_BOLETO.getValue()), SANTANDER_BOLETO);
         VALUE_MAP.put(new Integer(BRADESCO_ONLINE_TRANSFER.getValue()), BRADESCO_ONLINE_TRANSFER);
