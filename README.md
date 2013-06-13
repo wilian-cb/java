@@ -1,5 +1,5 @@
-Biblioteca de integração PagSeguro para Java
-============================================
+Biblioteca de integração PagSeguro em Java
+==========================================
 ---
 Descrição
 ---------
@@ -28,6 +28,7 @@ Instalação
   - incluindo o jar pagseguro-api-x.x.x.jar como dependência de seu projeto atual;
   - importando o diretório *pagseguro-api* como um novo projeto em sua IDE, e incluí-lo como dependência do seu projeto atual.
  - Opcionalmente você também pode importar o diretório *pagseguro-api-example* como um novo projeto em sua IDE para visualizar a utilização das classes da biblioteca de acordo com cada funcionalidade disponível.
+ - Para finalizar você precisa exportar o certificado existente na página do PagSeguro e em seguida importar para sua JVM.
 
 Configuração
 ------------
