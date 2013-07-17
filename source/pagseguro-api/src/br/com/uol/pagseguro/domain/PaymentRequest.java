@@ -92,12 +92,12 @@ public class PaymentRequest {
     /**
      * Determines for which url PagSeguro will send the order related notifications codes.
      * 
-     * Optional. Any change happens in the transaction status, a new notification request will be send
-     * to this url. You can use that for update the related order.
+     * Optional. Any change happens in the transaction status, a new notification request will be send to this url. You
+     * can use that for update the related order.
      */
     private String notificationURL;
 
-	/**
+    /**
      * Initializes a new instance of the PaymentRequest class
      */
     public PaymentRequest() {
@@ -159,9 +159,10 @@ public class PaymentRequest {
         sender.setPhone(new Phone(areaCode, number));
         return this;
     }
-    
+
     /**
      * Sets the Sender, party that will be sending the money
+     * 
      * @param name
      * @param email
      * @param areaCode
@@ -170,7 +171,8 @@ public class PaymentRequest {
      * @param documentValue
      * @return
      */
-    public PaymentRequest setSender(String name, String email, String areaCode, String number, String documentType, String documentValue) {
+    public PaymentRequest setSender(String name, String email, String areaCode, String number, String documentType,
+            String documentValue) {
         if (sender == null) {
             sender = new Sender();
         }
@@ -197,8 +199,7 @@ public class PaymentRequest {
     }
 
     /**
-     * @return the currency 
-     * Example: BRL
+     * @return the currency Example: BRL
      * @see Currency
      */
     public String getCurrency() {
@@ -507,46 +508,51 @@ public class PaymentRequest {
 
     /**
      * Get the notification status url
+     * 
      * @return String
      */
     public String getNotificationURL() {
-		return notificationURL;
-	}
+        return notificationURL;
+    }
 
     /**
      * Sets the url that PagSeguro will send the new notifications statuses
+     * 
      * @param notificationURL
      */
-	public void setNotificationURL(String notificationURL) {
-		this.notificationURL = notificationURL;
-	}
-	
-	/**
-	 * Add document for sender documents list
-	 * @param document
-	 */
-	public void addSenderDocument(SenderDocument document){
-		this.getSender().addDocument(document);
-	}
-	
-	/**
-	 * Add document for sender documents list
-	 * @param type
-	 * @param value
-	 */
-	public void addSenderDocument(String type, Long value){
-		this.getSender().addDocument(type, value);
-	}
-	
-	/**
-	 * Add document for sender documents list
-	 * @param type
-	 * @param value
-	 */
-	public void addSenderDocument(String type, String value){
-		this.getSender().addDocument(type, value);
-	}
-	
+    public void setNotificationURL(String notificationURL) {
+        this.notificationURL = notificationURL;
+    }
+
+    /**
+     * Add document for sender documents list
+     * 
+     * @param document
+     */
+    public void addSenderDocument(SenderDocument document) {
+        this.getSender().addDocument(document);
+    }
+
+    /**
+     * Add document for sender documents list
+     * 
+     * @param type
+     * @param value
+     */
+    public void addSenderDocument(String type, Long value) {
+        this.getSender().addDocument(type, value);
+    }
+
+    /**
+     * Add document for sender documents list
+     * 
+     * @param type
+     * @param value
+     */
+    public void addSenderDocument(String type, String value) {
+        this.getSender().addDocument(type, value);
+    }
+
     /**
      * Calls the PagSeguro web service and register this request for payment
      * 

@@ -24,14 +24,17 @@ public class SearchTransactionByCode {
 
     public static void main(String[] args) {
 
-    	//Substitute the code below with a valid transaction code for your account
+        // Substitute the code below with a valid transaction code for your
+        // account
         String transactionCode = "41F4640C-4A84-435B-831C-8EAD876A3B93";
 
         Transaction transaction = null;
         try {
-        	//Substitute the parameters below with your credentials (e-mail and token)
-            transaction = TransactionSearchService.searchByCode(new AccountCredentials("suporte@lojamodelo.com.br", "95112EE828D94278BD394E91C4388F20"), transactionCode);
-        	
+            // Substitute the parameters below with your credentials (e-mail and
+            // token)
+            transaction = TransactionSearchService.searchByCode(new AccountCredentials("suporte@lojamodelo.com.br",
+                    "95112EE828D94278BD394E91C4388F20"), transactionCode);
+
         } catch (PagSeguroServiceException e) {
             System.err.println(e.toString());
         }
@@ -63,23 +66,25 @@ public class SearchTransactionByCode {
         System.out.println("reference: " + transaction.getReference());
         System.out.println("senderEmail: " + transaction.getSender().getEmail());
 
-        if(transaction.getSender() != null){
-        	System.out.println("senderPhone: " + transaction.getSender().getPhone());
+        if (transaction.getSender() != null) {
+            System.out.println("senderPhone: " + transaction.getSender().getPhone());
         }
 
-        if(transaction.getShipping() != null){
-	        System.out.println("shippingType: " + transaction.getShipping().getType().getValue());
-	        System.out.println("shippingCost: " + transaction.getShipping().getCost());
-	        if(transaction.getShipping().getAddress() != null){
-		        System.out.println("shippingAddressCountry: " + transaction.getShipping().getAddress().getCountry());
-		        System.out.println("shippingAddressState: " + transaction.getShipping().getAddress().getState());
-		        System.out.println("shippingAddressCity: " + transaction.getShipping().getAddress().getCity());
-		        System.out.println("shippingAddressPostalCode: " + transaction.getShipping().getAddress().getPostalCode());
-		        System.out.println("shippingAddressDistrict: " + transaction.getShipping().getAddress().getDistrict());
-		        System.out.println("shippingAddressStreet: " + transaction.getShipping().getAddress().getStreet());
-		        System.out.println("shippingAddressNumber: " + transaction.getShipping().getAddress().getNumber());
-		        System.out.println("shippingAddressComplement: " + transaction.getShipping().getAddress().getComplement());
-	        }
+        if (transaction.getShipping() != null) {
+            System.out.println("shippingType: " + transaction.getShipping().getType().getValue());
+            System.out.println("shippingCost: " + transaction.getShipping().getCost());
+            if (transaction.getShipping().getAddress() != null) {
+                System.out.println("shippingAddressCountry: " + transaction.getShipping().getAddress().getCountry());
+                System.out.println("shippingAddressState: " + transaction.getShipping().getAddress().getState());
+                System.out.println("shippingAddressCity: " + transaction.getShipping().getAddress().getCity());
+                System.out.println("shippingAddressPostalCode: "
+                        + transaction.getShipping().getAddress().getPostalCode());
+                System.out.println("shippingAddressDistrict: " + transaction.getShipping().getAddress().getDistrict());
+                System.out.println("shippingAddressStreet: " + transaction.getShipping().getAddress().getStreet());
+                System.out.println("shippingAddressNumber: " + transaction.getShipping().getAddress().getNumber());
+                System.out.println("shippingAddressComplement: "
+                        + transaction.getShipping().getAddress().getComplement());
+            }
         }
 
         System.out.println("status: " + transaction.getStatus().getValue());

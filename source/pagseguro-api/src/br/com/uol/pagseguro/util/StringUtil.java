@@ -21,37 +21,47 @@ package br.com.uol.pagseguro.util;
  */
 public class StringUtil {
 
-	/**
-	 * Truncate a String and add final end chars to them
-	 * @param String value
-	 * @param Integer limit
-	 * @param String endChars
-	 * @return String
-	 */
-	public static String truncateValue(String value, int limit, String endChars){
-		if (!value.equals(null) && value.length() > limit)
-			value = value.substring(0, limit - endChars.length()) + endChars;
-		return value;
-	}
+    /**
+     * Truncate a String and add final end chars to them
+     * 
+     * @param String
+     *            value
+     * @param Integer
+     *            limit
+     * @param String
+     *            endChars
+     * @return String
+     */
+    public static String truncateValue(String value, int limit, String endChars) {
+        if (!value.equals(null) && value.length() > limit)
+            value = value.substring(0, limit - endChars.length()) + endChars;
+        return value;
+    }
 
-	/**
-	 * Remove extra spaces from String
-	 * @param String value
-	 * @return String
-	 */
-	public static String removeExtraSpaces(String value){
-		return value.replaceAll("( +)", " ").trim();
-	}
-	
-	/**
-	 * Format a String dropping extra spaces and truncate value
-	 * @param String value
-	 * @param Integer limit
-	 * @param String endChars
-	 * @return String
-	 */
-	public static String formatString(String value, int limit, String endChars){
-		return StringUtil.truncateValue(StringUtil.removeExtraSpaces(value), limit, endChars);
-	}
+    /**
+     * Remove extra spaces from String
+     * 
+     * @param String
+     *            value
+     * @return String
+     */
+    public static String removeExtraSpaces(String value) {
+        return value.replaceAll("( +)", " ").trim();
+    }
+
+    /**
+     * Format a String dropping extra spaces and truncate value
+     * 
+     * @param String
+     *            value
+     * @param Integer
+     *            limit
+     * @param String
+     *            endChars
+     * @return String
+     */
+    public static String formatString(String value, int limit, String endChars) {
+        return StringUtil.truncateValue(StringUtil.removeExtraSpaces(value), limit, endChars);
+    }
 
 }

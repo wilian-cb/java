@@ -30,7 +30,7 @@ public final class PagSeguroSystemOutLogger implements Logger {
      * @param object
      */
     public void info(Object object) {
-    	System.out.println("[INFO]"+object);
+        System.out.println("[INFO]" + object);
     }
 
     /**
@@ -40,7 +40,7 @@ public final class PagSeguroSystemOutLogger implements Logger {
      * @param e
      */
     public void error(String message, Exception e) {
-    	System.out.println("[ERROR] " + message + e.getMessage());
+        System.out.println("[ERROR] " + message + e.getMessage());
     }
 
     /**
@@ -49,7 +49,7 @@ public final class PagSeguroSystemOutLogger implements Logger {
      * @param message
      */
     public void error(String message) {
-    	System.out.println("[ERROR] "+message);
+        System.out.println("[ERROR] " + message);
     }
 
     /**
@@ -58,7 +58,7 @@ public final class PagSeguroSystemOutLogger implements Logger {
      * @param message
      */
     public void warning(String message) {
-    	System.out.println("[WARN] " + message);
+        System.out.println("[WARN] " + message);
     }
 
     /**
@@ -67,7 +67,7 @@ public final class PagSeguroSystemOutLogger implements Logger {
      * @param print
      */
     public void debug(String message) {
-    	System.out.println("[DEBUG] " + message);
+        System.out.println("[DEBUG] " + message);
 
     }
 
@@ -77,7 +77,7 @@ public final class PagSeguroSystemOutLogger implements Logger {
      * @param print
      */
     public void info(String message) {
-    	System.out.println("[INFO]" + message);
+        System.out.println("[INFO]" + message);
 
     }
 
@@ -87,7 +87,7 @@ public final class PagSeguroSystemOutLogger implements Logger {
      * @param print
      */
     public void warn(String message) {
-    	System.out.println("[WARN] "+message);
+        System.out.println("[WARN] " + message);
     }
 
     /**
@@ -96,7 +96,7 @@ public final class PagSeguroSystemOutLogger implements Logger {
      * @param print
      */
     public void warn(String message, Throwable t) {
-    	System.out.println("[WARN] " + message + t.getMessage());
+        System.out.println("[WARN] " + message + t.getMessage());
     }
 
     /**
@@ -105,7 +105,7 @@ public final class PagSeguroSystemOutLogger implements Logger {
      * @param print
      */
     public void error(String message, Throwable t) {
-    	System.out.println("[ERROR] " + message + t.getMessage());
+        System.out.println("[ERROR] " + message + t.getMessage());
     }
 
 }

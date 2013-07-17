@@ -34,9 +34,10 @@ public class NotificationService {
 
     /**
      * PagSeguro Log tool
+     * 
      * @see Logger
      */
-    static Logger log =  PagSeguroLoggerFactory.getLogger(PaymentService.class);
+    static Logger log = PagSeguroLoggerFactory.getLogger(PaymentService.class);
 
     /**
      * Url of Search Web Service
@@ -68,7 +69,8 @@ public class NotificationService {
         try {
             // Parsing the transaction
             Transaction transaction = TransactionParser.readTransaction(connection.getInputStream());
-            log.info("NotificationService.CheckTransaction(notificationCode=" + notificationCode + ") - end - " + transaction);
+            log.info("NotificationService.CheckTransaction(notificationCode=" + notificationCode + ") - end - "
+                    + transaction);
             return transaction;
         } catch (Exception e) {
             log.error("NotificationService.CheckTransaction(notificationCode=" + notificationCode + ") - ", e);

@@ -38,20 +38,22 @@ public class SearchTransactionByDate {
             Calendar finalCalendar = Calendar.getInstance();
             finalCalendar.set(2013, Calendar.MAY, 14, 00, 00);
 
-            //Substitute the parameters below with your credentials (e-mail and token)
-            AccountCredentials credentials = new AccountCredentials("suporte@lojamodelo.com.br", "95112EE828D94278BD394E91C4388F20");
-            
-            result = TransactionSearchService.searchByDate(credentials, initialCalendar.getTime(), finalCalendar.getTime(), new Integer(1), new Integer(10));
-        } 
-        catch (PagSeguroServiceException e) {
+            // Substitute the parameters below with your credentials (e-mail and
+            // token)
+            AccountCredentials credentials = new AccountCredentials("suporte@lojamodelo.com.br",
+                    "95112EE828D94278BD394E91C4388F20");
+
+            result = TransactionSearchService.searchByDate(credentials, initialCalendar.getTime(),
+                    finalCalendar.getTime(), new Integer(1), new Integer(10));
+        } catch (PagSeguroServiceException e) {
             System.err.println(e.toString());
             return;
         }
 
         if (result != null) {
             System.out.println("Search date: " + result.getDate());
-            System.out.println(result.getResultsInThisPage() + " results in the page "
-                    + result.getPage() + " of " + result.getTotalPages() + " pages.");
+            System.out.println(result.getResultsInThisPage() + " results in the page " + result.getPage() + " of "
+                    + result.getTotalPages() + " pages.");
 
             List listTransactionSummaries = result.getTransactionSummaries();
             Iterator transactionSummariesIterator = listTransactionSummaries.iterator();
@@ -65,7 +67,7 @@ public class SearchTransactionByDate {
                 System.out.println("Date: " + currentTransactionSummary.getDate());
                 System.out.println("Disccount amount: " + currentTransactionSummary.getDiscountAmount());
                 System.out.println("Extra amount: " + currentTransactionSummary.getExtraAmount());
-                System.out.println("Fee amount: "  + currentTransactionSummary.getFeeAmount());
+                System.out.println("Fee amount: " + currentTransactionSummary.getFeeAmount());
                 System.out.println("Transaction amount: " + currentTransactionSummary.getGrossAmount());
                 System.out.println("Last event date: " + currentTransactionSummary.getLastEvent());
                 System.out.println("Net amount: " + currentTransactionSummary.getNetAmount());

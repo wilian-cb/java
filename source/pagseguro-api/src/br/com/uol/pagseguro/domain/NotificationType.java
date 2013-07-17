@@ -20,9 +20,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
-    Defines a list of known notification types.
-   	This class is not an enum to enable the introduction of new shipping types
-    without breaking this version of the library.
+ * Defines a list of known notification types. This class is not an enum to enable the introduction of new shipping
+ * types without breaking this version of the library.
  */
 public final class NotificationType {
 
@@ -41,7 +40,7 @@ public final class NotificationType {
 
     /**
      * @param value
-     * @return the NotificationType corresponding to the informed value 
+     * @return the NotificationType corresponding to the informed value
      */
     public static NotificationType fromValue(String value) {
 

@@ -24,28 +24,28 @@ import java.util.List;
  */
 public class TransactionSearchResult {
 
-    /** 
-     * Date/time when this search was executed 
+    /**
+     * Date/time when this search was executed
      */
     private Date date;
 
-    /** 
+    /**
      * Transactions in the current page
      */
     private int resultsInThisPage;
 
-    /** 
-     * Total number of pages 
+    /**
+     * Total number of pages
      */
     private int totalPages;
 
-    /** 
-     * Current page. 
+    /**
+     * Current page.
      */
     private int page;
 
-    /** 
-     * Transactions in this page 
+    /**
+     * Transactions in this page
      */
     private List transactionSummaries;
 
@@ -57,7 +57,8 @@ public class TransactionSearchResult {
     }
 
     /**
-     * Set the date/time when this search was executed 
+     * Set the date/time when this search was executed
+     * 
      * @param date
      */
     public void setDate(Date date) {
@@ -81,14 +82,14 @@ public class TransactionSearchResult {
     }
 
     /**
-     * @return the total number of pages 
+     * @return the total number of pages
      */
     public int getTotalPages() {
         return totalPages;
     }
 
     /**
-     * Sets the total number of pages 
+     * Sets the total number of pages
      * 
      * @param totalPages
      */
@@ -129,7 +130,7 @@ public class TransactionSearchResult {
         this.transactionSummaries = transactionSummaries;
     }
 
-    /** 
+    /**
      * @param transactionSummary
      */
     public void addTransactionSummary(TransactionSummary transactionSummary) {
@@ -138,8 +139,8 @@ public class TransactionSearchResult {
         }
         getTransactionSummaries().add(transactionSummary);
     }
-    
-    public String toString(){
+
+    public String toString() {
         StringBuffer sb = new StringBuffer(256);
         sb.append("TransactionSearchResult(Date=");
         sb.append(date);
@@ -149,8 +150,8 @@ public class TransactionSearchResult {
         sb.append(totalPages);
         sb.append(",Transactions in this page=");
         sb.append(transactionSummaries != null ? transactionSummaries.size() : 0);
-    	
-    	return sb.toString();
+
+        return sb.toString();
     }
 
 }

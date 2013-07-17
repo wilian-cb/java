@@ -19,7 +19,8 @@ import br.com.uol.pagseguro.exception.PagSeguroServiceException;
 
 /**
  * Represents a PagSeguro web service error
- * @see PagSeguroServiceException 
+ * 
+ * @see PagSeguroServiceException
  */
 public class Error {
 
@@ -36,12 +37,11 @@ public class Error {
     public Error() {
     }
 
-    
-    public Error(String code, String message){
-    	this.setCode(code);
-    	this.setMessage(message);
+    public Error(String code, String message) {
+        this.setCode(code);
+        this.setMessage(message);
     }
-    
+
     /**
      * @return the code
      */
@@ -51,6 +51,7 @@ public class Error {
 
     /**
      * Sets the code
+     * 
      * @param code
      */
     public void setCode(String code) {
@@ -66,6 +67,7 @@ public class Error {
 
     /**
      * Sets the error description
+     * 
      * @param message
      */
     public void setMessage(String message) {

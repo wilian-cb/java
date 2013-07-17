@@ -24,43 +24,44 @@ import java.util.List;
  */
 public class Transaction {
 
-    /** 
-     * Last event date
-     * Date the last notification about this transaction was sent 
+    /**
+     * Last event date Date the last notification about this transaction was sent
      */
     private Date lastEventDate;
 
-    /** 
-     * Transaction date 
+    /**
+     * Transaction date
      */
     private Date date;
 
-    /** 
-     * Transaction code 
+    /**
+     * Transaction code
      */
     private String code;
 
     /**
-     *  Reference code
-     *  You can use the reference code to store an identifier so you can 
-     *  associate the PagSeguro transaction to a transaction in your system.
+     * Reference code You can use the reference code to store an identifier so you can associate the PagSeguro
+     * transaction to a transaction in your system.
      */
     private String reference;
 
-    /** 
+    /**
      * Transaction type
-     * @see TransactionType 
+     * 
+     * @see TransactionType
      */
     private TransactionType type;
 
-    /** 
+    /**
      * Transaction status
+     * 
      * @see TransactionStatus
      */
     private TransactionStatus status;
 
     /**
      * Payment method
+     * 
      * @see PaymentMethod
      */
     private PaymentMethod paymentMethod;
@@ -99,21 +100,24 @@ public class Transaction {
      * Items count
      */
     private Integer itemCount;
-    
+
     /**
      * item/product list in this transaction
+     * 
      * @see Item
      */
     private List items;
 
     /**
      * Payer information, who is sending money
+     * 
      * @see Sender
      */
     private Sender sender;
 
     /**
      * Shipping information
+     * 
      * @see Shipping
      */
     private Shipping shipping;
@@ -126,6 +130,7 @@ public class Transaction {
 
     /**
      * Date the last notification about this transaction was sent
+     * 
      * @return the last event date
      */
     public Date getLastEventDate() {
@@ -174,9 +179,9 @@ public class Transaction {
     }
 
     /**
-     * You can use the reference code to store an identifier so you can 
-     *  associate the PagSeguro transaction to a transaction in your system.
-     *  
+     * You can use the reference code to store an identifier so you can associate the PagSeguro transaction to a
+     * transaction in your system.
+     * 
      * @return the reference code
      */
     public String getReference() {
@@ -202,6 +207,7 @@ public class Transaction {
 
     /**
      * Sets the transaction type
+     * 
      * @see TransactionType
      * 
      * @param type
@@ -220,6 +226,7 @@ public class Transaction {
 
     /**
      * Sets the transaction status
+     * 
      * @see TransactionStatus
      * 
      * @param status
@@ -331,8 +338,8 @@ public class Transaction {
     public Integer getInstallmentCount() {
         return installmentCount;
     }
-    
-	/**
+
+    /**
      * Sets the installment count in this transaction
      * 
      * @param installmentCount
@@ -343,11 +350,12 @@ public class Transaction {
 
     /**
      * Sets the items count
+     * 
      * @param itemCount
      */
     public void setItemCount(Integer itemCount) {
-		this.itemCount = itemCount;
-	}
+        this.itemCount = itemCount;
+    }
 
     /**
      * @return the items/products count in this transaction
@@ -355,7 +363,7 @@ public class Transaction {
     public Integer getItemCount() {
         return itemCount == null ? new Integer(0) : itemCount;
     }
-    
+
     /**
      * @return the items/products list in this transaction
      * @see Item
@@ -366,6 +374,7 @@ public class Transaction {
 
     /**
      * Sets the list of items/products in this transaction
+     * 
      * @see Item
      * 
      * @param items
@@ -384,7 +393,8 @@ public class Transaction {
 
     /**
      * Sets the sender information, who is sending money in this transaction
-     * @see Sender 
+     * 
+     * @see Sender
      * 
      * @param sender
      */
@@ -402,6 +412,7 @@ public class Transaction {
 
     /**
      * sets the shipping information for this transaction
+     * 
      * @see Shipping
      * 
      * @param shipping
@@ -410,7 +421,7 @@ public class Transaction {
         this.shipping = shipping;
     }
 
-    public String toString(){
+    public String toString() {
         StringBuffer sb = new StringBuffer(256);
         sb.append("Transaction(Code=" + getCode());
         sb.append(",Date=" + getDate());
@@ -419,6 +430,6 @@ public class Transaction {
         sb.append(",Email=" + sender != null ? sender.getEmail() : null);
         sb.append(",ItemsCount=" + getItemCount());
         sb.append(")");
-    	return sb.toString();
+        return sb.toString();
     }
 }

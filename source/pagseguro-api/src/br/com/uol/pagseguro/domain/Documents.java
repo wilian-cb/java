@@ -5,7 +5,7 @@ package br.com.uol.pagseguro.domain;
  */
 public class Documents {
 
-	/** CPF document */
-	public static final String CPF = "CPF";
-	
+    /** CPF document */
+    public static final String CPF = "CPF";
+
 }

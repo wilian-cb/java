@@ -23,13 +23,14 @@ import java.util.Date;
  */
 public class TransactionSummary {
 
-    /** 
+    /**
      * Transaction status
+     * 
      * @see TransactionStatus
      */
     private TransactionStatus status;
 
-    /** 
+    /**
      * Discount amount
      */
     private BigDecimal discountAmount;
@@ -50,8 +51,7 @@ public class TransactionSummary {
     private BigDecimal extraAmount;
 
     /**
-     * Last event date
-     * Date the last notification about this transaction was sent
+     * Last event date Date the last notification about this transaction was sent
      */
     private Date lastEvent;
 
@@ -169,8 +169,8 @@ public class TransactionSummary {
         this.type = type;
     }
 
-    public String toString(){
-    	return "Status: " + status;	
+    public String toString() {
+        return "Status: " + status;
     }
-    
+
 }

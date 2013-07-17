@@ -22,8 +22,8 @@ import java.util.Map;
  */
 public abstract class Credentials {
 
-/**
- * @return a map of name value pairs that compose this set of credentials
- */
-	public abstract Map getAttributes();
+    /**
+     * @return a map of name value pairs that compose this set of credentials
+     */
+    public abstract Map getAttributes();
 }

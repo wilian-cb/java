@@ -22,29 +22,30 @@ import java.math.BigDecimal;
  */
 public class Shipping {
 
-    /** 
-     * Shipping address 
+    /**
+     * Shipping address
      */
     private Address address;
 
-    /** 
-     * Shipping type. See the ShippingType helper class for a list of known shipping types. 
+    /**
+     * Shipping type. See the ShippingType helper class for a list of known shipping types.
      */
     private ShippingType type;
 
-    /** 
-     * shipping cost. 
+    /**
+     * shipping cost.
      */
     private BigDecimal cost;
 
     /**
-     * Initializes a new instance of the Shipping class 
+     * Initializes a new instance of the Shipping class
      */
     public Shipping() {
     }
 
     /**
      * Sets the shipping address
+     * 
      * @param address
      * @see Address
      */
@@ -62,6 +63,7 @@ public class Shipping {
 
     /**
      * Sets the shipping type
+     * 
      * @param type
      * @see ShippingType
      */
@@ -79,6 +81,7 @@ public class Shipping {
 
     /**
      * Sets the cost
+     * 
      * @param cost
      */
     public void setCost(BigDecimal cost) {

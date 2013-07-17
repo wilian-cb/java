@@ -20,15 +20,13 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Defines a list of known shipping types.
- * this class is not an enum to enable the introduction of new shipping types
- * without breaking this version of the library. 
+ * Defines a list of known shipping types. this class is not an enum to enable the introduction of new shipping types
+ * without breaking this version of the library.
  */
 public final class ShippingType {
 
     /**
-     * the shipping type value
-     * Example: 1
+     * the shipping type value Example: 1
      */
     private final int value;
 

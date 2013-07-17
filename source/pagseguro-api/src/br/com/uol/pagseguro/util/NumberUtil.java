@@ -17,18 +17,18 @@
 package br.com.uol.pagseguro.util;
 
 /**
- * Class that represents util number functions 
+ * Class that represents util number functions
  */
 public class NumberUtil {
 
-	/**
-	 * Get only numbers from a string value
-	 * @param value
-	 * @return
-	 */
-	public static Long getOnlyNumbers(String value){
-		return new Long(value.replaceAll("\\D+", ""));
-	}
-	
-}
+    /**
+     * Get only numbers from a string value
+     * 
+     * @param value
+     * @return
+     */
+    public static Long getOnlyNumbers(String value) {
+        return new Long(value.replaceAll("\\D+", ""));
+    }
 
+}

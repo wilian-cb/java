@@ -38,9 +38,10 @@ public class TransactionSearchService {
 
     /**
      * PagSeguro Log tool
+     * 
      * @see Logger
      */
-    static Logger log =  PagSeguroLoggerFactory.getLogger(TransactionSearchService.class);
+    static Logger log = PagSeguroLoggerFactory.getLogger(TransactionSearchService.class);
 
     /**
      * PagSeguro transaction search web service URL
@@ -66,37 +67,36 @@ public class TransactionSearchService {
     public static Transaction searchByCode(Credentials credentials, String transactionCode)
             throws PagSeguroServiceException {
 
-		log.info("TransactionSearchService.SearchByCode(transactionCode=" + transactionCode + ") - begin");
+        log.info("TransactionSearchService.SearchByCode(transactionCode=" + transactionCode + ") - begin");
 
         if (transactionCode == null || transactionCode.trim().equals("")) {
             throw new IllegalArgumentException("transaction code can not be null");
         }
 
         try {
-        	
-        	// calling transaction search web service
-        	HttpURLConnection connection = HttpURLConnectionUtil.getHttpGetConnection(
-        			buildURLByCode(credentials, transactionCode), CONTENT_TYPE);
 
-        	// parsing transaction
+            // calling transaction search web service
+            HttpURLConnection connection = HttpURLConnectionUtil.getHttpGetConnection(
+                    buildURLByCode(credentials, transactionCode), CONTENT_TYPE);
+
+            // parsing transaction
             Transaction transaction = TransactionParser.readTransaction(connection.getInputStream());
-			log.info("TransactionSearchService.SearchByCode(transactionCode="
-					+ transactionCode + ") - end - " + transaction.toString());
-			
-			// disconnecting
-			connection.disconnect();
-			
+            log.info("TransactionSearchService.SearchByCode(transactionCode=" + transactionCode + ") - end - "
+                    + transaction.toString());
+
+            // disconnecting
+            connection.disconnect();
+
             return transaction;
         } catch (Exception e) {
-			log.error("TransactionSearchService.SearchByCode(transactionCode="
-					+ transactionCode + ") - error", e);
+            log.error("TransactionSearchService.SearchByCode(transactionCode=" + transactionCode + ") - error", e);
             throw new RuntimeException(e);
         }
     }
 
     /**
      * Search transactions associated with this set of credentials within a date range
-     *
+     * 
      * @param credentials
      * @param initialDate
      * @param finalDate
@@ -108,44 +108,41 @@ public class TransactionSearchService {
      */
     public static TransactionSearchResult searchByDate(Credentials credentials, Date initialDate, Date finalDate,
             Integer page, Integer maxPageResults) throws PagSeguroServiceException {
-        
-    	SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-    	String initialDateString = initialDate != null ? sdf.format(initialDate) : null;
-    	String finalDateString = finalDate!= null ? sdf.format(finalDate) :  null;
-        
-		log.info("TransactionSearchService.SearchByDate(initialDate="
-				+ initialDateString + ", finalDate=" + finalDateString + ") - begin");
-		
-		// instantiating new TransactionResultSearch
-		TransactionSearchResult search = new TransactionSearchResult();
+
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        String initialDateString = initialDate != null ? sdf.format(initialDate) : null;
+        String finalDateString = finalDate != null ? sdf.format(finalDate) : null;
+
+        log.info("TransactionSearchService.SearchByDate(initialDate=" + initialDateString + ", finalDate="
+                + finalDateString + ") - begin");
+
+        // instantiating new TransactionResultSearch
+        TransactionSearchResult search = new TransactionSearchResult();
 
         try {
-        	
-        	// call transaction search web service
-        	HttpURLConnection connection = HttpURLConnectionUtil.getHttpGetConnection(
-        			buildURLByDate(credentials, initialDate, finalDate, page, maxPageResults), CONTENT_TYPE);
 
-        	if (connection != null){
-        		// parsing PagSeguro response
+            // call transaction search web service
+            HttpURLConnection connection = HttpURLConnectionUtil.getHttpGetConnection(
+                    buildURLByDate(credentials, initialDate, finalDate, page, maxPageResults), CONTENT_TYPE);
+
+            if (connection != null) {
+                // parsing PagSeguro response
                 TransactionSearchResultXMLHandler.getHandler(connection.getInputStream(), search);
-                
-                log.info("TransactionSearchService.SearchByDate(initialDate="
-        				+ initialDateString + ", finalDate=" + finalDateString + ") - end - "
-        				+ search);
-                
+
+                log.info("TransactionSearchService.SearchByDate(initialDate=" + initialDateString + ", finalDate="
+                        + finalDateString + ") - end - " + search);
+
                 // disconnecting connection
                 connection.disconnect();
-        	}
-        	else {
-        		throw new PagSeguroServiceException();
-        	}
-            
+            } else {
+                throw new PagSeguroServiceException();
+            }
+
             return search;
-            
+
         } catch (Exception e) {
-        	log.error("TransactionSearchService.SearchByDate(initialDate="
-    				+ initialDateString + ", finalDate=" + finalDateString + ") - error "
-    				+ search, e);
+            log.error("TransactionSearchService.SearchByDate(initialDate=" + initialDateString + ", finalDate="
+                    + finalDateString + ") - error " + search, e);
             throw new RuntimeException(e);
         }
 

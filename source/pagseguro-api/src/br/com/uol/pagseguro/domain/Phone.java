@@ -63,6 +63,7 @@ public class Phone {
 
     /**
      * Sets the area code
+     * 
      * @param areaCode
      */
     public void setAreaCode(String areaCode) {
@@ -71,6 +72,7 @@ public class Phone {
 
     /**
      * Sets the number
+     * 
      * @param number
      */
     public void setNumber(String number) {

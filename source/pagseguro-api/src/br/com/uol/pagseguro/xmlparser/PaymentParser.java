@@ -47,9 +47,10 @@ public class PaymentParser {
 
     /**
      * PagSeguro Log tool
+     * 
      * @see PagSeguroDummyLogger
      */
-    static Logger log =  PagSeguroLoggerFactory.getLogger(PaymentParser.class);
+    static Logger log = PagSeguroLoggerFactory.getLogger(PaymentParser.class);
 
     /**
      * Creates the XML representation of the payment request
@@ -72,12 +73,14 @@ public class PaymentParser {
                 Element sender = XMLParserUtils.createElement(doc, "sender", null);
 
                 if (paymentRequest.getSender().getName() != null) {
-                    Element senderName = XMLParserUtils.createElement(doc, "name", paymentRequest.getSender().getName());
+                    Element senderName = XMLParserUtils
+                            .createElement(doc, "name", paymentRequest.getSender().getName());
                     sender.appendChild(senderName);
                 }
 
                 if (paymentRequest.getSender().getEmail() != null) {
-                    Element senderEmail = XMLParserUtils.createElement(doc, "email", paymentRequest.getSender().getEmail());
+                    Element senderEmail = XMLParserUtils.createElement(doc, "email", paymentRequest.getSender()
+                            .getEmail());
                     sender.appendChild(senderEmail);
                 }
 
@@ -86,48 +89,51 @@ public class PaymentParser {
                     Element senderPhone = XMLParserUtils.createElement(doc, "phone", null);
 
                     if (paymentRequest.getSender().getPhone().getAreaCode() != null) {
-                        Element senderPhoneAreaCode = XMLParserUtils.createElement(doc, "areaCode", paymentRequest.getSender()
-                                .getPhone().getAreaCode());
+                        Element senderPhoneAreaCode = XMLParserUtils.createElement(doc, "areaCode", paymentRequest
+                                .getSender().getPhone().getAreaCode());
                         senderPhone.appendChild(senderPhoneAreaCode);
                     }
 
                     if (paymentRequest.getSender().getPhone().getNumber() != null) {
-                        Element senderPhoneNumber = XMLParserUtils.createElement(doc, "number", paymentRequest.getSender()
-                                .getPhone().getNumber());
+                        Element senderPhoneNumber = XMLParserUtils.createElement(doc, "number", paymentRequest
+                                .getSender().getPhone().getNumber());
                         senderPhone.appendChild(senderPhoneNumber);
                     }
                     sender.appendChild(senderPhone);
                 }
-                
+
                 // <documents>
-                if (!paymentRequest.getSender().getDocuments().isEmpty()){
-                	
-                	Element documents = doc.createElement("documents");
-                	
-            		for(int i = 0; i < paymentRequest.getSender().getDocuments().size(); i++){
-                		
-                		Element document = XMLParserUtils.createElement(doc, "document", null);
-						
-                		SenderDocument pagseguroDocument = (SenderDocument) paymentRequest.getSender().getDocuments().get(i);
-                		
-						if (pagseguroDocument.getType() != null){
-							Element documentType = XMLParserUtils.createElement(doc, "type", pagseguroDocument.getType());
-							document.appendChild(documentType);
-						}
-						
-						if (pagseguroDocument.getValue() != null){
-							Element documentValue = XMLParserUtils.createElement(doc, "value", pagseguroDocument.getValue().toString());
-							document.appendChild(documentValue);
-						}
-						
-						// adding new document for documents list
-						documents.appendChild(document);
-					}
-                	
-                	// adding documents list for sender
-                	sender.appendChild(documents);
+                if (!paymentRequest.getSender().getDocuments().isEmpty()) {
+
+                    Element documents = doc.createElement("documents");
+
+                    for (int i = 0; i < paymentRequest.getSender().getDocuments().size(); i++) {
+
+                        Element document = XMLParserUtils.createElement(doc, "document", null);
+
+                        SenderDocument pagseguroDocument = (SenderDocument) paymentRequest.getSender().getDocuments()
+                                .get(i);
+
+                        if (pagseguroDocument.getType() != null) {
+                            Element documentType = XMLParserUtils.createElement(doc, "type",
+                                    pagseguroDocument.getType());
+                            document.appendChild(documentType);
+                        }
+
+                        if (pagseguroDocument.getValue() != null) {
+                            Element documentValue = XMLParserUtils.createElement(doc, "value", pagseguroDocument
+                                    .getValue().toString());
+                            document.appendChild(documentValue);
+                        }
+
+                        // adding new document for documents list
+                        documents.appendChild(document);
+                    }
+
+                    // adding documents list for sender
+                    sender.appendChild(documents);
                 }
-                
+
                 checkout.appendChild(sender);
             }
 
@@ -197,7 +203,8 @@ public class PaymentParser {
 
             // <reference>
             if (paymentRequest.getReference() != null) {
-                Element reference = XMLParserUtils.createElement(doc, "reference", paymentRequest.getReference().toString());
+                Element reference = XMLParserUtils.createElement(doc, "reference", paymentRequest.getReference()
+                        .toString());
                 checkout.appendChild(reference);
             }
 
@@ -212,8 +219,8 @@ public class PaymentParser {
                 }
 
                 if (paymentRequest.getShipping().getCost() != null) {
-                    Element shippingCost = XMLParserUtils.createElement(doc, "cost", paymentRequest.getShipping().getCost()
-                            .toString());
+                    Element shippingCost = XMLParserUtils.createElement(doc, "cost", paymentRequest.getShipping()
+                            .getCost().toString());
                     shipping.appendChild(shippingCost);
                 }
 
@@ -222,14 +229,14 @@ public class PaymentParser {
                     Element address = XMLParserUtils.createElement(doc, "address", null);
 
                     if (paymentRequest.getShipping().getAddress().getStreet() != null) {
-                        Element addressStreet = XMLParserUtils.createElement(doc, "street", paymentRequest.getShipping()
-                                .getAddress().getStreet());
+                        Element addressStreet = XMLParserUtils.createElement(doc, "street", paymentRequest
+                                .getShipping().getAddress().getStreet());
                         address.appendChild(addressStreet);
                     }
 
                     if (paymentRequest.getShipping().getAddress().getNumber() != null) {
-                        Element addressNumber = XMLParserUtils.createElement(doc, "number", paymentRequest.getShipping()
-                                .getAddress().getNumber());
+                        Element addressNumber = XMLParserUtils.createElement(doc, "number", paymentRequest
+                                .getShipping().getAddress().getNumber());
                         address.appendChild(addressNumber);
                     }
 
@@ -252,8 +259,8 @@ public class PaymentParser {
                     }
 
                     if (paymentRequest.getShipping().getAddress().getDistrict() != null) {
-                        Element addressDistrict = XMLParserUtils.createElement(doc, "district", paymentRequest.getShipping()
-                                .getAddress().getDistrict());
+                        Element addressDistrict = XMLParserUtils.createElement(doc, "district", paymentRequest
+                                .getShipping().getAddress().getDistrict());
                         address.appendChild(addressDistrict);
                     }
 
@@ -264,8 +271,8 @@ public class PaymentParser {
                     }
 
                     if (paymentRequest.getShipping().getAddress().getCountry() != null) {
-                        Element addressCountry = XMLParserUtils.createElement(doc, "country", paymentRequest.getShipping()
-                                .getAddress().getCountry());
+                        Element addressCountry = XMLParserUtils.createElement(doc, "country", paymentRequest
+                                .getShipping().getAddress().getCountry());
                         address.appendChild(addressCountry);
                     }
 
@@ -286,11 +293,12 @@ public class PaymentParser {
             }
 
             // <notificationURL>
-            if (paymentRequest.getNotificationURL() != null){
-            	Element notificationURL = XMLParserUtils.createElement(doc, "notificationURL", paymentRequest.getNotificationURL().toString());
-            	checkout.appendChild(notificationURL);
+            if (paymentRequest.getNotificationURL() != null) {
+                Element notificationURL = XMLParserUtils.createElement(doc, "notificationURL", paymentRequest
+                        .getNotificationURL().toString());
+                checkout.appendChild(notificationURL);
             }
-            
+
             doc.appendChild(checkout);
 
             TransformerFactory factory = TransformerFactory.newInstance();
@@ -314,14 +322,14 @@ public class PaymentParser {
      * Returns the payment request code
      * 
      * @param xmlInputStream
-     * @return the payment request code 
+     * @return the payment request code
      * @throws ParserConfigurationException
      * @throws SAXException
      * @throws ParseException
      * @throws IOException
      */
-    public static String readPaymentReturnXml(InputStream xmlInputStream)
-            throws ParserConfigurationException, SAXException, ParseException, IOException {
+    public static String readPaymentReturnXml(InputStream xmlInputStream) throws ParserConfigurationException,
+            SAXException, ParseException, IOException {
 
         log.debug("Parsing Payment API response.");
 
@@ -330,10 +338,10 @@ public class PaymentParser {
         Document doc = dBuilder.parse(xmlInputStream);
 
         Element paymentReturnElement = doc.getDocumentElement();
-        
+
         String paymentRequestCode = XMLParserUtils.getTagValue("code", paymentReturnElement);
 
-        log.debug("Checkout registered Success! Payment request code: "+ paymentRequestCode);
+        log.debug("Checkout registered Success! Payment request code: " + paymentRequestCode);
 
         return paymentRequestCode;
     }

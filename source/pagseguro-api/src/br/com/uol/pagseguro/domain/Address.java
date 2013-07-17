@@ -17,6 +17,7 @@ package br.com.uol.pagseguro.domain;
 
 /**
  * Represents an address location, typically for shipping or charging purposes.
+ * 
  * @see Shipping
  */
 public class Address {
@@ -32,8 +33,7 @@ public class Address {
     private String number;
 
     /**
-     * Apartment, suite number or any other qualifier after the street/number pair.
-     * Example: Apt 274, building A.
+     * Apartment, suite number or any other qualifier after the street/number pair. Example: Apt 274, building A.
      */
     private String complement;
 
@@ -62,9 +62,8 @@ public class Address {
      */
     private String postalCode;
 
-    
     /**
-     * Initializes a new instance of the Address class 
+     * Initializes a new instance of the Address class
      */
     public Address() {
     }
@@ -93,9 +92,8 @@ public class Address {
         this.postalCode = postalCode;
     }
 
-    
     /**
-     * @return the street 
+     * @return the street
      */
     public String getStreet() {
         return street;
@@ -151,8 +149,9 @@ public class Address {
     }
 
     /**
-     *  Sets the street
-     *  @param street
+     * Sets the street
+     * 
+     * @param street
      */
     public void setStreet(String street) {
         this.street = street;
@@ -160,6 +159,7 @@ public class Address {
 
     /**
      * Sets the number
+     * 
      * @param number
      */
     public void setNumber(String number) {
@@ -168,6 +168,7 @@ public class Address {
 
     /**
      * Sets the complement
+     * 
      * @param complement
      */
     public void setComplement(String complement) {
@@ -176,6 +177,7 @@ public class Address {
 
     /**
      * Sets the district
+     * 
      * @param district
      */
     public void setDistrict(String district) {
@@ -184,6 +186,7 @@ public class Address {
 
     /**
      * sets the city
+     * 
      * @param city
      */
     public void setCity(String city) {
@@ -192,6 +195,7 @@ public class Address {
 
     /**
      * Sets the state
+     * 
      * @param state
      */
     public void setState(String state) {
@@ -200,14 +204,16 @@ public class Address {
 
     /**
      * Sets the postalCode
+     * 
      * @param postalCode
      */
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
-    
+
     /**
      * Sets the country
+     * 
      * @param country
      */
     public void setCountry(String country) {

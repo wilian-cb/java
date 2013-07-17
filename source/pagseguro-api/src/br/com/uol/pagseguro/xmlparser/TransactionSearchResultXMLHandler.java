@@ -37,7 +37,7 @@ import br.com.uol.pagseguro.domain.TransactionSummary;
 import br.com.uol.pagseguro.util.DateParserUTC;
 
 /**
- * Utility class for handle transactions search in PagSeguro's web service 
+ * Utility class for handle transactions search in PagSeguro's web service
  */
 public class TransactionSearchResultXMLHandler extends DefaultHandler {
 

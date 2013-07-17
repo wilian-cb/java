@@ -33,14 +33,14 @@ public class PagSeguroServiceException extends Exception {
      * List of errors returned by the PagSeguro web service
      */
     private List errors;
-    
+
     /**
      *  
      */
     private HttpError httpError;
 
     /**
-     * Initializes a new instance of the PagSeguroServiceException class 
+     * Initializes a new instance of the PagSeguroServiceException class
      */
     public PagSeguroServiceException() {
     }
@@ -66,7 +66,7 @@ public class PagSeguroServiceException extends Exception {
     }
 
     /**
-     * @return the list of errors returned by the PagSeguro web service 
+     * @return the list of errors returned by the PagSeguro web service
      */
     public List getErrorList() {
 

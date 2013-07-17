@@ -87,6 +87,7 @@ public class Item {
 
     /**
      * Sets the product identifier
+     * 
      * @param id
      */
     public void setId(String id) {
@@ -102,6 +103,7 @@ public class Item {
 
     /**
      * Sets the product description
+     * 
      * @param description
      */
     public void setDescription(String description) {
@@ -117,6 +119,7 @@ public class Item {
 
     /**
      * Sets the quantity
+     * 
      * @param quantity
      */
     public void setQuantity(Integer quantity) {
@@ -132,6 +135,7 @@ public class Item {
 
     /**
      * Sets the unit amount for this item
+     * 
      * @param amount
      */
     public void setAmount(BigDecimal amount) {
@@ -147,6 +151,7 @@ public class Item {
 
     /**
      * Sets the single unit weight
+     * 
      * @param weight
      */
     public void setWeight(Long weight) {
@@ -162,6 +167,7 @@ public class Item {
 
     /**
      * Sets the unit shipping cost for this item
+     * 
      * @param shippingCost
      */
     public void setShippingCost(BigDecimal shippingCost) {
@@ -172,5 +178,5 @@ public class Item {
         return "[id: " + id + ", description: " + description + ", quantity: " + quantity + ", amount: " + amount
                 + ", weight: " + weight + ", shippingCost: " + shippingCost + "]";
     }
-    
+
 }

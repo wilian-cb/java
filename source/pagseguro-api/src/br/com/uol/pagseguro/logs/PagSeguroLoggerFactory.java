@@ -53,7 +53,7 @@ public class PagSeguroLoggerFactory {
                     logger = (Logger) classConstructor.newInstance(new Object[] { clazz });
                     map.put(clazz.getName(), logger);
                 } else if (defaultConstructor != null) {
-                    
+
                     if (map.size() > 0) {
                         logger = (Logger) map.values().iterator().next();
                     } else {

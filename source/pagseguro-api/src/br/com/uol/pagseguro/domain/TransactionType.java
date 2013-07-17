@@ -20,8 +20,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Defines a list of known transaction types.
- * This class is not an enum to enable the introduction of new shipping types
+ * Defines a list of known transaction types. This class is not an enum to enable the introduction of new shipping types
  * without breaking this version of the library.
  */
 public final class TransactionType {

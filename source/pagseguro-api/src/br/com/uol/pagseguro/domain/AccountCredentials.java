@@ -50,7 +50,9 @@ public class AccountCredentials extends Credentials {
         this.token = token.trim();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see br.com.uol.pagseguro.domain.Credentials#getAttributes()
      */
     public Map getAttributes() {

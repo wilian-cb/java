@@ -20,13 +20,12 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Defines a list of known payment method codes. 
+ * Defines a list of known payment method codes.
  */
 public final class PaymentMethodCode {
 
     /**
-     * Payment method code
-     * Example: 101
+     * Payment method code Example: 101
      */
     private final int value;
 
@@ -59,7 +58,7 @@ public final class PaymentMethodCode {
      * Aura
      */
     public static final PaymentMethodCode AURA_CREDIT_CARD = new PaymentMethodCode(106);
-    
+
     /**
      * Elo
      */
@@ -68,53 +67,53 @@ public final class PaymentMethodCode {
     /**
      * PLENOCard
      */
-    public static final PaymentMethodCode PLENO_CREDIT_CARD = new PaymentMethodCode(108); 
-    
+    public static final PaymentMethodCode PLENO_CREDIT_CARD = new PaymentMethodCode(108);
+
     /**
      * PersonalCard
      */
     public static final PaymentMethodCode PERSONAL_CREDIT_CARD = new PaymentMethodCode(109);
-    
+
     /**
      * JCB
      */
     public static final PaymentMethodCode JCB_CREDIT_CARD = new PaymentMethodCode(110);
-    
+
     /**
      * Discover
      */
     public static final PaymentMethodCode DISCOVER_CREDIT_CARD = new PaymentMethodCode(111);
-    
+
     /**
      * BrasilCard
      */
     public static final PaymentMethodCode BRASIL_CREDIT_CARD = new PaymentMethodCode(112);
-    
+
     /**
      * FORTBRASIL
      */
     public static final PaymentMethodCode FORTBRASIL_CREDIT_CARD = new PaymentMethodCode(113);
-    
+
     /**
      * CARDBAN
      */
     public static final PaymentMethodCode CARDBAN_CREDIT_CARD = new PaymentMethodCode(114);
-    
+
     /**
      * VALECARD
      */
     public static final PaymentMethodCode VALECARD_CREDIT_CARD = new PaymentMethodCode(115);
-    
+
     /**
      * Cabal
      */
     public static final PaymentMethodCode CABAL_CREDIT_CARD = new PaymentMethodCode(116);
-    
+
     /**
      * Mais!
      */
     public static final PaymentMethodCode MAIS_CREDIT_CARD = new PaymentMethodCode(117);
-    
+
     /**
      * Avista
      */
@@ -124,7 +123,7 @@ public final class PaymentMethodCode {
      * GRANCARD
      */
     public static final PaymentMethodCode GRANDCARD_CREDIT_CARD = new PaymentMethodCode(119);
-    
+
     /**
      * Bradesco - boleto
      */
@@ -151,7 +150,7 @@ public final class PaymentMethodCode {
     public static final PaymentMethodCode UNIBANCO_ONLINE_TRANSFER = new PaymentMethodCode(303);
 
     /**
-     * Banco do Brasil on-line transfer 
+     * Banco do Brasil on-line transfer
      */
     public static final PaymentMethodCode BANCO_BRASIL_ONLINE_TRANSFER = new PaymentMethodCode(304);
 
@@ -161,15 +160,15 @@ public final class PaymentMethodCode {
     public static final PaymentMethodCode REAL_ONLINE_TRANSFER = new PaymentMethodCode(305);
 
     /**
-     * Banrisul on-line transfer 
+     * Banrisul on-line transfer
      */
     public static final PaymentMethodCode BANRISUL_ONLINE_TRANSFER = new PaymentMethodCode(306);
 
     /**
-     * HSBC on-line transfer 
+     * HSBC on-line transfer
      */
     public static final PaymentMethodCode HSBC_ONLINE_TRANSFER = new PaymentMethodCode(307);
-    
+
     /**
      * PagSeguro account balance
      */
@@ -244,10 +243,8 @@ public final class PaymentMethodCode {
         this.value = value;
     }
 
-    
     /**
-     * @return the payment method code value
-     * Example: 101
+     * @return the payment method code value Example: 101
      */
     public int getValue() {
         return value;

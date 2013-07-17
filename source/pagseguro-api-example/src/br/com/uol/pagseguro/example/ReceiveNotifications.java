@@ -24,17 +24,22 @@ public class ReceiveNotifications {
 
     public static void main(String[] args) {
 
-    	// Substitute the code below with a notification code for your transaction. 
-        // You receive this notification code through a post on the URL that you specify in 
-        // this page: 
-    	/** @link https://pagseguro.uol.com.br/integracao/notificacao-de-transacoes.jhtml*/
+        // Substitute the code below with a notification code for your
+        // transaction.
+        // You receive this notification code through a post on the URL that you
+        // specify in
+        // this page:
+        /**
+         * @link https://pagseguro.uol.com.br/integracao/notificacao-de-transacoes .jhtml
+         */
         String notificationCode = "512AF8-49E2FBE2FB71-799426FFAC58-90F5C1";
 
         Transaction transaction = null;
         try {
             // Check transaction
-            transaction = NotificationService.checkTransaction(new AccountCredentials("suporte@lojamodelo.com.br", "95112EE828D94278BD394E91C4388F20"), notificationCode);
-        	
+            transaction = NotificationService.checkTransaction(new AccountCredentials("suporte@lojamodelo.com.br",
+                    "95112EE828D94278BD394E91C4388F20"), notificationCode);
+
         } catch (PagSeguroServiceException e) {
             System.err.println(e.toString());
         }

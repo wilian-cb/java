@@ -30,9 +30,8 @@ public class PaymentMethod {
      */
     private PaymentMethodCode code;
 
-    
     /**
-     * Initializes a new instance of the PaymentMethod class 
+     * Initializes a new instance of the PaymentMethod class
      */
     public PaymentMethod() {
     }
@@ -56,7 +55,8 @@ public class PaymentMethod {
     }
 
     /**
-     * Sets the payment method type 
+     * Sets the payment method type
+     * 
      * @param type
      */
     public void setType(PaymentMethodType type) {
@@ -72,6 +72,7 @@ public class PaymentMethod {
 
     /**
      * Sets the payment method code
+     * 
      * @param code
      */
     public void setCode(PaymentMethodCode code) {

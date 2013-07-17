@@ -36,7 +36,7 @@ public class XMLParserUtils {
      * @param fromElement
      * @return
      */
-	public static List getElements(String elementTag, Element fromElement) {
+    public static List getElements(String elementTag, Element fromElement) {
         List elements = new ArrayList();
         NodeList nodeList = fromElement.getElementsByTagName(elementTag);
         for (int i = 0; i < nodeList.getLength(); i++) {

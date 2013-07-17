@@ -34,11 +34,11 @@ import br.com.uol.pagseguro.xmlparser.PaymentParser;
  */
 public class PaymentService {
 
-	/**
-	 * PagSeguro Log tool
-	 * 
-	 * @see PagSeguroDummyLogger
-	 */
+    /**
+     * PagSeguro Log tool
+     * 
+     * @see PagSeguroDummyLogger
+     */
     static Logger log = PagSeguroLoggerFactory.getLogger(PaymentService.class);
 
     /**
@@ -71,20 +71,20 @@ public class PaymentService {
     public static URL doPayment(Credentials credentials, PaymentRequest paymentRequest)
             throws PagSeguroServiceException {
 
-    	log.info("PaymentService.Register(" + paymentRequest + ") - begin");
+        log.info("PaymentService.Register(" + paymentRequest + ") - begin");
         String xml = PaymentParser.writePaymentXml(paymentRequest);
 
         // calling payment web service
-        HttpURLConnection connection = HttpURLConnectionUtil.getHttpPostConnection(buildUrl(credentials, paymentRequest),
-                URL_CONTENT_TYPE + "; charset=" + CHARSET, xml);
+        HttpURLConnection connection = HttpURLConnectionUtil.getHttpPostConnection(
+                buildUrl(credentials, paymentRequest), URL_CONTENT_TYPE + "; charset=" + CHARSET, xml);
 
         try {
             // parsing web service response
             URL paymentURL = new URL(URL_REDIR + PaymentParser.readPaymentReturnXml(connection.getInputStream()));
-            
-            log.info("PaymentService.Register("+paymentRequest+") - end - " + paymentURL);
+
+            log.info("PaymentService.Register(" + paymentRequest + ") - end - " + paymentURL);
             return paymentURL;
-            
+
         } catch (Exception e) {
             log.error("PaymentService.Register(" + paymentRequest + ") - error ", e);
             throw new RuntimeException(e);

@@ -41,139 +41,143 @@ import br.com.uol.pagseguro.xmlparser.ErrorsParser;
  */
 public class HttpURLConnectionUtil {
 
-	/**
-	 * PagSeguro Log tool
-	 * @see PagSeguroDummyLogger
-	 */
-	static Logger log =  PagSeguroLoggerFactory.getLogger(HttpURLConnectionUtil.class);
+    /**
+     * PagSeguro Log tool
+     * 
+     * @see PagSeguroDummyLogger
+     */
+    static Logger log = PagSeguroLoggerFactory.getLogger(HttpURLConnectionUtil.class);
 
-	private static final String HTTP_METHOD_POST = "POST";
+    private static final String HTTP_METHOD_POST = "POST";
 
-	private static final String HTTP_METHOD_GET = "GET";
+    private static final String HTTP_METHOD_GET = "GET";
 
-	/**
-	 * Creates a http connection and makes a remote call 
-	 * 
-	 * @param method
-	 * @param urlPath
-	 * @param contentType
-	 * @param xml
-	 * @return
-	 * @throws PagSeguroServiceException
-	 */
-	private static HttpURLConnection getHttpURLConnection(String method, String urlPath, String contentType,
-			String xml) throws PagSeguroServiceException {
+    /**
+     * Creates a http connection and makes a remote call
+     * 
+     * @param method
+     * @param urlPath
+     * @param contentType
+     * @param xml
+     * @return
+     * @throws PagSeguroServiceException
+     */
+    private static HttpURLConnection getHttpURLConnection(String method, String urlPath, String contentType, String xml)
+            throws PagSeguroServiceException {
 
-		log.debug("method: " + method + ", Content-type:" + contentType + ", target URL: " + urlPath);
+        log.debug("method: " + method + ", Content-type:" + contentType + ", target URL: " + urlPath);
 
-		URL url;
-		HttpURLConnection connection;
-		try {
+        URL url;
+        HttpURLConnection connection;
+        try {
 
-			// Creates a connection
-			url = new URL(urlPath);
-			connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestMethod(method);
-			connection.setDoOutput(true);
-			connection.setDoInput(true);
-			connection.setRequestProperty("Content-type", contentType);
-			connection.setRequestProperty("lib-description", "java-v." + PagSeguroSystem.getLibversion());
-			connection.setRequestProperty("language-engine-description", "java:" + PagSeguroSystem.getLanguageEnginedescription());
-			
-			// adding module version to header request 
-			if (PagSeguroConfig.getModuleVersion() != null){
-				connection.setRequestProperty("module-description", PagSeguroConfig.getModuleVersion());
-			}
-			
-			// adding cms version to header request 
-			if (PagSeguroConfig.getCmsVersion() != null){
-				connection.setRequestProperty("cms-description", PagSeguroConfig.getCmsVersion());
-			}
-			
-			// write the XML
-			if (xml != null && !xml.equals("")) {
-				log.debug("sending XML: " + xml);
-				connection.getOutputStream().write(xml.getBytes(PagSeguroSystem.getPagSeguroEncoding()));
-			}
-			
-			// handle the response
-			int responseCode = connection.getResponseCode();
+            // Creates a connection
+            url = new URL(urlPath);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod(method);
+            connection.setDoOutput(true);
+            connection.setDoInput(true);
+            connection.setRequestProperty("Content-type", contentType);
+            connection.setRequestProperty("lib-description", "java:" + PagSeguroSystem.getLibversion());
+            connection.setRequestProperty("language-engine-description",
+                    "java:" + PagSeguroSystem.getLanguageEnginedescription());
 
-			if (responseCode != HttpURLConnection.HTTP_OK) {
-				if (responseCode == HttpURLConnection.HTTP_BAD_REQUEST) {
+            // adding module version to header request
+            if (PagSeguroConfig.getModuleVersion() != null) {
+                connection.setRequestProperty("module-description", PagSeguroConfig.getModuleVersion());
+            }
 
-					List errors = ErrorsParser.readErrosXml(connection.getErrorStream());
-					log(errors);
+            // adding cms version to header request
+            if (PagSeguroConfig.getCmsVersion() != null) {
+                connection.setRequestProperty("cms-description", PagSeguroConfig.getCmsVersion());
+            }
 
-					throw new PagSeguroServiceException(errors, HttpError.fromValue(responseCode));
-				}
+            // write the XML
+            if (xml != null && !xml.equals("")) {
+                log.debug("sending XML: " + xml);
+                connection.getOutputStream().write(xml.getBytes(PagSeguroSystem.getPagSeguroEncoding()));
+            }
 
-				log.error("HTTP: " + responseCode + ". Error during PagSeguro API call.");
-				throw new PagSeguroServiceException(HttpError.fromValue(responseCode));
-			}
+            // handle the response
+            int responseCode = connection.getResponseCode();
 
-			log.debug("API call success: " + responseCode);
+            if (responseCode != HttpURLConnection.HTTP_OK) {
+                if (responseCode == HttpURLConnection.HTTP_BAD_REQUEST) {
 
-			// returns the http connection
-			return connection;
+                    List errors = ErrorsParser.readErrosXml(connection.getErrorStream());
+                    log(errors);
 
-		} catch (IOException e) {
-			log.error("Error while parsing the response", e);
-			throw new PagSeguroServiceException(HttpURLConnectionUtil.generateErrorsList(e), HttpError.INTERNAL_SERVER_ERROR);
-		} catch (ParserConfigurationException e) {
-			log.error("Error while parsing the response", e);
-			throw new PagSeguroServiceException(HttpURLConnectionUtil.generateErrorsList(e), HttpError.BAD_REQUEST);
-		} catch (SAXException e) {
-			log.error("Error while parsing the response", e);
-			throw new PagSeguroServiceException(HttpURLConnectionUtil.generateErrorsList(e), HttpError.BAD_REQUEST);
-		}
+                    throw new PagSeguroServiceException(errors, HttpError.fromValue(responseCode));
+                }
 
-	}
+                log.error("HTTP: " + responseCode + ". Error during PagSeguro API call.");
+                throw new PagSeguroServiceException(HttpError.fromValue(responseCode));
+            }
 
-	/**
-	 * makes a post request in the informed URL
-	 * 
-	 * @param urlPath
-	 * @param contentType
-	 * @param xml
-	 * @return
-	 * @throws PagSeguroServiceException
-	 */
-	public static HttpURLConnection getHttpPostConnection(String urlPath, String contentType, String xml)
-			throws PagSeguroServiceException {
-		return getHttpURLConnection(HTTP_METHOD_POST, urlPath, contentType, xml);
-	}
+            log.debug("API call success: " + responseCode);
 
-	/**
-	 * makes a get request n the informed URL
-	 * 
-	 * @param urlPath
-	 * @param contentType
-	 * @return
-	 * @throws PagSeguroServiceException
-	 */
-	public static HttpURLConnection getHttpGetConnection(String urlPath, String contentType)
-			throws PagSeguroServiceException {
-		return getHttpURLConnection(HTTP_METHOD_GET, urlPath, contentType, null);
-	}
+            // returns the http connection
+            return connection;
 
-	private static void log(List errors) {
-		String print = "HTTP: " + HttpsURLConnection.HTTP_BAD_REQUEST + ". Validation error in PagSeguro webservice: \n";
+        } catch (IOException e) {
+            log.error("Error while parsing the response", e);
+            throw new PagSeguroServiceException(HttpURLConnectionUtil.generateErrorsList(e),
+                    HttpError.INTERNAL_SERVER_ERROR);
+        } catch (ParserConfigurationException e) {
+            log.error("Error while parsing the response", e);
+            throw new PagSeguroServiceException(HttpURLConnectionUtil.generateErrorsList(e), HttpError.BAD_REQUEST);
+        } catch (SAXException e) {
+            log.error("Error while parsing the response", e);
+            throw new PagSeguroServiceException(HttpURLConnectionUtil.generateErrorsList(e), HttpError.BAD_REQUEST);
+        }
 
-		for (int i = 0; i < errors.size(); i++) {
-			Error error = (Error) errors.get(i);
-			print += "> ";
-			print += error.getCode() + " - " + error.getMessage();
-			print += "\n";
-		}
+    }
 
-		log.error(print);
-	}
-	
-	private static List generateErrorsList(Exception e){
-		List errors = new ArrayList();
-		errors.add(new Error(null, e.getMessage()));
-		
-		return errors;
-	}
+    /**
+     * makes a post request in the informed URL
+     * 
+     * @param urlPath
+     * @param contentType
+     * @param xml
+     * @return
+     * @throws PagSeguroServiceException
+     */
+    public static HttpURLConnection getHttpPostConnection(String urlPath, String contentType, String xml)
+            throws PagSeguroServiceException {
+        return getHttpURLConnection(HTTP_METHOD_POST, urlPath, contentType, xml);
+    }
+
+    /**
+     * makes a get request n the informed URL
+     * 
+     * @param urlPath
+     * @param contentType
+     * @return
+     * @throws PagSeguroServiceException
+     */
+    public static HttpURLConnection getHttpGetConnection(String urlPath, String contentType)
+            throws PagSeguroServiceException {
+        return getHttpURLConnection(HTTP_METHOD_GET, urlPath, contentType, null);
+    }
+
+    private static void log(List errors) {
+        String print = "HTTP: " + HttpsURLConnection.HTTP_BAD_REQUEST
+                + ". Validation error in PagSeguro webservice: \n";
+
+        for (int i = 0; i < errors.size(); i++) {
+            Error error = (Error) errors.get(i);
+            print += "> ";
+            print += error.getCode() + " - " + error.getMessage();
+            print += "\n";
+        }
+
+        log.error(print);
+    }
+
+    private static List generateErrorsList(Exception e) {
+        List errors = new ArrayList();
+        errors.add(new Error(null, e.getMessage()));
+
+        return errors;
+    }
 }

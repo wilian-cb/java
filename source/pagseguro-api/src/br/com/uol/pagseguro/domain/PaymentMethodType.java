@@ -25,8 +25,7 @@ import java.util.Map;
 public final class PaymentMethodType {
 
     /**
-     * Payment method type value
-     * Example: 1
+     * Payment method type value Example: 1
      */
     private final int value;
 
@@ -87,8 +86,7 @@ public final class PaymentMethodType {
     }
 
     /**
-     * @return payment method type value
-     * Example: 1
+     * @return payment method type value Example: 1
      */
     public int getValue() {
         return value;
