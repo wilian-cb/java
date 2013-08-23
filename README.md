@@ -44,6 +44,10 @@ Mais informações estão disponíveis na [documentação oficial].
 Changelog
 ---------
 ---
+2.0.4
+
+ - Atualização dos códigos de meios de pagamento.
+
 2.0.3
 
  - Correção: Tratamento de exceção.

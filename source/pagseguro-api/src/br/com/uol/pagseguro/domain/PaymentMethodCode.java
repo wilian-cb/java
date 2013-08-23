@@ -180,6 +180,11 @@ public final class PaymentMethodCode {
     public static final PaymentMethodCode OI_PAGGO = new PaymentMethodCode(501);
 
     /**
+     * Banco do Brasil direct deposit
+     */
+    public static final PaymentMethodCode BANCO_BRASIL_DIRECT_DEPOSIT = new PaymentMethodCode(701);
+
+    /**
      * The values map
      */
     private static final Map VALUE_MAP = new HashMap();
@@ -215,6 +220,7 @@ public final class PaymentMethodCode {
         VALUE_MAP.put(new Integer(HSBC_ONLINE_TRANSFER.getValue()), HSBC_ONLINE_TRANSFER);
         VALUE_MAP.put(new Integer(PS_BALANCE.getValue()), PS_BALANCE);
         VALUE_MAP.put(new Integer(OI_PAGGO.getValue()), OI_PAGGO);
+        VALUE_MAP.put(new Integer(BANCO_BRASIL_DIRECT_DEPOSIT.getValue()), BANCO_BRASIL_DIRECT_DEPOSIT);
     }
 
     public static PaymentMethodCode fromValue(Integer value) {

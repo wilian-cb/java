@@ -54,6 +54,11 @@ public final class PaymentMethodType {
      */
     public static final PaymentMethodType OI_PAGGO = new PaymentMethodType(5);
 
+    /**
+     * Direct Deposit
+     */
+    public static final PaymentMethodType DIRECT_DEPOSIT = new PaymentMethodType(7);
+
     private static final Map VALUE_MAP = new HashMap();
 
     static {
@@ -62,6 +67,7 @@ public final class PaymentMethodType {
         VALUE_MAP.put(new Integer(ONLINE_TRANSFER.getValue()), ONLINE_TRANSFER);
         VALUE_MAP.put(new Integer(BALANCE.getValue()), BALANCE);
         VALUE_MAP.put(new Integer(OI_PAGGO.getValue()), OI_PAGGO);
+        VALUE_MAP.put(new Integer(DIRECT_DEPOSIT.getValue()), DIRECT_DEPOSIT);
     }
 
     private PaymentMethodType(int value) {

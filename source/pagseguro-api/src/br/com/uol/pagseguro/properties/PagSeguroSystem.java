@@ -26,7 +26,7 @@ public class PagSeguroSystem {
 
     private static ResourceBundle resourceBundle;
 
-    private static final String libVersion = "2.0.3";
+    private static final String libVersion = "2.0.4";
 
     private static final String languageEngineDescription = System.getProperty("java.version") + ":"
             + System.getProperty("java.vendor");
