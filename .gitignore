@@ -16,6 +16,11 @@ local.properties
 .settings/
 .loadpath
 
+#################
+## Netbeans
+#################
+classes/
+
 # External tool builders
 .externalToolBuilders/
 *~
