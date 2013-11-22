@@ -38,6 +38,10 @@ public class PagSeguroSystem {
             e.printStackTrace();
         }
     }
+    
+    public static String getUrlAbandoned() {
+        return resourceBundle.getString("url.abandoned");
+    }
 
     public static String getUrlNotification() {
         return resourceBundle.getString("url.notification");
