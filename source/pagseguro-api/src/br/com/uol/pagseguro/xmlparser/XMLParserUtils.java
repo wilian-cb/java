@@ -1,17 +1,19 @@
-/**
- * Copyright [2011] [PagSeguro Internet Ltda.]
+/*
+ ************************************************************************
+ Copyright [2011] [PagSeguro Internet Ltda.]
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+ http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ ************************************************************************
  */
 package br.com.uol.pagseguro.xmlparser;
 
@@ -28,6 +30,9 @@ import org.w3c.dom.Text;
  * Utility class for XML parsing
  */
 public class XMLParserUtils {
+    
+    private XMLParserUtils() {
+    }
 
     /**
      * Gets XML elements
@@ -36,8 +41,9 @@ public class XMLParserUtils {
      * @param fromElement
      * @return
      */
-    public static List getElements(String elementTag, Element fromElement) {
-        List elements = new ArrayList();
+    public static List<Element> getElements(String elementTag,
+            Element fromElement) {
+        List<Element> elements = new ArrayList<Element>();
         NodeList nodeList = fromElement.getElementsByTagName(elementTag);
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
@@ -79,7 +85,7 @@ public class XMLParserUtils {
         if (nodeList != null && nodeList.getLength() > 0) {
             NodeList childList = nodeList.item(0).getChildNodes();
             if (childList != null && childList.getLength() > 0) {
-                Node node = (Node) childList.item(0);
+                Node node = childList.item(0);
                 return node.getNodeValue();
             }
         }

@@ -1,22 +1,24 @@
-/**
- * Copyright [2011] [PagSeguro Internet Ltda.]
+/*
+ ************************************************************************
+ Copyright [2011] [PagSeguro Internet Ltda.]
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+ http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ ************************************************************************
  */
 package br.com.uol.pagseguro.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -47,13 +49,13 @@ public class TransactionSearchResult {
     /**
      * Transactions in this page
      */
-    private List transactionSummaries;
+    private List<TransactionSummary> transactions;
 
     /**
      * @return the date/time when this search was executed
      */
     public Date getDate() {
-        return date;
+        return this.date;
     }
 
     /**
@@ -69,7 +71,7 @@ public class TransactionSearchResult {
      * @return the number of Transactions in the current page
      */
     public int getResultsInThisPage() {
-        return resultsInThisPage;
+        return this.resultsInThisPage;
     }
 
     /**
@@ -85,7 +87,7 @@ public class TransactionSearchResult {
      * @return the total number of pages
      */
     public int getTotalPages() {
-        return totalPages;
+        return this.totalPages;
     }
 
     /**
@@ -101,7 +103,7 @@ public class TransactionSearchResult {
      * @return the current page number
      */
     public int getPage() {
-        return page;
+        return this.page;
     }
 
     /**
@@ -117,8 +119,14 @@ public class TransactionSearchResult {
      * @return the Transactions in this page
      * @see TransactionSummary
      */
-    public List getTransactionSummaries() {
-        return transactionSummaries;
+    public List<TransactionSummary> getTransactionSummaries() {
+        
+        if (this.transactions == null) {
+            this.transactions = new ArrayList<TransactionSummary>();
+        }
+        
+        return this.transactions;
+        
     }
 
     /**
@@ -126,22 +134,26 @@ public class TransactionSearchResult {
      * 
      * @param transactionSummaries
      */
-    public void setTransactionSummaries(List transactionSummaries) {
-        this.transactionSummaries = transactionSummaries;
+    public void setTransactions(
+            List<TransactionSummary> transactions) {
+        this.transactions = transactions;
     }
 
     /**
      * @param transactionSummary
      */
-    public void addTransactionSummary(TransactionSummary transactionSummary) {
-        if (getTransactionSummaries() == null) {
-            setTransactionSummaries(new LinkedList());
-        }
-        getTransactionSummaries().add(transactionSummary);
+    public void addTransactionSummary(TransactionSummary transactions) {
+        this.getTransactionSummaries().add(transactions);
     }
 
+    /**
+     * @return String a string that represents the current object
+     */
+    @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer(256);
+        
+        StringBuilder sb = new StringBuilder();
+        
         sb.append("TransactionSearchResult(Date=");
         sb.append(date);
         sb.append(",CurrentPage=");
@@ -149,8 +161,8 @@ public class TransactionSearchResult {
         sb.append(",TotalPages=");
         sb.append(totalPages);
         sb.append(",Transactions in this page=");
-        sb.append(transactionSummaries != null ? transactionSummaries.size() : 0);
-
+        sb.append(transactions != null ? transactions.size() : 0);
+        
         return sb.toString();
     }
 

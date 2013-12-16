@@ -1,18 +1,21 @@
-/**
- * Copyright [2011] [PagSeguro Internet Ltda.]
+/*
+ ************************************************************************
+ Copyright [2011] [PagSeguro Internet Ltda.]
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+ http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ ************************************************************************
  */
+
 package br.com.uol.pagseguro.example;
 
 import br.com.uol.pagseguro.domain.AccountCredentials;
@@ -36,12 +39,13 @@ public class ReceiveNotifications {
 
         Transaction transaction = null;
         try {
+            
             // Check transaction
-            transaction = NotificationService.checkTransaction(new AccountCredentials("suporte@lojamodelo.com.br",
-                    "95112EE828D94278BD394E91C4388F20"), notificationCode);
-
+            transaction = NotificationService.checkTransaction(
+                    new AccountCredentials("suporte@lojamodelo.com.br", "00000000000000000000000000000000"), notificationCode);
+                    
         } catch (PagSeguroServiceException e) {
-            System.err.println(e.toString());
+            System.err.println(e.getMessage());
         }
 
         if (transaction != null) {

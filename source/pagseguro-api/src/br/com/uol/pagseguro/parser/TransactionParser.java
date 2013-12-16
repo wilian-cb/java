@@ -1,19 +1,21 @@
-/**
- * Copyright [2011] [PagSeguro Internet Ltda.]
+/*
+ ************************************************************************
+ Copyright [2011] [PagSeguro Internet Ltda.]
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+ http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ ************************************************************************
  */
-package br.com.uol.pagseguro.xmlparser;
+package br.com.uol.pagseguro.parser;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,10 +46,9 @@ import br.com.uol.pagseguro.domain.ShippingType;
 import br.com.uol.pagseguro.domain.Transaction;
 import br.com.uol.pagseguro.domain.TransactionStatus;
 import br.com.uol.pagseguro.domain.TransactionType;
-import br.com.uol.pagseguro.logs.Logger;
-import br.com.uol.pagseguro.logs.PagSeguroLoggerFactory;
-import br.com.uol.pagseguro.service.TransactionSearchService;
-import br.com.uol.pagseguro.util.DateParserUTC;
+import br.com.uol.pagseguro.helper.PagSeguroUtil;
+import br.com.uol.pagseguro.logs.Log;
+import br.com.uol.pagseguro.xmlparser.XMLParserUtils;
 
 /**
  * Parses a transaction XML in a <b>Transaction</b> object
@@ -55,13 +56,16 @@ import br.com.uol.pagseguro.util.DateParserUTC;
  * @see Transaction
  */
 public class TransactionParser {
+    
+    private TransactionParser() {
+    }
 
     /**
      * PagSeguro Log tool
      * 
      * @see Logger
      */
-    static Logger log = PagSeguroLoggerFactory.getLogger(TransactionSearchService.class);
+    private static Log log = new Log(TransactionParser.class);
 
     /**
      * Parses the XML response form PagSeguro web services
@@ -73,8 +77,7 @@ public class TransactionParser {
      * @throws IOException
      * @throws ParseException
      */
-    public static Transaction readTransaction(InputStream xmlInputStream) throws ParserConfigurationException,
-            SAXException, IOException, ParseException {
+    public static Transaction readTransaction(InputStream xmlInputStream) throws ParserConfigurationException, SAXException, IOException, ParseException {
 
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -87,18 +90,18 @@ public class TransactionParser {
         Element transactionElement = doc.getDocumentElement();
         Transaction transaction = new Transaction();
 
-        log.debug("Parsing transaction");
-
-        // parsing <transaction><date>
-        tagValue = XMLParserUtils.getTagValue("date", transactionElement);
-        if (tagValue != null) {
-            transaction.setDate(DateParserUTC.parse(tagValue));
-        }
+        TransactionParser.log.debug("Parsing transaction");
 
         // parsing <transaction><lastEventDate>
         tagValue = XMLParserUtils.getTagValue("lastEventDate", transactionElement);
         if (tagValue != null) {
-            transaction.setLastEventDate(DateParserUTC.parse(tagValue));
+            transaction.setLastEventDate(PagSeguroUtil.parse(tagValue));
+        }
+
+        // parsing <transaction><date>
+        tagValue = XMLParserUtils.getTagValue("date", transactionElement);
+        if (tagValue != null) {
+            transaction.setDate(PagSeguroUtil.parse(tagValue));
         }
 
         // parsing <transaction><code>
@@ -116,13 +119,13 @@ public class TransactionParser {
         // parsing <transaction><type>
         tagValue = XMLParserUtils.getTagValue("type", transactionElement);
         if (tagValue != null) {
-            transaction.setType(TransactionType.fromValue(Integer.valueOf(tagValue)));
+            transaction.setType(new TransactionType(Integer.valueOf(tagValue)));
         }
 
         // parsing <transaction><status>
         tagValue = XMLParserUtils.getTagValue("status", transactionElement);
         if (tagValue != null) {
-            transaction.setStatus(TransactionStatus.fromValue(Integer.valueOf(tagValue)));
+            transaction.setStatus(new TransactionStatus(Integer.valueOf(tagValue)));
         }
 
         // parsing <transaction><paymentMethod>
@@ -133,13 +136,13 @@ public class TransactionParser {
             // parsing <transaction><paymentMethod><type>
             tagValue = XMLParserUtils.getTagValue("type", paymentMethodElement);
             if (tagValue != null) {
-                paymentMethod.setType(PaymentMethodType.fromValue(Integer.valueOf(tagValue)));
+                paymentMethod.setType(new PaymentMethodType(Integer.valueOf(tagValue)));
             }
 
             // parsing <transaction><paymentMethod><code>
             tagValue = XMLParserUtils.getTagValue("code", paymentMethodElement);
             if (tagValue != null) {
-                paymentMethod.setCode(PaymentMethodCode.fromValue(Integer.valueOf(tagValue)));
+                paymentMethod.setCode(new PaymentMethodCode(Integer.valueOf(tagValue)));
             }
 
             // setting transaction payment method
@@ -178,7 +181,8 @@ public class TransactionParser {
         }
 
         // setting <transaction><installmentCount>
-        tagValue = XMLParserUtils.getTagValue("installmentCount", transactionElement);
+        tagValue = XMLParserUtils.getTagValue("installmentCount",
+                transactionElement);
         if (tagValue != null) {
             transaction.setInstallmentCount(Integer.valueOf(tagValue));
         }
@@ -189,11 +193,11 @@ public class TransactionParser {
         // setting <transaction><items>
         Element itemsElement = XMLParserUtils.getElement("items", transactionElement);
         if (itemsElement != null) {
-            List itElements = XMLParserUtils.getElements("item", itemsElement);
-            List items = new ArrayList();
+            List<Element> itElements = XMLParserUtils.getElements("item", itemsElement);
+            List<Item> items = new ArrayList<Item>();
 
             for (int i = 0; i < itElements.size(); i++) {
-                Element itElement = (Element) itElements.get(i);
+                Element itElement = itElements.get(i);
 
                 // setting <transaction><items><item>
                 Item item = new Item();
@@ -261,18 +265,19 @@ public class TransactionParser {
                 if (tagValue != null) {
                     phone.setNumber(tagValue);
                 }
+                
                 sender.setPhone(phone);
             }
 
             // setting <transaction><sender><documents>
             Element documentsElements = XMLParserUtils.getElement("documents", transactionElement);
             if (documentsElements != null) {
-                List documents = XMLParserUtils.getElements("document", documentsElements);
+                List<Element> documents = XMLParserUtils.getElements("document", documentsElements);
 
                 for (int i = 0; i < documents.size(); i++) {
 
                     // getting document Element
-                    Element docElement = (Element) documents.get(i);
+                    Element docElement = documents.get(i);
 
                     // creating new SenderDocument object
                     SenderDocument senderDocument = new SenderDocument();
@@ -286,7 +291,7 @@ public class TransactionParser {
                     // setting <transaction><sender><documents><document><value>
                     tagValue = XMLParserUtils.getTagValue("value", docElement);
                     if (tagValue != null) {
-                        senderDocument.setValue(new Long(tagValue));
+                        senderDocument.setValue(tagValue);
                     }
 
                     // adding document for sender documents list
@@ -307,7 +312,7 @@ public class TransactionParser {
             // setting <transaction><shipping><type>
             tagValue = XMLParserUtils.getTagValue("type", shippingElement);
             if (tagValue != null) {
-                shipping.setType(ShippingType.fromValue(Integer.valueOf(tagValue)));
+                shipping.setType(new ShippingType(Integer.valueOf(tagValue)));
             }
 
             // setting <transaction><shipping><cost>
@@ -366,7 +371,8 @@ public class TransactionParser {
                 }
 
                 // setting <transaction><shipping><address><country>
-                tagValue = XMLParserUtils.getTagValue("country", addressElement);
+                tagValue = XMLParserUtils
+                        .getTagValue("country", addressElement);
                 if (tagValue != null) {
                     address.setCountry(tagValue);
                 }
@@ -379,8 +385,9 @@ public class TransactionParser {
             transaction.setShipping(shipping);
         }
 
-        log.debug("Parsing transaction success: " + transaction.getCode());
+        TransactionParser.log.debug("Parsing transaction success: " + transaction.getCode());
 
         return transaction;
+        
     }
 }

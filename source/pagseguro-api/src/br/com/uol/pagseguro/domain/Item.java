@@ -1,26 +1,33 @@
-/**
- * Copyright [2011] [PagSeguro Internet Ltda.]
+/*
+ ************************************************************************
+ Copyright [2011] [PagSeguro Internet Ltda.]
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+ http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ ************************************************************************
  */
+
 package br.com.uol.pagseguro.domain;
 
 import java.math.BigDecimal;
+
+import br.com.uol.pagseguro.helper.PagSeguroUtil;
 
 /**
  * Represents a product/item in a transaction
  */
 public class Item {
+
+    private static final int MAX_VALUE_STRING = 255;
 
     /**
      * Product identifier, such as SKU
@@ -69,7 +76,8 @@ public class Item {
      * @param weight
      * @param shippingCost
      */
-    public Item(String id, String description, Integer quantity, BigDecimal amount, Long weight, BigDecimal shippingCost) {
+    public Item(String id, String description, Integer quantity,
+            BigDecimal amount, Long weight, BigDecimal shippingCost) {
         this.id = id;
         this.description = description;
         this.quantity = quantity;
@@ -82,7 +90,7 @@ public class Item {
      * @return the product identifier
      */
     public String getId() {
-        return id;
+        return this.id;
     }
 
     /**
@@ -98,7 +106,7 @@ public class Item {
      * @return the product description
      */
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     /**
@@ -107,14 +115,14 @@ public class Item {
      * @param description
      */
     public void setDescription(String description) {
-        this.description = description;
+        this.description = PagSeguroUtil.formatString(description, MAX_VALUE_STRING, "");
     }
 
     /**
      * @return the quantity
      */
     public Integer getQuantity() {
-        return quantity;
+        return this.quantity;
     }
 
     /**
@@ -130,7 +138,7 @@ public class Item {
      * @return the amount
      */
     public BigDecimal getAmount() {
-        return amount;
+        return this.amount;
     }
 
     /**
@@ -146,7 +154,7 @@ public class Item {
      * @return the weight
      */
     public Long getWeight() {
-        return weight;
+        return this.weight;
     }
 
     /**
@@ -162,7 +170,7 @@ public class Item {
      * @return the unit shipping cost for this item
      */
     public BigDecimal getShippingCost() {
-        return shippingCost;
+        return this.shippingCost;
     }
 
     /**
@@ -172,11 +180,6 @@ public class Item {
      */
     public void setShippingCost(BigDecimal shippingCost) {
         this.shippingCost = shippingCost;
-    }
-
-    public String toString() {
-        return "[id: " + id + ", description: " + description + ", quantity: " + quantity + ", amount: " + amount
-                + ", weight: " + weight + ", shippingCost: " + shippingCost + "]";
     }
 
 }

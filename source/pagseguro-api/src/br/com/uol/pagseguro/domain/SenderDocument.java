@@ -1,30 +1,36 @@
-/**
- * Copyright [2011] [PagSeguro Internet Ltda.]
+/*
+ * ***********************************************************************
+ Copyright [2011] [PagSeguro Internet Ltda.]
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+ http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ * ***********************************************************************
  */
 
 package br.com.uol.pagseguro.domain;
 
-import br.com.uol.pagseguro.util.NumberUtil;
+import br.com.uol.pagseguro.helper.PagSeguroUtil;
 
+/**
+ * Class that represents a Sender Document
+ * 
+ */
 public class SenderDocument {
 
     /** Sender document type */
     private String type;
 
     /** Sender document value */
-    private Long value;
+    private String value;
 
     /**
      * The constructor
@@ -39,20 +45,9 @@ public class SenderDocument {
      * @param type
      * @param value
      */
-    public SenderDocument(String type, Long value) {
-        this.setType(type);
-        this.setValue(value);
-    }
-
-    /**
-     * The constructor
-     * 
-     * @param type
-     * @param value
-     */
     public SenderDocument(String type, String value) {
-        this.setType(type);
-        this.setValue(value);
+        this.type = type.toUpperCase();
+        this.value = PagSeguroUtil.getOnlyNumbers(value);
     }
 
     /**
@@ -61,7 +56,7 @@ public class SenderDocument {
      * @return String
      */
     public String getType() {
-        return type;
+        return this.type;
     }
 
     /**
@@ -71,7 +66,7 @@ public class SenderDocument {
      *            type
      */
     public void setType(String type) {
-        this.type = type;
+        this.type = type.toUpperCase();
     }
 
     /**
@@ -79,32 +74,25 @@ public class SenderDocument {
      * 
      * @return Long
      */
-    public Long getValue() {
-        return value;
+    public String getValue() {
+        return this.value;
     }
 
     /**
      * Sets document value
      * 
-     * @param Long
-     *            value
-     */
-    public void setValue(Long value) {
-        this.value = value;
-    }
-
-    /**
-     * Sets document value
-     * 
-     * @param Long
+     * @param String
      *            value
      */
     public void setValue(String value) {
-        this.value = NumberUtil.getOnlyNumbers(value);
+        this.value = PagSeguroUtil.getOnlyNumbers(value);
     }
 
+    /**
+     * Gets toString class return string
+     */
+    @Override
     public String toString() {
-        return "Document [type=" + type + ", value=" + value + "]";
+        return "PagSeguroSenderDocument [type=" + type + ", value=" + value + "]";
     }
-
 }

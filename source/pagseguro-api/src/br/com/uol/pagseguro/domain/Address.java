@@ -1,19 +1,25 @@
-/**
- * Copyright [2011] [PagSeguro Internet Ltda.]
+/*
+ * ***********************************************************************
+ Copyright [2011] [PagSeguro Internet Ltda.]
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+ http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ * ***********************************************************************
  */
+
 package br.com.uol.pagseguro.domain;
+
+import br.com.uol.pagseguro.enums.EnumStates;
+import br.com.uol.pagseguro.helper.PagSeguroUtil;
 
 /**
  * Represents an address location, typically for shipping or charging purposes.
@@ -21,6 +27,11 @@ package br.com.uol.pagseguro.domain;
  * @see Shipping
  */
 public class Address {
+
+    /**
+     * Postal/Zip code
+     */
+    private String postalCode;
 
     /**
      * Street name
@@ -33,7 +44,8 @@ public class Address {
     private String number;
 
     /**
-     * Apartment, suite number or any other qualifier after the street/number pair. Example: Apt 274, building A.
+     * Apartment, suite number or any other qualifier after the street/number
+     * pair. Example: Apt 274, building A.
      */
     private String complement;
 
@@ -58,11 +70,6 @@ public class Address {
     private String country;
 
     /**
-     * Postal/Zip code
-     */
-    private String postalCode;
-
-    /**
      * Initializes a new instance of the Address class
      */
     public Address() {
@@ -80,8 +87,8 @@ public class Address {
      * @param number
      * @param complement
      */
-    public Address(String country, String state, String city, String district, String postalCode, String street,
-            String number, String complement) {
+    public Address(String country, String state, String city, String district,
+            String postalCode, String street, String number, String complement) {
         this.street = street;
         this.number = number;
         this.complement = complement;
@@ -96,56 +103,56 @@ public class Address {
      * @return the street
      */
     public String getStreet() {
-        return street;
+        return this.street;
     }
 
     /**
      * @return the number
      */
     public String getNumber() {
-        return number;
+        return this.number;
     }
 
     /**
      * @return the complement
      */
     public String getComplement() {
-        return complement;
+        return this.complement;
     }
 
     /**
      * @return the district
      */
     public String getDistrict() {
-        return district;
+        return this.district;
     }
 
     /**
      * @return the city
      */
     public String getCity() {
-        return city;
+        return this.city;
     }
 
     /**
      * @return the state
      */
     public String getState() {
-        return state;
+        return this.state;
     }
 
     /**
      * @return the postal code
      */
     public String getPostalCode() {
-        return postalCode;
+        return this.postalCode;
     }
 
     /**
      * @return the country
      */
     public String getCountry() {
-        return country;
+        return this.country;
     }
 
     /**
@@ -199,7 +206,7 @@ public class Address {
      * @param state
      */
     public void setState(String state) {
-        this.state = state;
+        this.state = treatState(state);
     }
 
     /**
@@ -218,5 +225,49 @@ public class Address {
      */
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    /**
+     * Treat the state to pass in format waited of the PagSeguro
+     * 
+     * @param type
+     *            $defaultState
+     * @return string
+     */
+    public String treatState(String defaultState) {
+
+        if (defaultState.length() == 2) {
+            return treatAcronym(defaultState);
+        }
+
+        defaultState = PagSeguroUtil.removeAccents(defaultState);
+        defaultState = defaultState.replaceAll(" ", "");
+        String stateName = "";
+
+        for (EnumStates state : EnumStates.values()) {
+            if (defaultState.equalsIgnoreCase(state.getName())) {
+                stateName = state.getAcronym();
+            }
+        }
+
+        return stateName;
+    }
+
+    /**
+     * Treat the acronym to pass in format waited of the PagSeguro
+     * 
+     * @param acronym
+     * @return string
+     */
+    public String treatAcronym(String acronym) {
+
+        String defaultAcronym = "";
+
+        for (EnumStates state : EnumStates.values()) {
+            if (acronym.equalsIgnoreCase(state.getAcronym())) {
+                defaultAcronym = state.getAcronym();
+            }
+        }
+        return defaultAcronym;
     }
 }

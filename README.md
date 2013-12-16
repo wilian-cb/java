@@ -44,6 +44,13 @@ Mais informações estão disponíveis na [documentação oficial].
 Changelog
 ---------
 ---
+
+2.0.5
+
+ - Alteração da classe ShippingType passando uma Enum de tipo de frete no construtor.
+ - Alterado método de envio para HTTP.
+ - Adicionado possibilidade de envio de SenderCPF, MetaData e Parameter Generics.
+ 
 2.0.4
 
  - Atualização dos códigos de meios de pagamento.

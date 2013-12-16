@@ -1,17 +1,19 @@
-/**
- * Copyright [2011] [PagSeguro Internet Ltda.]
+/*
+ * ***********************************************************************
+ Copyright [2011] [PagSeguro Internet Ltda.]
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+ http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ * ***********************************************************************
  */
 
 package br.com.uol.pagseguro.domain;
@@ -19,12 +21,14 @@ package br.com.uol.pagseguro.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.uol.pagseguro.util.StringUtil;
+import br.com.uol.pagseguro.helper.PagSeguroUtil;
 
 /**
  * Represents the party on the transaction that is sending the money
  */
 public class Sender {
+
+    private static final int NUMBER_50 = 50;
 
     /** Sender name */
     private String name;
@@ -36,7 +40,7 @@ public class Sender {
     private Phone phone;
 
     /** Sender documents */
-    private List documents;
+    private List<SenderDocument> documents;
 
     /**
      * Initializes a new instance of the Sender class
@@ -45,19 +49,32 @@ public class Sender {
     }
 
     /**
+     * Initializes a new instance of the Sender class
+     * 
+     * @param name
+     * @param email
+     * @param phone
+     */
+    public Sender(String name, String email, Phone phone) {
+        this.name = PagSeguroUtil.formatString(name, NUMBER_50, "");
+        this.email = email;
+        this.phone = phone;
+    }
+
+    /**
      * Sets the Sender name
      * 
      * @param name
      */
     public void setName(String name) {
-        this.name = StringUtil.formatString(name, 50, "");
+        this.name = PagSeguroUtil.formatString(name, NUMBER_50, "");
     }
 
     /**
      * @return the sender name
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
@@ -73,7 +90,7 @@ public class Sender {
      * @return the sender e-mail
      */
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     /**
@@ -89,10 +106,10 @@ public class Sender {
      * @return the sender phone
      */
     public Phone getPhone() {
-        if (phone == null) {
-            phone = new Phone();
+        if (this.phone == null) {
+            this.phone = new Phone();
         }
-        return phone;
+        return this.phone;
     }
 
     /**
@@ -100,11 +117,11 @@ public class Sender {
      * 
      * @return the sender documents list
      */
-    public List getDocuments() {
-        if (documents == null) {
-            documents = new ArrayList();
+    public List<SenderDocument> getDocuments() {
+        if (this.documents == null) {
+            this.documents = new ArrayList<SenderDocument>();
         }
-        return documents;
+        return this.documents;
     }
 
     /**
@@ -112,7 +129,7 @@ public class Sender {
      * 
      * @param documents
      */
-    public void setDocuments(List documents) {
+    public void setDocuments(List<SenderDocument> documents) {
         this.documents = documents;
     }
 
@@ -131,22 +148,17 @@ public class Sender {
      * @param type
      * @param value
      */
-    public void addDocument(String type, Long value) {
-        this.getDocuments().add(new SenderDocument(type, value));
-    }
-
-    /**
-     * Add a document for sender documents list
-     * 
-     * @param type
-     * @param value
-     */
     public void addDocument(String type, String value) {
         this.getDocuments().add(new SenderDocument(type, value));
     }
 
+    /**
+     * return string
+     */
+    @Override
     public String toString() {
-        return "Sender [name=" + name + ", email=" + email + ", phone=" + phone + ", documents=" + documents + "]";
+        return "Sender [name=" + name + ", email=" + email + ", phone=" + phone
+                + ", documents=" + documents + "]";
     }
 
 }

@@ -1,104 +1,103 @@
-/**
- * Copyright [2011] [PagSeguro Internet Ltda.]
+/*
+ ************************************************************************
+ Copyright [2011] [PagSeguro Internet Ltda.]
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+ http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ ************************************************************************
  */
+
 package br.com.uol.pagseguro.domain;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import br.com.uol.pagseguro.enums.EnumPaymentMethodType;
 
 /**
  * Defines a list of known payment method types.
  */
-public final class PaymentMethodType {
+public class PaymentMethodType {
 
     /**
-     * Payment method type value Example: 1
+     * Payment method type value Exemple : 1
+     * 
+     * @var Integer
      */
-    private final int value;
+    private Integer value;
 
     /**
-     * Credit card
+     * Construct Default
      */
-    public static final PaymentMethodType CREDIT_CARD = new PaymentMethodType(1);
-
-    /**
-     * Boleto - is a form of invoicing in Brazil
-     */
-    public static final PaymentMethodType BOLETO = new PaymentMethodType(2);
-
-    /**
-     * Online transfer
-     */
-    public static final PaymentMethodType ONLINE_TRANSFER = new PaymentMethodType(3);
-
-    /**
-     * PagSeguro account balance
-     */
-    public static final PaymentMethodType BALANCE = new PaymentMethodType(4);
-
-    /**
-     * OiPaggo
-     */
-    public static final PaymentMethodType OI_PAGGO = new PaymentMethodType(5);
-
-    /**
-     * Direct Deposit
-     */
-    public static final PaymentMethodType DIRECT_DEPOSIT = new PaymentMethodType(7);
-
-    private static final Map VALUE_MAP = new HashMap();
-
-    static {
-        VALUE_MAP.put(new Integer(CREDIT_CARD.getValue()), CREDIT_CARD);
-        VALUE_MAP.put(new Integer(BOLETO.getValue()), BOLETO);
-        VALUE_MAP.put(new Integer(ONLINE_TRANSFER.getValue()), ONLINE_TRANSFER);
-        VALUE_MAP.put(new Integer(BALANCE.getValue()), BALANCE);
-        VALUE_MAP.put(new Integer(OI_PAGGO.getValue()), OI_PAGGO);
-        VALUE_MAP.put(new Integer(DIRECT_DEPOSIT.getValue()), DIRECT_DEPOSIT);
+    public PaymentMethodType() {
     }
 
-    private PaymentMethodType(int value) {
+    /**
+     * Construct
+     * 
+     * @param value
+     */
+    public PaymentMethodType(Integer value) {
         this.value = value;
     }
 
-    public static PaymentMethodType fromValue(Integer value) {
-        Iterator i = VALUE_MAP.keySet().iterator();
+    /**
+     * Set Value By Type
+     * 
+     * @param type
+     */
+    public void setByType(String type) {
 
-        while (i.hasNext()) {
-            Integer type = (Integer) i.next();
-            if (type.intValue() == value.intValue()) {
-                return (PaymentMethodType) VALUE_MAP.get(type);
+        Integer auxValue = 0;
+
+        for (EnumPaymentMethodType paymentMethodType : EnumPaymentMethodType.values()) {
+            if (type.equalsIgnoreCase(paymentMethodType.getType())) {
+                auxValue = paymentMethodType.getValue();
             }
         }
 
-        return new PaymentMethodType(value.intValue());
-    }
-
-    public String toString() {
-        return Integer.toString(getValue());
+        if (auxValue > 0) {
+            value = auxValue;
+        }
     }
 
     /**
-     * @return payment method type value Example: 1
+     * 
+     * @param value
+     * @return PagSeguroPaymentMethodType the corresponding to the informed
+     *         value
      */
-    public int getValue() {
-        return value;
+    public String getTypeFromValue(Integer value) {
+
+        String type = "";
+
+        for (EnumPaymentMethodType paymentMethodType : EnumPaymentMethodType.values()) {
+            if (value.equals(paymentMethodType.getValue())) {
+                type = paymentMethodType.getType();
+            }
+        }
+        return type;
     }
 
-    public boolean equals(PaymentMethodType other) {
-        return other.getValue() == this.getValue();
+    /**
+     * @return the value
+     */
+    public Integer getValue() {
+        return this.value;
     }
+
+    /**
+     * @param value
+     *            the value to set
+     */
+    public void setValue(Integer value) {
+        this.value = value;
+    }
+
 }
