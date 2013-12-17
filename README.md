@@ -16,7 +16,7 @@ A biblioteca PagSeguro em Java é um conjunto de classes de domínio que facilit
 Requisitos
 ----------
 ---
- - [Java] 1.4+
+ - [Java] 1.5+
 
 
 Instalação
@@ -47,9 +47,10 @@ Changelog
 
 2.1.0
 
- - Alteração da classe ShippingType passando uma Enum de tipo de frete no construtor.
- - Alterado método de envio para HTTP.
- - Adicionado possibilidade de envio de SenderCPF, MetaData e Parameter Generics.
+ - Compatibildiade com Java 1.5+
+ - Remoção de arquivos desnecessários
+ - Alterado método de envio para HTTP
+ - Adicionado possibilidade de envio de SenderCPF, MetaData e Parameter Generics
  
 2.0.4
 
