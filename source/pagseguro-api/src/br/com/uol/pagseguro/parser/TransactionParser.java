@@ -42,10 +42,10 @@ import br.com.uol.pagseguro.domain.Phone;
 import br.com.uol.pagseguro.domain.Sender;
 import br.com.uol.pagseguro.domain.SenderDocument;
 import br.com.uol.pagseguro.domain.Shipping;
-import br.com.uol.pagseguro.domain.ShippingType;
 import br.com.uol.pagseguro.domain.Transaction;
 import br.com.uol.pagseguro.domain.TransactionStatus;
 import br.com.uol.pagseguro.domain.TransactionType;
+import br.com.uol.pagseguro.enums.ShippingType;
 import br.com.uol.pagseguro.helper.PagSeguroUtil;
 import br.com.uol.pagseguro.logs.Log;
 import br.com.uol.pagseguro.xmlparser.XMLParserUtils;
@@ -56,7 +56,7 @@ import br.com.uol.pagseguro.xmlparser.XMLParserUtils;
  * @see Transaction
  */
 public class TransactionParser {
-    
+
     private TransactionParser() {
     }
 
@@ -77,7 +77,8 @@ public class TransactionParser {
      * @throws IOException
      * @throws ParseException
      */
-    public static Transaction readTransaction(InputStream xmlInputStream) throws ParserConfigurationException, SAXException, IOException, ParseException {
+    public static Transaction readTransaction(InputStream xmlInputStream) throws ParserConfigurationException,
+            SAXException, IOException, ParseException {
 
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -181,8 +182,7 @@ public class TransactionParser {
         }
 
         // setting <transaction><installmentCount>
-        tagValue = XMLParserUtils.getTagValue("installmentCount",
-                transactionElement);
+        tagValue = XMLParserUtils.getTagValue("installmentCount", transactionElement);
         if (tagValue != null) {
             transaction.setInstallmentCount(Integer.valueOf(tagValue));
         }
@@ -265,7 +265,7 @@ public class TransactionParser {
                 if (tagValue != null) {
                     phone.setNumber(tagValue);
                 }
-                
+
                 sender.setPhone(phone);
             }
 
@@ -312,7 +312,7 @@ public class TransactionParser {
             // setting <transaction><shipping><type>
             tagValue = XMLParserUtils.getTagValue("type", shippingElement);
             if (tagValue != null) {
-                shipping.setType(new ShippingType(Integer.valueOf(tagValue)));
+                shipping.setType(ShippingType.fromValue(Integer.valueOf(tagValue)));
             }
 
             // setting <transaction><shipping><cost>
@@ -371,8 +371,7 @@ public class TransactionParser {
                 }
 
                 // setting <transaction><shipping><address><country>
-                tagValue = XMLParserUtils
-                        .getTagValue("country", addressElement);
+                tagValue = XMLParserUtils.getTagValue("country", addressElement);
                 if (tagValue != null) {
                     address.setCountry(tagValue);
                 }
@@ -388,6 +387,6 @@ public class TransactionParser {
         TransactionParser.log.debug("Parsing transaction success: " + transaction.getCode());
 
         return transaction;
-        
+
     }
 }

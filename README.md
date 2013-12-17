@@ -45,7 +45,7 @@ Changelog
 ---------
 ---
 
-2.0.5
+2.1.0
 
  - Alteração da classe ShippingType passando uma Enum de tipo de frete no construtor.
  - Alterado método de envio para HTTP.

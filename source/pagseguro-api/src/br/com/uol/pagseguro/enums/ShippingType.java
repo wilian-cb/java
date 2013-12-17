@@ -18,59 +18,55 @@
 
 package br.com.uol.pagseguro.enums;
 
-import br.com.uol.pagseguro.domain.Documents;
-
 /**
- * 
- * EnumDocument
+ * ShippingType
  */
-public enum EnumDocument {
+public enum ShippingType {
 
-    CPF("CPF", "Cadastro de Pessoa Física");
+    PAC("PAC", 1),
+
+    SEDEX("SEDEX", 2),
+
+    NOT_SPECIFIED("NOT_SPECIFIED", 3);
 
     /**
-     * The type document
-     * 
-     * @var string
+     * String type shipping
      */
     private String type;
 
     /**
-     * The description document
-     * 
-     * @var string
+     * Integer value
      */
-    private String description;
+    private Integer value;
 
     /**
      * Construct
      * 
      * @param type
-     * @param description
-     * @see Documents
+     * @param value
      */
-    EnumDocument(String type, String description) {
-        setType(type);
-        setDescription(description);
+    ShippingType(String type, Integer value) {
+        this.setType(type);
+        this.setValue(value);
     }
-    
-    public static EnumDocument fromValue(String type) {
-        
-        for (EnumDocument enumDocument : values()) {
-            if (enumDocument.type.equals(type)) {
-                return enumDocument;
+
+    public static ShippingType fromValue(Integer value) {
+
+        for (ShippingType shippingType : values()) {
+            if (shippingType.value.equals(value)) {
+                return shippingType;
             }
         }
-        
+
         return null;
-        
+
     }
 
     /**
      * @return the type
      */
     public String getType() {
-        return type;
+        return this.type;
     }
 
     /**
@@ -82,17 +78,18 @@ public enum EnumDocument {
     }
 
     /**
-     * @return the description
+     * @return the value
      */
-    public String getDescription() {
-        return description;
+    public Integer getValue() {
+        return this.value;
     }
 
     /**
-     * @param description
-     *            the description to set
+     * @param value
+     *            the value to set
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setValue(Integer value) {
+        this.value = value;
     }
+
 }

@@ -20,6 +20,8 @@ package br.com.uol.pagseguro.domain;
 
 import java.math.BigDecimal;
 
+import br.com.uol.pagseguro.enums.ShippingType;
+
 /**
  * Shipping information
  */

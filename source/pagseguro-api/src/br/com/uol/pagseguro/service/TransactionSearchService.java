@@ -24,9 +24,9 @@ import java.util.List;
 
 import br.com.uol.pagseguro.domain.Credentials;
 import br.com.uol.pagseguro.domain.Error;
-import br.com.uol.pagseguro.domain.HttpStatus;
 import br.com.uol.pagseguro.domain.Transaction;
 import br.com.uol.pagseguro.domain.TransactionSearchResult;
+import br.com.uol.pagseguro.enums.HttpStatus;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
 import br.com.uol.pagseguro.logs.Log;
 import br.com.uol.pagseguro.parser.TransactionParser;
@@ -38,7 +38,7 @@ import br.com.uol.pagseguro.xmlparser.ErrorsParser;
  * Encapsulates web service calls to search for PagSeguro transactions
  */
 public class TransactionSearchService {
-    
+
     private TransactionSearchService() {
     }
 
@@ -58,23 +58,21 @@ public class TransactionSearchService {
      * @var DATE_FORMAT
      */
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm"; // "2011-04-01T08:30"
-    
+
     /**
      * @var String
      */
     private static final String SEARCH_BY_CODE = "TransactionSearchService.SearchByCode(transactionCode= %1s) - error %2s";
-    
+
     /**
      * @var String
      */
     private static final String SEARCH_BY_DATE_BEGIN = "TransactionSearchService.SearchByDate(initialDate= %1s , finalDate= %2s ) - begin";
-    
+
     /**
      * @var String
      */
     private static final String SEARCH_BY_DATE = "TransactionSearchService.SearchByDate(initialDate= %1s , finalDate= %2s) - end %3s";
-    
-    
 
     /**
      * Build Search Url By Code
@@ -82,10 +80,12 @@ public class TransactionSearchService {
      * @param connectionData
      * @param transactionCode
      * @return
-     * @throws PagSeguroServiceException 
+     * @throws PagSeguroServiceException
      */
-    private static String buildSearchUrlByCode(ConnectionData connectionData, String transactionCode) throws PagSeguroServiceException {
-        return connectionData.getTransactionSearchUrl() + "/" + transactionCode + "?" + connectionData.getCredentialsUrlQuery();
+    private static String buildSearchUrlByCode(ConnectionData connectionData, String transactionCode)
+            throws PagSeguroServiceException {
+        return connectionData.getTransactionSearchUrl() + "/" + transactionCode + "?"
+                + connectionData.getCredentialsUrlQuery();
     }
 
     /**
@@ -97,9 +97,10 @@ public class TransactionSearchService {
      * @param page
      * @param maxPageResults
      * @return
-     * @throws PagSeguroServiceException 
+     * @throws PagSeguroServiceException
      */
-    private static String buildSearchUrlByDate(ConnectionData connectionData, String initialDate, String finalDate, Integer page, Integer maxPageResults) throws PagSeguroServiceException {
+    private static String buildSearchUrlByDate(ConnectionData connectionData, String initialDate, String finalDate,
+            Integer page, Integer maxPageResults) throws PagSeguroServiceException {
 
         StringBuilder sb = new StringBuilder();
         sb.append(connectionData.getTransactionSearchUrl());
@@ -119,27 +120,33 @@ public class TransactionSearchService {
         return sb.toString();
     }
 
-    public static TransactionSearchResult searchByDate(Credentials credentials, Date initialDate) throws PagSeguroServiceException {
+    public static TransactionSearchResult searchByDate(Credentials credentials, Date initialDate)
+            throws PagSeguroServiceException {
         return searchByDateCore(credentials, initialDate, new Date(Long.MAX_VALUE), 0, 0);
     }
 
-    public static TransactionSearchResult searchByDate(Credentials credentials, Date initialDate, int pageNumber) throws PagSeguroServiceException {
+    public static TransactionSearchResult searchByDate(Credentials credentials, Date initialDate, int pageNumber)
+            throws PagSeguroServiceException {
         return searchByDateCore(credentials, initialDate, new Date(Long.MAX_VALUE), pageNumber, 0);
     }
 
-    public static TransactionSearchResult searchByDate(Credentials credentials, Date initialDate, int pageNumber, int resultsPerPage) throws PagSeguroServiceException {
+    public static TransactionSearchResult searchByDate(Credentials credentials, Date initialDate, int pageNumber,
+            int resultsPerPage) throws PagSeguroServiceException {
         return searchByDateCore(credentials, initialDate, new Date(Long.MAX_VALUE), pageNumber, resultsPerPage);
     }
 
-    public static TransactionSearchResult searchByDate(Credentials credentials, Date initialDate, Date finalDate) throws PagSeguroServiceException {
+    public static TransactionSearchResult searchByDate(Credentials credentials, Date initialDate, Date finalDate)
+            throws PagSeguroServiceException {
         return searchByDateCore(credentials, initialDate, finalDate, 0, 0);
     }
 
-    public static TransactionSearchResult searchByDate(Credentials credentials, Date initialDate, Date finalDate, int pageNumber) throws PagSeguroServiceException {
+    public static TransactionSearchResult searchByDate(Credentials credentials, Date initialDate, Date finalDate,
+            int pageNumber) throws PagSeguroServiceException {
         return searchByDateCore(credentials, initialDate, finalDate, pageNumber, 0);
     }
 
-    public static TransactionSearchResult searchByDate(Credentials credentials, Date initialDate, Date finalDate, int pageNumber, int resultsPerPage) throws PagSeguroServiceException {
+    public static TransactionSearchResult searchByDate(Credentials credentials, Date initialDate, Date finalDate,
+            int pageNumber, int resultsPerPage) throws PagSeguroServiceException {
         return searchByDateCore(credentials, initialDate, finalDate, pageNumber, resultsPerPage);
     }
 
@@ -151,28 +158,32 @@ public class TransactionSearchService {
      * @return
      * @throws Exception
      */
-    public static Transaction searchByCode(Credentials credentials, String transactionCode) throws PagSeguroServiceException {
+    public static Transaction searchByCode(Credentials credentials, String transactionCode)
+            throws PagSeguroServiceException {
 
-        TransactionSearchService.log.info("TransactionSearchService.SearchByCode(transactionCode="+ transactionCode + ") - begin");
+        TransactionSearchService.log.info("TransactionSearchService.SearchByCode(transactionCode=" + transactionCode
+                + ") - begin");
 
         ConnectionData connectionData = new ConnectionData(credentials, TransactionSearchService.SERVICE_NAME);
 
         HttpConnection connection = new HttpConnection();
         HttpStatus httpStatusCode = null;
 
-        HttpURLConnection response = connection.get(TransactionSearchService.buildSearchUrlByCode(connectionData, transactionCode), connectionData
-                        .getServiceTimeout(), connectionData.getCharset());
+        HttpURLConnection response = connection.get(
+                TransactionSearchService.buildSearchUrlByCode(connectionData, transactionCode),
+                connectionData.getServiceTimeout(), connectionData.getCharset());
 
         try {
 
-            httpStatusCode = new HttpStatus(response.getResponseCode());
+            httpStatusCode = HttpStatus.fromCode(response.getResponseCode());
 
             if (HttpURLConnection.HTTP_OK == httpStatusCode.getStatus().intValue()) {
 
                 Transaction transaction = TransactionParser.readTransaction(response.getInputStream());
 
-                TransactionSearchService.log.info(String.format(TransactionSearchService.SEARCH_BY_CODE, transactionCode, transaction.toString()));
-                
+                TransactionSearchService.log.info(String.format(TransactionSearchService.SEARCH_BY_CODE,
+                        transactionCode, transaction.toString()));
+
                 return transaction;
 
             } else {
@@ -181,7 +192,8 @@ public class TransactionSearchService {
 
                 PagSeguroServiceException exception = new PagSeguroServiceException(httpStatusCode, listErrors);
 
-                TransactionSearchService.log.error(String.format(TransactionSearchService.SEARCH_BY_CODE, transactionCode, exception.getMessage()));
+                TransactionSearchService.log.error(String.format(TransactionSearchService.SEARCH_BY_CODE,
+                        transactionCode, exception.getMessage()));
 
                 throw exception;
             }
@@ -190,8 +202,9 @@ public class TransactionSearchService {
             throw e;
         } catch (Exception e) {
 
-            TransactionSearchService.log.error(String.format(TransactionSearchService.SEARCH_BY_CODE, transactionCode, e.getMessage()));
-            
+            TransactionSearchService.log.error(String.format(TransactionSearchService.SEARCH_BY_CODE, transactionCode,
+                    e.getMessage()));
+
             throw new PagSeguroServiceException(httpStatusCode, e);
 
         } finally {
@@ -200,8 +213,7 @@ public class TransactionSearchService {
     }
 
     /**
-     * Search transactions associated with this set of credentials within a date
-     * range
+     * Search transactions associated with this set of credentials within a date range
      * 
      * @param credentials
      * @param initialDate
@@ -210,56 +222,61 @@ public class TransactionSearchService {
      * @param maxPageResults
      * @throws Exception
      */
-    private static TransactionSearchResult searchByDateCore(Credentials credentials, Date initialDate, Date finalDate, Integer page, Integer maxPageResults)
-            throws PagSeguroServiceException {
+    private static TransactionSearchResult searchByDateCore(Credentials credentials, Date initialDate, Date finalDate,
+            Integer page, Integer maxPageResults) throws PagSeguroServiceException {
 
         String dtInitial = TransactionSearchService.formatDate(initialDate);
         String dtFinal = TransactionSearchService.formatDate(finalDate);
 
-        TransactionSearchService.log.info(String.format(TransactionSearchService.SEARCH_BY_DATE_BEGIN, dtInitial, dtFinal));
+        TransactionSearchService.log.info(String.format(TransactionSearchService.SEARCH_BY_DATE_BEGIN, dtInitial,
+                dtFinal));
 
         ConnectionData connectionData = new ConnectionData(credentials, TransactionSearchService.SERVICE_NAME);
 
         HttpConnection connection = new HttpConnection();
-        
+
         TransactionSearchResult search = new TransactionSearchResult();
-        
+
         HttpStatus httpStatusCode = null;
-        
-        HttpURLConnection response = connection.get(TransactionSearchService.buildSearchUrlByDate(connectionData, dtInitial, dtFinal, page,
+
+        HttpURLConnection response = connection
+                .get(TransactionSearchService.buildSearchUrlByDate(connectionData, dtInitial, dtFinal, page,
                         maxPageResults), connectionData.getServiceTimeout(), connectionData.getCharset());
 
         try {
 
-            httpStatusCode = new HttpStatus(response.getResponseCode());
+            httpStatusCode = HttpStatus.fromCode(response.getResponseCode());
 
             if (HttpURLConnection.HTTP_OK == httpStatusCode.getStatus().intValue()) {
 
                 TransactionSearchResulParser.getHandler(response.getInputStream(), search);
 
-                TransactionSearchService.log.info(String.format(TransactionSearchService.SEARCH_BY_DATE, dtInitial, dtFinal, search.toString()));
+                TransactionSearchService.log.info(String.format(TransactionSearchService.SEARCH_BY_DATE, dtInitial,
+                        dtFinal, search.toString()));
 
                 return search;
 
             } else {
-                
+
                 List<Error> listErrors = ErrorsParser.readErrosXml(response.getErrorStream());
 
                 PagSeguroServiceException exception = new PagSeguroServiceException(httpStatusCode, listErrors);
 
-                TransactionSearchService.log.error(String.format(TransactionSearchService.SEARCH_BY_DATE, dtInitial, dtFinal, exception.getMessage()));
-                
+                TransactionSearchService.log.error(String.format(TransactionSearchService.SEARCH_BY_DATE, dtInitial,
+                        dtFinal, exception.getMessage()));
+
                 throw exception;
             }
 
         } catch (PagSeguroServiceException e) {
             throw e;
         } catch (Exception e) {
-            
-            TransactionSearchService.log.error(String.format(TransactionSearchService.SEARCH_BY_DATE, dtInitial, dtFinal, search.toString()));
+
+            TransactionSearchService.log.error(String.format(TransactionSearchService.SEARCH_BY_DATE, dtInitial,
+                    dtFinal, search.toString()));
 
             throw new PagSeguroServiceException(httpStatusCode, e);
-            
+
         } finally {
             response.disconnect();
         }

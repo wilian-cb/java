@@ -18,7 +18,7 @@
 
 package br.com.uol.pagseguro.domain;
 
-import br.com.uol.pagseguro.enums.EnumPaymentCode;
+import br.com.uol.pagseguro.enums.PaymentCode;
 
 /**
  * Defines a list of known payment method codes.
@@ -56,7 +56,7 @@ public class PaymentMethodCode {
 
         Integer auxValue = 0;
 
-        for (EnumPaymentCode code : EnumPaymentCode.values()) {
+        for (PaymentCode code : PaymentCode.values()) {
             if (type.equalsIgnoreCase(code.getType())) {
                 auxValue = code.getValue();
             }
@@ -76,7 +76,7 @@ public class PaymentMethodCode {
 
         String type = "";
 
-        for (EnumPaymentCode code : EnumPaymentCode.values()) {
+        for (PaymentCode code : PaymentCode.values()) {
             if (value.equals(code.getValue())) {
                 type = code.getType();
             }

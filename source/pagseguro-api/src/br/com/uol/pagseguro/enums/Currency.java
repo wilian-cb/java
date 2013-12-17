@@ -19,10 +19,9 @@
 package br.com.uol.pagseguro.enums;
 
 /**
- * EnumCurrency
- * 
+ * Currency
  */
-public enum EnumCurrency {
+public enum Currency {
 
     REAL("REAL", "BRL");
 
@@ -42,11 +41,11 @@ public enum EnumCurrency {
      * @param name
      * @param iso
      */
-    EnumCurrency(String name, String iso) {
+    Currency(String name, String iso) {
         this.name = name;
         this.iso = iso;
     }
-    
+
     /**
      * Get Name
      * 

@@ -23,8 +23,8 @@ import java.util.List;
 
 import br.com.uol.pagseguro.domain.Credentials;
 import br.com.uol.pagseguro.domain.Error;
-import br.com.uol.pagseguro.domain.HttpStatus;
 import br.com.uol.pagseguro.domain.PaymentRequest;
+import br.com.uol.pagseguro.enums.HttpStatus;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
 import br.com.uol.pagseguro.helper.PagSeguroUtil;
 import br.com.uol.pagseguro.logs.Log;
@@ -37,7 +37,7 @@ import br.com.uol.pagseguro.xmlparser.ErrorsParser;
  * Class Payment Service
  */
 public class PaymentService {
-    
+
     private PaymentService() {
     }
 
@@ -56,7 +56,7 @@ public class PaymentService {
      * @param ConnectionData
      *            connectionData
      * @return string
-     * @throws PagSeguroServiceException 
+     * @throws PagSeguroServiceException
      */
     public static String buildCheckoutRequestUrl(ConnectionData connectionData) throws PagSeguroServiceException {
         return connectionData.getWebServiceUrl() + "?" + connectionData.getCredentialsUrlQuery();
@@ -81,24 +81,25 @@ public class PaymentService {
      * @return string
      * @throws Exception
      */
-    public static String createCheckoutRequest(Credentials credentials, PaymentRequest paymentRequest, Boolean isCheckoutLightbox) throws PagSeguroServiceException {
+    public static String createCheckoutRequest(Credentials credentials, PaymentRequest paymentRequest,
+            Boolean isCheckoutLightbox) throws PagSeguroServiceException {
 
         PaymentService.log.info(String.format("PaymentService.Register( %s ) - begin", paymentRequest.toString()));
 
         ConnectionData connectionData = new ConnectionData(credentials, PaymentService.SERVICE_NAME);
 
-        String url = PaymentService.buildCheckoutRequestUrl(connectionData)
-                + "&"
+        String url = PaymentService.buildCheckoutRequestUrl(connectionData) + "&"
                 + PagSeguroUtil.urlQuery(PaymentParser.getData(paymentRequest));
 
         HttpConnection connection = new HttpConnection();
         HttpStatus httpCodeStatus = null;
 
-        HttpURLConnection response = connection.post(url, PaymentParser.getData(paymentRequest), connectionData.getServiceTimeout(), connectionData.getCharset());
+        HttpURLConnection response = connection.post(url, PaymentParser.getData(paymentRequest),
+                connectionData.getServiceTimeout(), connectionData.getCharset());
 
         try {
 
-            httpCodeStatus = new HttpStatus(response.getResponseCode());
+            httpCodeStatus = HttpStatus.fromCode(response.getResponseCode());
 
             if (HttpURLConnection.HTTP_OK == httpCodeStatus.getStatus().intValue()) {
 
@@ -111,7 +112,8 @@ public class PaymentService {
                     paymentReturn = PaymentService.buildCheckoutUrl(connectionData, code);
                 }
 
-                PaymentService.log.info(String.format("PaymentService.Register( %1s ) - end  %2s )", paymentRequest.toString(), code));
+                PaymentService.log.info(String.format("PaymentService.Register( %1s ) - end  %2s )",
+                        paymentRequest.toString(), code));
 
                 return paymentReturn;
 
@@ -121,7 +123,8 @@ public class PaymentService {
 
                 PagSeguroServiceException exception = new PagSeguroServiceException(httpCodeStatus, errors);
 
-                PaymentService.log.error(String.format("PaymentService.Register( %1s ) - error %2s", paymentRequest.toString(), exception.getMessage()));
+                PaymentService.log.error(String.format("PaymentService.Register( %1s ) - error %2s",
+                        paymentRequest.toString(), exception.getMessage()));
 
                 throw exception;
 
@@ -131,7 +134,8 @@ public class PaymentService {
             throw e;
         } catch (Exception e) {
 
-            PaymentService.log.error(String.format("PaymentService.Register( %1s ) - error %2s", paymentRequest.toString(), e.getMessage()));
+            PaymentService.log.error(String.format("PaymentService.Register( %1s ) - error %2s",
+                    paymentRequest.toString(), e.getMessage()));
 
             throw new PagSeguroServiceException(httpCodeStatus, e);
 

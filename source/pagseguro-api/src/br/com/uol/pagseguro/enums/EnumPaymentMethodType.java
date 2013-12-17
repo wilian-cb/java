@@ -25,10 +25,15 @@ package br.com.uol.pagseguro.enums;
 public enum EnumPaymentMethodType {
 
     CREDIT_CARD("CREDIT_CARD", 1),
+
     BOLETO("BOLETO", 2),
+
     ONLINE_TRANSFER("ONLINE_TRANSFER", 3),
+
     BALANCE("BALANCE", 4),
-    OI_PAGGO("OI_PAGGO",5),
+
+    OI_PAGGO("OI_PAGGO", 5),
+
     DIRECT_DEPOSIT("DIRECT_DEPOSIT", 7);
 
     /**
@@ -37,7 +42,7 @@ public enum EnumPaymentMethodType {
     private String type;
 
     /**
-     * Integer valye type payment
+     * Integer value type payment
      */
     private Integer value;
 
@@ -51,17 +56,17 @@ public enum EnumPaymentMethodType {
         setType(type);
         setValue(value);
     }
-    
+
     public static EnumPaymentMethodType fromValue(Integer value) {
-        
+
         for (EnumPaymentMethodType enumPaymentMethodType : values()) {
             if (enumPaymentMethodType.value.equals(value)) {
                 return enumPaymentMethodType;
             }
         }
-        
+
         return null;
-        
+
     }
 
     /**

@@ -29,22 +29,22 @@ public class SearchTransactionByCode {
 
         // Substitute the code below with a valid transaction code for your
         // account
-        
+
         String transactionCode = "41F4640C-4A84-435B-831C-8EAD876A3B93";
-        
+
         Transaction transaction = null;
-        
+
         try {
-            
+
             // Substitute the parameters below with your credentials (e-mail and
             // token)
-            transaction = TransactionSearchService.searchByCode(
-                    new AccountCredentials("suporte@lojamodelo.com.br", "00000000000000000000000000000000"), transactionCode);
-            
+            transaction = TransactionSearchService.searchByCode(new AccountCredentials("vendedor@java.com",
+                    "00000000000000000000000000000000"), transactionCode);
+
         } catch (PagSeguroServiceException e) {
             System.err.println(e.getMessage());
         }
-        
+
         if (transaction != null) {
             printTransaction(transaction);
         }

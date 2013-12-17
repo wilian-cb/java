@@ -69,10 +69,9 @@ public class TransactionStatus {
     /**
      * 
      * @param value
-     * @return String the transaction status corresponding to the informed
-     *         status value
+     * @return String the transaction status corresponding to the informed status value
      */
-    public String getTypeFromValue(Integer value) {
+    public String getTypeFromValue() {
 
         String type = "";
 

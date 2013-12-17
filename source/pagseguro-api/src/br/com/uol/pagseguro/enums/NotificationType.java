@@ -19,10 +19,9 @@
 package br.com.uol.pagseguro.enums;
 
 /**
- * 
- * EnumNotificationType
+ * NotificationType
  */
-public enum EnumNotificationType {
+public enum NotificationType {
 
     TRANSACTION("TRANSACTION", "transaction");
 
@@ -42,21 +41,21 @@ public enum EnumNotificationType {
      * @param type
      * @param value
      */
-    EnumNotificationType(String type, String value) {
+    NotificationType(String type, String value) {
         this.type = type;
         this.value = value;
     }
-    
-    public static EnumNotificationType fromValue(String value) {
-        
-        for (EnumNotificationType enumNotificationType : values()) {
+
+    public static NotificationType fromValue(String value) {
+
+        for (NotificationType enumNotificationType : values()) {
             if (enumNotificationType.type.equals(value)) {
                 return enumNotificationType;
             }
         }
-        
+
         return null;
-        
+
     }
 
     /**

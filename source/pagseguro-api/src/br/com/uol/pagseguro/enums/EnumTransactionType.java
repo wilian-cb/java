@@ -21,14 +21,23 @@ package br.com.uol.pagseguro.enums;
 public enum EnumTransactionType {
 
     PAYMENT("PAYMENT", 1),
+
     TRANSFER("TRANSFER", 2),
+
     FUND_ADDITION("FUND_ADDITION", 3),
+
     WITHDRAW("WITHDRAW", 4),
+
     CHARGE("CHARGE", 5),
+
     DONATION("DONATION", 6),
+
     BONUS("BONUS", 7),
+
     BONUS_REPASS("BONUS_REPASS", 8),
+
     OPERATIONAL("OPERATIONAL", 9),
+
     POLITICAL_DONATION("POLITICAL_DONATION", 10);
 
     /**
@@ -45,17 +54,17 @@ public enum EnumTransactionType {
         setType(type);
         setValue(value);
     }
-    
+
     public static EnumTransactionType fromValue(Integer value) {
-        
+
         for (EnumTransactionType enumTransactionType : values()) {
             if (enumTransactionType.value.equals(value)) {
                 return enumTransactionType;
             }
         }
-        
+
         return null;
-        
+
     }
 
     /**

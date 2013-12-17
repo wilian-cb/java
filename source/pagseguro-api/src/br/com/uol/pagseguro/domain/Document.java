@@ -18,7 +18,7 @@
 
 package br.com.uol.pagseguro.domain;
 
-import br.com.uol.pagseguro.enums.EnumDocument;
+import br.com.uol.pagseguro.enums.DocumentType;
 import br.com.uol.pagseguro.helper.PagSeguroUtil;
 
 /**
@@ -28,15 +28,11 @@ public class Document {
 
     /**
      * The type document
-     * 
-     * @var string
      */
-    private String type;
+    private DocumentType type;
 
     /**
      * The value document
-     * 
-     * @var string
      */
     private String value;
 
@@ -52,7 +48,7 @@ public class Document {
      * @param type
      * @param value
      */
-    public Document(String type, String value) {
+    public Document(DocumentType type, String value) {
         this.type = type;
         this.value = PagSeguroUtil.getOnlyNumbers(value);
     }
@@ -60,7 +56,7 @@ public class Document {
     /**
      * @return the type
      */
-    public String getType() {
+    public DocumentType getType() {
         return this.type;
     }
 
@@ -68,7 +64,7 @@ public class Document {
      * @param type
      *            the type to set
      */
-    public void setType(String type) {
+    public void setType(DocumentType type) {
         this.type = type;
     }
 
@@ -90,16 +86,18 @@ public class Document {
     /**
      * Check if document type is available for PagSeguro
      * 
-     * @param documentType
+     * @param type
      * @return
      */
-    public static boolean isDocumentTypeAvailable(String documentType) {
+    public static boolean isDocumentTypeAvailable(String type) {
         boolean available = false;
-        for (EnumDocument document : EnumDocument.values()) {
-            if (documentType.equalsIgnoreCase(document.getType())) {
+
+        for (DocumentType documentType : DocumentType.values()) {
+            if (type.equalsIgnoreCase(documentType.getType())) {
                 available = true;
             }
         }
+
         return available;
     }
 }

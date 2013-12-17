@@ -22,7 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import br.com.uol.pagseguro.domain.Error;
-import br.com.uol.pagseguro.domain.HttpStatus;
+import br.com.uol.pagseguro.enums.HttpStatus;
 
 /**
  * Encapsulates a problem that occurred calling a PagSeguro web service
@@ -68,7 +68,8 @@ public class PagSeguroServiceException extends Exception {
      * @param httpStatus
      */
     public PagSeguroServiceException(HttpStatus httpStatus, Exception exception) {
-        super(String.format("Http: %1$s - %2$s \n %3$s", httpStatus.getStatus(), httpStatus.getType(), exception.getMessage()));
+        super(String.format("Http: %1$s - %2$s \n %3$s", httpStatus.getStatus(), httpStatus.getType(),
+                exception.getMessage()));
         this.httpStatus = httpStatus;
     }
 
@@ -142,7 +143,7 @@ public class PagSeguroServiceException extends Exception {
 
             }
         }
-        
+
         return message.toString();
     }
 

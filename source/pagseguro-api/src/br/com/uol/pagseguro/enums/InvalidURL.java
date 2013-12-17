@@ -19,12 +19,14 @@
 package br.com.uol.pagseguro.enums;
 
 /**
- * EnumInvalidURL
+ * InvalidURL
  */
-public enum EnumInvalidURL {
+public enum InvalidURL {
 
     LOCALHOST("localhost"),
+
     IP_V4("127.0.0.1"),
+
     IP_V6("::1");
 
     /**
@@ -33,11 +35,11 @@ public enum EnumInvalidURL {
     private String value;
 
     /**
-     * Construct EnumInvalidURL
+     * Construct EnumInvali * dURL
      * 
      * @param value
      */
-    EnumInvalidURL(String value) {
+    InvalidURL(String value) {
         this.setValue(value);
     }
 
@@ -46,8 +48,8 @@ public enum EnumInvalidURL {
      * 
      * @return array EnumInvalidURL
      */
-    public EnumInvalidURL[] getEnumInvalidURL() {
-        return EnumInvalidURL.values();
+    public InvalidURL[] getEnumInvalidURL() {
+        return InvalidURL.values();
     }
 
     /**

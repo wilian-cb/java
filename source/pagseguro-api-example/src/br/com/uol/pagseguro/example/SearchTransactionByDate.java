@@ -36,28 +36,29 @@ public class SearchTransactionByDate {
 
         TransactionSearchResult result = null;
         try {
-            
+
             Calendar initialCalendar = Calendar.getInstance();
             initialCalendar.set(2013, Calendar.DECEMBER, 01, 0, 00);
             Calendar finalCalendar = Calendar.getInstance();
             finalCalendar.set(2013, Calendar.DECEMBER, 10, 00, 00);
 
             // Substitute the parameters below with your credentials (e-mail and token)
-            AccountCredentials credentials = new AccountCredentials("suporte@lojamodelo.com.br", "00000000000000000000000000000000");
-            
+            AccountCredentials credentials = new AccountCredentials("vendedor@java.com",
+                    "00000000000000000000000000000000");
+
             result = TransactionSearchService.searchByDate(credentials, initialCalendar.getTime(),
                     finalCalendar.getTime(), new Integer(01), new Integer(01));
-            
+
         } catch (PagSeguroServiceException e) {
             System.err.println(e.getMessage());
-        } 
+        }
 
         if (result != null) {
             System.out.println("Search date: " + result.getDate());
             System.out.println(result.getResultsInThisPage() + " results in the page " + result.getPage() + " of "
                     + result.getTotalPages() + " pages.");
 
-            List<TransactionSummary> listTransactionSummaries = result.getTransactions();
+            List<TransactionSummary> listTransactionSummaries = result.getTransactionSummaries();
             Iterator<TransactionSummary> transactionSummariesIterator = listTransactionSummaries.iterator();
             int counter = 0;
             while (transactionSummariesIterator.hasNext()) {

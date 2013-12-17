@@ -18,7 +18,7 @@
 
 package br.com.uol.pagseguro.domain;
 
-import br.com.uol.pagseguro.enums.EnumStates;
+import br.com.uol.pagseguro.enums.States;
 import br.com.uol.pagseguro.helper.PagSeguroUtil;
 
 /**
@@ -244,7 +244,7 @@ public class Address {
         defaultState = defaultState.replaceAll(" ", "");
         String stateName = "";
 
-        for (EnumStates state : EnumStates.values()) {
+        for (States state : States.values()) {
             if (defaultState.equalsIgnoreCase(state.getName())) {
                 stateName = state.getAcronym();
             }
@@ -263,7 +263,7 @@ public class Address {
 
         String defaultAcronym = "";
 
-        for (EnumStates state : EnumStates.values()) {
+        for (States state : States.values()) {
             if (acronym.equalsIgnoreCase(state.getAcronym())) {
                 defaultAcronym = state.getAcronym();
             }

@@ -18,13 +18,10 @@
 
 package br.com.uol.pagseguro.enums;
 
-import br.com.uol.pagseguro.domain.Documents;
-
 /**
- * 
- * EnumDocument
+ * Document
  */
-public enum EnumDocuments {
+public enum DocumentType {
 
     CPF("CPF", "Cadastro de Pessoa Física");
 
@@ -47,23 +44,22 @@ public enum EnumDocuments {
      * 
      * @param type
      * @param description
-     * @see Documents
      */
-    EnumDocuments(String type, String description) {
+    DocumentType(String type, String description) {
         setType(type);
         setDescription(description);
     }
-    
-    public static EnumDocuments fromValue(String type) {
-        
-        for (EnumDocuments enumDocuments : values()) {
-            if (enumDocuments.type.equals(type)) {
-                return enumDocuments;
+
+    public static DocumentType fromValue(String type) {
+
+        for (DocumentType documentType : values()) {
+            if (documentType.type.equals(type)) {
+                return documentType;
             }
         }
-        
+
         return null;
-        
+
     }
 
     /**
@@ -90,10 +86,9 @@ public enum EnumDocuments {
 
     /**
      * @param description
-     *            the desciption to set
+     *            the description to set
      */
     public void setDescription(String description) {
         this.description = description;
     }
-
 }

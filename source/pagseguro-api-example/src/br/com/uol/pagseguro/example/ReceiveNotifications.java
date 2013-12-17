@@ -18,9 +18,13 @@
 
 package br.com.uol.pagseguro.example;
 
-import br.com.uol.pagseguro.domain.AccountCredentials;
+import java.util.Iterator;
+
+import br.com.uol.pagseguro.domain.Error;
 import br.com.uol.pagseguro.domain.Transaction;
+import br.com.uol.pagseguro.enums.NotificationType;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
+import br.com.uol.pagseguro.properties.PagSeguroConfig;
 import br.com.uol.pagseguro.service.NotificationService;
 
 public class ReceiveNotifications {
@@ -35,22 +39,38 @@ public class ReceiveNotifications {
         /**
          * @link https://pagseguro.uol.com.br/integracao/notificacao-de-transacoes .jhtml
          */
-        String notificationCode = "512AF8-49E2FBE2FB71-799426FFAC58-90F5C1";
+        String notificationCode = "ADB456F3BB3EBB3E6ADAA4919F80EEB1118F";
+        String notificationType = "transaction";
 
         Transaction transaction = null;
+
         try {
-            
-            // Check transaction
-            transaction = NotificationService.checkTransaction(
-                    new AccountCredentials("suporte@lojamodelo.com.br", "00000000000000000000000000000000"), notificationCode);
-                    
+
+            if (notificationType == NotificationType.TRANSACTION.getType()) {
+                transaction = NotificationService.checkTransaction(PagSeguroConfig.getAccountCredentials(),
+                        notificationCode);
+            }
+
         } catch (PagSeguroServiceException e) {
+
+            Iterator<Error> itr = e.getErrors().iterator();
+
+            while (itr.hasNext()) {
+                Error error = (Error) itr.next();
+                System.out.println("Código do erro: " + error.getCode());
+                System.out.println("Mensagem de erro: " + error.getMessage());
+            }
+
+        } catch (Exception e) {
+
             System.err.println(e.getMessage());
+
         }
 
         if (transaction != null) {
-            System.out.println("transaction code: " + transaction.getCode());
-            System.out.println("transaction status: " + transaction.getStatus());
+            System.out.println("ID da transação: " + transaction.getCode());
+            System.out.println("Status da transação: " + transaction.getStatus().getTypeFromValue());
         }
+
     }
 }

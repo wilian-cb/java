@@ -23,7 +23,8 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.uol.pagseguro.enums.EnumInvalidURL;
+import br.com.uol.pagseguro.enums.InvalidURL;
+import br.com.uol.pagseguro.enums.ShippingType;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
 import br.com.uol.pagseguro.service.PaymentService;
 
@@ -39,8 +40,6 @@ public class PaymentRequest {
 
     /**
      * Payment currency.
-     * 
-     * @see Currencies
      */
     private String currency;
 
@@ -50,25 +49,24 @@ public class PaymentRequest {
     private List<Item> items;
 
     /**
-     * Uri to where the PagSeguro payment page should redirect the user after
-     * the payment information is processed. Typically this is a confirmation
-     * page on your web site.
+     * Uri to where the PagSeguro payment page should redirect the user after the payment information is processed.
+     * Typically this is a confirmation page on your web site.
      */
     private String redirectURL;
 
     /**
      * Extra amount to be added to the transaction total
      * 
-     * This value can be used to add an extra charge to the transaction or
-     * provide a discount in the case ExtraAmount is a negative value.
+     * This value can be used to add an extra charge to the transaction or provide a discount in the case ExtraAmount is
+     * a negative value.
      */
     private BigDecimal extraAmount;
 
     /**
      * Reference code
      * 
-     * Optional. You can use the reference code to store an identifier so you
-     * can associate the PagSeguro transaction to a transaction in your system.
+     * Optional. You can use the reference code to store an identifier so you can associate the PagSeguro transaction to
+     * a transaction in your system.
      */
     private String reference;
 
@@ -80,28 +78,24 @@ public class PaymentRequest {
     /**
      * How long this payment request will remain valid, in seconds.
      * 
-     * Optional. After this payment request is submitted, the payment code
-     * returned will remain valid for the period specified here.
+     * Optional. After this payment request is submitted, the payment code returned will remain valid for the period
+     * specified here.
      */
     private BigInteger maxAge;
 
     /**
-     * How many times the payment redirect uri returned by the payment web
-     * service can be accessed.
+     * How many times the payment redirect uri returned by the payment web service can be accessed.
      * 
-     * Optional. After this payment request is submitted, the payment redirect
-     * uri returned by the payment web service will remain valid for the number
-     * of uses specified here.
+     * Optional. After this payment request is submitted, the payment redirect uri returned by the payment web service
+     * will remain valid for the number of uses specified here.
      */
     private BigInteger maxUses;
 
     /**
-     * Determines for which url PagSeguro will send the order related
-     * notifications codes.
+     * Determines for which url PagSeguro will send the order related notifications codes.
      * 
-     * Optional. Any change happens in the transaction status, a new
-     * notification request will be send to this url. You can use that for
-     * update the related order.
+     * Optional. Any change happens in the transaction status, a new notification request will be send to this url. You
+     * can use that for update the related order.
      */
     private String notificationURL;
 
@@ -132,9 +126,8 @@ public class PaymentRequest {
     /**
      * @return the sender
      * 
-     *         Party that will be sending the Uri to where the PagSeguro payment
-     *         page should redirect the user after the payment information is
-     *         processed. money
+     *         Party that will be sending the Uri to where the PagSeguro payment page should redirect the user after the
+     *         payment information is processed. money
      */
     public Sender getSender() {
         return this.sender;
@@ -159,16 +152,16 @@ public class PaymentRequest {
      * @return
      */
     public PaymentRequest setSender(String name, String email) {
-        
+
         if (this.sender == null) {
             this.sender = new Sender();
         }
-        
+
         this.sender.setName(name);
         this.sender.setEmail(email);
-        
+
         return this;
-        
+
     }
 
     /**
@@ -181,15 +174,15 @@ public class PaymentRequest {
      * @return
      */
     public PaymentRequest setSender(String name, String email, String areaCode, String number) {
-        
+
         if (this.sender == null) {
             this.sender = new Sender();
         }
-        
+
         this.sender.setName(name);
         this.sender.setEmail(email);
         this.sender.setPhone(new Phone(areaCode, number));
-        
+
         return this;
     }
 
@@ -204,44 +197,43 @@ public class PaymentRequest {
      * @param documentValue
      * @return
      */
-    public PaymentRequest setSender(String name, String email, String areaCode, String number, String documentType, String documentValue) {
-        
+    public PaymentRequest setSender(String name, String email, String areaCode, String number, String documentType,
+            String documentValue) {
+
         if (this.sender == null) {
             this.sender = new Sender();
         }
-        
+
         this.sender.setName(name);
         this.sender.setEmail(email);
         this.sender.setPhone(new Phone(areaCode, number));
         this.sender.addDocument(documentType, documentValue);
-        
+
         return this;
-        
+
     }
 
     /**
-     * Sets the Sender phone number, phone of the party that will be sending the
-     * money
+     * Sets the Sender phone number, phone of the party that will be sending the money
      * 
      * @param areaCode
      * @param number
      * @return
      */
     public PaymentRequest setSenderPhone(String areaCode, String number) {
-        
+
         if (this.sender == null) {
             this.sender = new Sender();
         }
-        
+
         this.sender.setPhone(new Phone(areaCode, number));
-        
+
         return this;
-        
+
     }
 
     /**
      * @return the currency Example: BRL
-     * @see Currencies
      */
     public String getCurrency() {
         return this.currency;
@@ -249,8 +241,6 @@ public class PaymentRequest {
 
     /**
      * Sets the currency
-     * 
-     * @see Currencies
      * 
      * @param currency
      * @return
@@ -265,13 +255,13 @@ public class PaymentRequest {
      * @see Item
      */
     public List<Item> getItems() {
-        
+
         if (this.items == null) {
             this.items = new ArrayList<Item>();
         }
-        
+
         return this.items;
-        
+
     }
 
     /**
@@ -299,7 +289,8 @@ public class PaymentRequest {
      * @param weight
      * @param shippingCost
      */
-    public void addItem(String id, String description, Integer quantity, BigDecimal amount, Long weight, BigDecimal shippingCost) {
+    public void addItem(String id, String description, Integer quantity, BigDecimal amount, Long weight,
+            BigDecimal shippingCost) {
         this.getItems().add(new Item(id, description, quantity, amount, weight, shippingCost));
     }
 
@@ -315,9 +306,8 @@ public class PaymentRequest {
     }
 
     /**
-     * Uri to where the PagSeguro payment page should redirect the user after
-     * the payment information is processed. Typically this is a confirmation
-     * page on your web site.
+     * Uri to where the PagSeguro payment page should redirect the user after the payment information is processed.
+     * Typically this is a confirmation page on your web site.
      * 
      * @return the redirectURL
      */
@@ -328,9 +318,8 @@ public class PaymentRequest {
     /**
      * Sets the redirect URL
      * 
-     * Uri to where the PagSeguro payment page should redirect the user after
-     * the payment information is processed. Typically this is a confirmation
-     * page on your web site.
+     * Uri to where the PagSeguro payment page should redirect the user after the payment information is processed.
+     * Typically this is a confirmation page on your web site.
      * 
      * @param redirectURL
      * @return
@@ -341,8 +330,8 @@ public class PaymentRequest {
     }
 
     /**
-     * This value can be used to add an extra charge to the transaction or
-     * provide a discount in the case ExtraAmount is a negative value.
+     * This value can be used to add an extra charge to the transaction or provide a discount in the case ExtraAmount is
+     * a negative value.
      * 
      * @return the extra amount
      */
@@ -351,9 +340,8 @@ public class PaymentRequest {
     }
 
     /**
-     * Sets the extra amount This value can be used to add an extra charge to
-     * the transaction or provide a discount in the case <b>extraAmount</b> is a
-     * negative value.
+     * Sets the extra amount This value can be used to add an extra charge to the transaction or provide a discount in
+     * the case <b>extraAmount</b> is a negative value.
      * 
      * @param extraAmount
      * @return
@@ -410,15 +398,15 @@ public class PaymentRequest {
      * @return
      */
     public PaymentRequest setShippingType(ShippingType type) {
-        
+
         if (this.shipping == null) {
             this.shipping = new Shipping();
         }
-        
+
         this.shipping.setType(type);
-        
+
         return this;
-        
+
     }
 
     /**
@@ -429,15 +417,15 @@ public class PaymentRequest {
      * @return
      */
     public PaymentRequest setShippingCost(BigDecimal cost) {
-        
+
         if (this.shipping == null) {
             this.shipping = new Shipping();
         }
-        
+
         this.shipping.setCost(cost);
-        
+
         return this;
-        
+
     }
 
     /**
@@ -454,19 +442,18 @@ public class PaymentRequest {
      * @param complement
      * @return
      */
-    public PaymentRequest setShipping(ShippingType type, String country,
-            String state, String city, String district, String postalCode,
-            String street, String number, String complement) {
-        
+    public PaymentRequest setShipping(ShippingType type, String country, String state, String city, String district,
+            String postalCode, String street, String number, String complement) {
+
         if (this.shipping == null) {
             this.shipping = new Shipping();
         }
-        
+
         this.shipping.setType(type);
         this.shipping.setAddress(new Address(country, state, city, district, postalCode, street, number, complement));
-        
+
         return this;
-        
+
     }
 
     /**
@@ -484,13 +471,12 @@ public class PaymentRequest {
      * @param cost
      * @return
      */
-    public PaymentRequest setShipping(ShippingType type, String country,
-            String state, String city, String district, String postalCode,
-            String street, String number, String complement, BigDecimal cost) {
+    public PaymentRequest setShipping(ShippingType type, String country, String state, String city, String district,
+            String postalCode, String street, String number, String complement, BigDecimal cost) {
 
         this.setShipping(type, country, state, city, district, postalCode, street, number, complement);
         this.shipping.setCost(cost);
-        
+
         return this;
 
     }
@@ -508,18 +494,17 @@ public class PaymentRequest {
      * @param complement
      * @return
      */
-    public PaymentRequest setShippingAddress(String country, String state,
-            String city, String district, String postalCode, String street,
-            String number, String complement) {
-        
+    public PaymentRequest setShippingAddress(String country, String state, String city, String district,
+            String postalCode, String street, String number, String complement) {
+
         if (this.shipping == null) {
             this.shipping = new Shipping();
         }
-        
+
         this.shipping.setAddress(new Address(country, state, city, district, postalCode, street, number, complement));
-        
+
         return this;
-        
+
     }
 
     /**
@@ -529,31 +514,30 @@ public class PaymentRequest {
      * @return
      */
     public PaymentRequest setShippingAddress(Address address) {
-        
+
         if (this.shipping == null) {
             this.shipping = new Shipping();
         }
-        
+
         this.shipping.setAddress(address);
-        
+
         return this;
-        
+
     }
 
     /**
      * @return the max age of this payment request
      * 
-     *         After this payment request is submitted, the payment code
-     *         returned will remain valid for the period specified.
+     *         After this payment request is submitted, the payment code returned will remain valid for the period
+     *         specified.
      */
     public BigInteger getMaxAge() {
         return this.maxAge;
     }
 
     /**
-     * Sets the max age of this payment request After this payment request is
-     * submitted, the payment code returned will remain valid for the period
-     * specified here.
+     * Sets the max age of this payment request After this payment request is submitted, the payment code returned will
+     * remain valid for the period specified here.
      * 
      * @param maxAge
      * @return
@@ -564,9 +548,8 @@ public class PaymentRequest {
     }
 
     /**
-     * After this payment request is submitted, the payment redirect uri
-     * returned by the payment web service will remain valid for the number of
-     * uses specified here.
+     * After this payment request is submitted, the payment redirect uri returned by the payment web service will remain
+     * valid for the number of uses specified here.
      * 
      * @return the max uses configured for this payment request
      */
@@ -577,9 +560,8 @@ public class PaymentRequest {
     /**
      * Sets the max uses of this payment request
      * 
-     * After this payment request is submitted, the payment redirect uri
-     * returned by the payment web service will remain valid for the number of
-     * uses specified here.
+     * After this payment request is submitted, the payment redirect uri returned by the payment web service will remain
+     * valid for the number of uses specified here.
      * 
      * @param maxUses
      * @return
@@ -632,13 +614,13 @@ public class PaymentRequest {
      * @return MetaData
      */
     public MetaData getMetaData() {
-        
+
         if (this.metaData == null) {
             this.metaData = new MetaData();
         }
-        
+
         return this.metaData;
-        
+
     }
 
     /**
@@ -678,13 +660,13 @@ public class PaymentRequest {
      * @return Parameter
      */
     public Parameter getParameter() {
-        
+
         if (this.parameter == null) {
             this.parameter = new Parameter();
         }
-        
+
         return this.parameter;
-        
+
     }
 
     /**
@@ -721,8 +703,7 @@ public class PaymentRequest {
      * Calls the PagSeguro web service and register this request for payment
      * 
      * @param credentials
-     * @return The URL to where the user needs to be redirected to in order to
-     *         complete the payment process
+     * @return The URL to where the user needs to be redirected to in order to complete the payment process
      * @throws PagSeguroServiceException
      */
     public String register(Credentials credentials) throws PagSeguroServiceException {
@@ -734,8 +715,7 @@ public class PaymentRequest {
      * 
      * @param credentials
      * @param isCheckoutLightbox
-     * @return The URL to where the user needs to be redirected to in order to
-     *         complete the payment process
+     * @return The URL to where the user needs to be redirected to in order to complete the payment process
      * @throws PagSeguroServiceException
      */
     public String register(Credentials credentials, Boolean isCheckoutLightbox) throws PagSeguroServiceException {
@@ -757,8 +737,7 @@ public class PaymentRequest {
     }
 
     /**
-     * Verify if the adress of NotificationURL or RedirectURL is for tests and
-     * return empty
+     * Verify if the adress of NotificationURL or RedirectURL is for tests and return empty
      * 
      * @param type
      *            url
@@ -768,14 +747,14 @@ public class PaymentRequest {
 
         String urlReturn = url;
 
-        for (EnumInvalidURL invalid : EnumInvalidURL.values()) {
+        for (InvalidURL invalid : InvalidURL.values()) {
             if (url.toLowerCase().contains(invalid.getValue().toLowerCase())) {
                 urlReturn = "";
             }
         }
-        
+
         return urlReturn;
-        
+
     }
 
 }

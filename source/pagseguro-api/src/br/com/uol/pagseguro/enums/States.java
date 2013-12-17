@@ -19,43 +19,72 @@
 package br.com.uol.pagseguro.enums;
 
 /**
- * EnumState
- * 
+ * State
  */
-public enum EnumStates {
+public enum States {
 
-    ACRE("acre", "AC"), 
-    ALAGOAS("alagoas", "AL"), 
-    AMAPA("amapa", "AP"), 
-    AMAZONAS("amazonas", "AM"), 
-    BAHIA("bahia", "BA"), 
-    CEARA("ceara", "CE"), 
-    ESPIRITO_SANTO("espiritosanto", "ES"), 
-    GOIAS("goias", "GO"), 
-    MARANHAO("maranhao", "MA"), 
-    MATO_GROSSO("matogrosso", "MT"), 
-    MATO_GROSSO_DO_SUL("matogrossodosul", "MS"), 
-    MATO_GROSSO_SUL("matogrossosul", "MS"), 
-    MINAS_GERAIS("minasgerais", "MG"), 
-    PARA("para", "PA"), 
-    PARAIBA("paraiba", "PB"), 
-    PARANA("parana", "PR"), 
-    PERNAMBUCO("pernambuco", "PE"), 
-    PIAUI("piaui", "PI"), 
-    RIO_DE_JANEIRO("riodejaneiro", "RJ"), 
-    RIO_JANEIRO("riojaneiro", "RJ"), 
-    RIO_GRANDE_DO_NORTE("riograndedonorte", "RN"), 
-    RIO_GRANDE_NORTE("riograndenorte", "RN"), 
-    RIO_GRANDE_DO_SUL("riograndedosul", "RS"), 
-    RIO_GRANDE_SUL("riograndesul", "RS"), 
-    RONDONIA("rondonia", "RO"), 
-    RORAIMA("roraima", "RR"), 
-    SANTA_CATARINA("santacatarina", "SC"), 
-    SAO_PAULO("saopaulo", "SP"), 
-    SERGIPE("sergipe", "SE"), 
-    TOCANTIS("tocantins", "TO"), 
+    ACRE("acre", "AC"),
+
+    ALAGOAS("alagoas", "AL"),
+
+    AMAPA("amapa", "AP"),
+
+    AMAZONAS("amazonas", "AM"),
+
+    BAHIA("bahia", "BA"),
+
+    CEARA("ceara", "CE"),
+
+    ESPIRITO_SANTO("espiritosanto", "ES"),
+
+    GOIAS("goias", "GO"),
+
+    MARANHAO("maranhao", "MA"),
+
+    MATO_GROSSO("matogrosso", "MT"),
+
+    MATO_GROSSO_DO_SUL("matogrossodosul", "MS"),
+
+    MATO_GROSSO_SUL("matogrossosul", "MS"),
+
+    MINAS_GERAIS("minasgerais", "MG"),
+
+    PARA("para", "PA"),
+
+    PARAIBA("paraiba", "PB"),
+
+    PARANA("parana", "PR"),
+
+    PERNAMBUCO("pernambuco", "PE"),
+
+    PIAUI("piaui", "PI"),
+
+    RIO_DE_JANEIRO("riodejaneiro", "RJ"),
+
+    RIO_JANEIRO("riojaneiro", "RJ"),
+
+    RIO_GRANDE_DO_NORTE("riograndedonorte", "RN"),
+
+    RIO_GRANDE_NORTE("riograndenorte", "RN"),
+
+    RIO_GRANDE_DO_SUL("riograndedosul", "RS"),
+
+    RIO_GRANDE_SUL("riograndesul", "RS"),
+
+    RONDONIA("rondonia", "RO"),
+
+    RORAIMA("roraima", "RR"),
+
+    SANTA_CATARINA("santacatarina", "SC"),
+
+    SAO_PAULO("saopaulo", "SP"),
+
+    SERGIPE("sergipe", "SE"),
+
+    TOCANTIS("tocantins", "TO"),
+
     DISTRITO_FEDERAL("distritofederal", "DF");
-    
+
     /**
      * State name
      */
@@ -72,21 +101,21 @@ public enum EnumStates {
      * @param name
      * @param acronym
      */
-    EnumStates(String name, String acronym) {
+    States(String name, String acronym) {
         this.name = name;
         this.acronym = acronym;
     }
-    
-    public static EnumStates fromValue(String acronym) {
-        
-        for (EnumStates enumStates : values()) {
+
+    public static States fromValue(String acronym) {
+
+        for (States enumStates : values()) {
             if (enumStates.acronym.equals(acronym)) {
                 return enumStates;
             }
         }
-        
+
         return null;
-        
+
     }
 
     /**

@@ -25,12 +25,19 @@ package br.com.uol.pagseguro.enums;
 public enum EnumTransactionStatus {
 
     INITIATED("INITIATED", 0),
+    
     WAITING_PAYMENT("WAITING_PAYMENT", 1),
+    
     IN_ANALYSIS("IN_ANALYSIS", 2),
+    
     PAID("PAID", 3),
+    
     AVAILABLE("AVAILABLE", 4),
+    
     IN_DISPUTE("IN_DISPUTE", 5),
+    
     REFUNDED("REFUNDED", 6),
+    
     CANCELLED("CANCELLED", 7);
 
     /**

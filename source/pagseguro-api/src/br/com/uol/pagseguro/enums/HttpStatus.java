@@ -16,47 +16,69 @@
  ************************************************************************
  */
 
-package br.com.uol.pagseguro.domain;
-
-import br.com.uol.pagseguro.enums.EnumHttpStatus;
+package br.com.uol.pagseguro.enums;
 
 /**
- * 
- * HTTP status that PagSeguro web services can return.
+ * HttpStatus
  */
-public class HttpStatus {
+public enum HttpStatus {
+
+    OK(200, "OK"),
+
+    BAD_REQUEST(400, "BAD_REQUEST"),
+
+    UNAUTHORIZED(401, "UNAUTHORIZED"),
+
+    FORBIDDEN(403, "FORBIDDEN"),
+
+    NOT_FOUND(404, "NOT_FOUND"),
+
+    INTERNAL_SERVER_ERROR(500, "INTERNAL_SERVER_ERROR"),
+
+    BAD_GATEWAY(502, "BAD_GATEWAY");
 
     /**
      * The status http Exemple 200
      * 
      * @var Integer
      */
-    private Integer status;
+    private Integer code;
 
     /**
      * The type http status Exemple : BAD_REQUEST
      * 
      * @var string
      */
-    private String type;
+    private String status;
 
     /**
      * Construct
      * 
      * @param status
+     * @param type
      */
-    public HttpStatus(Integer status) {
-        if (status != null) {
-            this.status = status;
-            this.type = this.getTypeByStatus(this.status);
+    HttpStatus(Integer status, String type) {
+        setStatus(status);
+        setType(type);
+    }
+
+    public static HttpStatus fromCode(Integer code) {
+
+        for (HttpStatus httpStatus : values()) {
+            if (httpStatus.code.equals(code)) {
+                return httpStatus;
+            }
         }
+
+        return null;
+
     }
 
     /**
      * @return the status
      */
     public Integer getStatus() {
-        return this.status;
+        return this.code;
     }
 
     /**
@@ -64,14 +86,14 @@ public class HttpStatus {
      *            the status to set
      */
     public void setStatus(Integer status) {
-        this.status = status;
+        this.code = status;
     }
 
     /**
      * @return the type
      */
     public String getType() {
-        return this.type;
+        return this.status;
     }
 
     /**
@@ -79,26 +101,7 @@ public class HttpStatus {
      *            the type to set
      */
     public void setType(String type) {
-        this.type = type;
-    }
-
-    /**
-     * Get type http status by status
-     * 
-     * @param status
-     * @return string
-     */
-    private String getTypeByStatus(Integer status) {
-
-        String httpType = "";
-
-        for (EnumHttpStatus http : EnumHttpStatus.values()) {
-            if (http.getStatus().compareTo(status) == 0) {
-                httpType = http.getType();
-            }
-        }
-        
-        return httpType;
+        this.status = type;
     }
 
 }

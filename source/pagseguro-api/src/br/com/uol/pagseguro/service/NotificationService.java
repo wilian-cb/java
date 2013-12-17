@@ -23,8 +23,8 @@ import java.util.List;
 
 import br.com.uol.pagseguro.domain.Credentials;
 import br.com.uol.pagseguro.domain.Error;
-import br.com.uol.pagseguro.domain.HttpStatus;
 import br.com.uol.pagseguro.domain.Transaction;
+import br.com.uol.pagseguro.enums.HttpStatus;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
 import br.com.uol.pagseguro.logs.Log;
 import br.com.uol.pagseguro.parser.TransactionParser;
@@ -36,7 +36,7 @@ import br.com.uol.pagseguro.xmlparser.ErrorsParser;
  * Encapsulates web service calls regarding PagSeguro notifications
  */
 public class NotificationService {
-    
+
     private NotificationService() {
     }
 
@@ -49,12 +49,12 @@ public class NotificationService {
      * @var Log
      */
     private static Log log = new Log(NotificationService.class);
-    
+
     /**
      * @var String
      */
     private static final String CHECK_TRANSACTION = "NotificationService.CheckTransaction(notificationCode= %1s) - error %2s";
-    
+
     /**
      * @var String
      */
@@ -64,14 +64,14 @@ public class NotificationService {
      * @param connectionData
      * @param notificationCode
      * @return
-     * @throws PagSeguroServiceException 
+     * @throws PagSeguroServiceException
      */
-    private static String buildTransactionNotificationUrl(ConnectionData connectionData, String notificationCode) throws PagSeguroServiceException {
+    private static String buildTransactionNotificationUrl(ConnectionData connectionData, String notificationCode)
+            throws PagSeguroServiceException {
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append(PagSeguroSystem.getNotificationUrl())
-                .append(notificationCode).append("?")
+        sb.append(PagSeguroSystem.getNotificationUrl()).append(notificationCode).append("?")
                 .append(connectionData.getCredentialsUrlQuery());
 
         return sb.toString();
@@ -84,7 +84,8 @@ public class NotificationService {
      * @param notificationCode
      * @throws Exception
      */
-    public static Transaction checkTransaction(Credentials credentials, String notificationCode) throws PagSeguroServiceException {
+    public static Transaction checkTransaction(Credentials credentials, String notificationCode)
+            throws PagSeguroServiceException {
 
         NotificationService.log.info(String.format(NotificationService.CHECK_TRANSACTION_BEGIN, notificationCode));
 
@@ -94,19 +95,21 @@ public class NotificationService {
         HttpStatus httpCodeStatus = null;
         Transaction transaction = null;
 
-        HttpURLConnection response = connection.get(NotificationService.buildTransactionNotificationUrl(connectionData,
-                        notificationCode), connectionData.getServiceTimeout(), connectionData.getCharset());
+        HttpURLConnection response = connection.get(
+                NotificationService.buildTransactionNotificationUrl(connectionData, notificationCode),
+                connectionData.getServiceTimeout(), connectionData.getCharset());
 
         try {
 
-            httpCodeStatus = new HttpStatus(response.getResponseCode());
+            httpCodeStatus = HttpStatus.fromCode(response.getResponseCode());
 
             if (HttpURLConnection.HTTP_OK == httpCodeStatus.getStatus().intValue()) {
 
                 transaction = TransactionParser.readTransaction(response.getInputStream());
 
-                NotificationService.log.info(String.format(NotificationService.CHECK_TRANSACTION, notificationCode, transaction.toString()));
-                
+                NotificationService.log.info(String.format(NotificationService.CHECK_TRANSACTION, notificationCode,
+                        transaction.toString()));
+
                 return transaction;
 
             } else {
@@ -115,8 +118,9 @@ public class NotificationService {
 
                 PagSeguroServiceException exception = new PagSeguroServiceException(httpCodeStatus, errors);
 
-                NotificationService.log.error(String.format(NotificationService.CHECK_TRANSACTION, notificationCode, exception.getMessage()));
-                
+                NotificationService.log.error(String.format(NotificationService.CHECK_TRANSACTION, notificationCode,
+                        exception.getMessage()));
+
                 throw exception;
             }
 
@@ -124,7 +128,8 @@ public class NotificationService {
             throw e;
         } catch (Exception e) {
 
-            NotificationService.log.error(String.format(NotificationService.CHECK_TRANSACTION, notificationCode, e.getMessage()));
+            NotificationService.log.error(String.format(NotificationService.CHECK_TRANSACTION, notificationCode,
+                    e.getMessage()));
 
             throw new PagSeguroServiceException(httpCodeStatus, e);
 
