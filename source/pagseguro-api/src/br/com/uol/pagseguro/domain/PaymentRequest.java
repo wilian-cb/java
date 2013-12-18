@@ -714,12 +714,13 @@ public class PaymentRequest {
      * Calls the PagSeguro web service and register this request for payment
      * 
      * @param credentials
-     * @param isCheckoutLightbox
-     * @return The URL to where the user needs to be redirected to in order to complete the payment process
+     * @param onlyCheckoutCode
+     * @return The URL to where the user needs to be redirected to in order to complete the payment process or the
+     *         checkout code when use Checkout Lightbox
      * @throws PagSeguroServiceException
      */
-    public String register(Credentials credentials, Boolean isCheckoutLightbox) throws PagSeguroServiceException {
-        return PaymentService.createCheckoutRequest(credentials, this, isCheckoutLightbox);
+    public String register(Credentials credentials, Boolean onlyCheckoutCode) throws PagSeguroServiceException {
+        return PaymentService.createCheckoutRequest(credentials, this, onlyCheckoutCode);
     }
 
     /**
@@ -737,7 +738,7 @@ public class PaymentRequest {
     }
 
     /**
-     * Verify if the adress of NotificationURL or RedirectURL is for tests and return empty
+     * Verify if the address of notificationURL or redirectURL is for tests and return empty
      * 
      * @param type
      *            url

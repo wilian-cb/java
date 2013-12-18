@@ -48,9 +48,9 @@ public enum NotificationType {
 
     public static NotificationType fromValue(String value) {
 
-        for (NotificationType enumNotificationType : values()) {
-            if (enumNotificationType.type.equals(value)) {
-                return enumNotificationType;
+        for (NotificationType notificationType : values()) {
+            if (notificationType.type.equals(value)) {
+                return notificationType;
             }
         }
 

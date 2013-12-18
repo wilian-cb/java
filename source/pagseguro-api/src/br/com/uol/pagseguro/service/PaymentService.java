@@ -77,12 +77,12 @@ public class PaymentService {
      * 
      * @param credentials
      * @param paymentRequest
-     * @param isCheckoutLightbox
+     * @param onlyCheckoutCode
      * @return string
      * @throws Exception
      */
     public static String createCheckoutRequest(Credentials credentials, PaymentRequest paymentRequest,
-            Boolean isCheckoutLightbox) throws PagSeguroServiceException {
+            Boolean onlyCheckoutCode) throws PagSeguroServiceException {
 
         PaymentService.log.info(String.format("PaymentService.Register( %s ) - begin", paymentRequest.toString()));
 
@@ -106,7 +106,7 @@ public class PaymentService {
                 String paymentReturn = null;
                 String code = PaymentParser.readSuccessXml(response);
 
-                if (isCheckoutLightbox) {
+                if (onlyCheckoutCode) {
                     paymentReturn = code;
                 } else {
                     paymentReturn = PaymentService.buildCheckoutUrl(connectionData, code);

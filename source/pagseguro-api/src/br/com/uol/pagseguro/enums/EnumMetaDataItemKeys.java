@@ -24,16 +24,26 @@ package br.com.uol.pagseguro.enums;
 public enum EnumMetaDataItemKeys {
 
     PASSENGER_CPF("PASSENGER_CPF", "CPF do passageiro"),
+
     PASSENGER_PASSPORT("PASSENGER_PASSPORT", "Passaporte do passageiro"),
+
     ORIGIN_CITY("ORIGIN_CITY", "Cidade de origem"),
+
     DESTINATION_CITY("DESTINATION_CITY", "Cidade de destino"),
+
     ORIGIN_AIRPORT_CODE("ORIGIN_AIRPORT_CODE", "Código do aeroporto de origem"),
+
     DESTINATION_AIRPORT_CODE("DESTINATION_AIRPORT_CODE", "Código do aeroporto de destino"),
+
     GAME_NAME("GAME_NAME", "Nome do jogo"),
-    PLAYER_ID("PLAYER_ID","Id do jogador"),
-    TIME_IN_GAME_DAYS("TIME_IN_GAME_DAYS","Tempo no jogo em dias"),
-    MOBILE_NUMBER("MOBILE_NUMBER","Celular de recarga"),
-    PASSENGER_NAME("PASSENGER_NAME","Nome do passageiro");
+
+    PLAYER_ID("PLAYER_ID", "Id do jogador"),
+
+    TIME_IN_GAME_DAYS("TIME_IN_GAME_DAYS", "Tempo no jogo em dias"),
+
+    MOBILE_NUMBER("MOBILE_NUMBER", "Celular de recarga"),
+
+    PASSENGER_NAME("PASSENGER_NAME", "Nome do passageiro");
 
     /**
      * String key
@@ -55,17 +65,17 @@ public enum EnumMetaDataItemKeys {
         this.key = key;
         this.description = description;
     }
-    
+
     public static EnumMetaDataItemKeys fromValue(String key) {
-        
+
         for (EnumMetaDataItemKeys enumMetaDataItemKeys : values()) {
             if (enumMetaDataItemKeys.key.equals(key)) {
                 return enumMetaDataItemKeys;
             }
         }
-        
+
         return null;
-        
+
     }
 
     /**
@@ -92,9 +102,9 @@ public enum EnumMetaDataItemKeys {
                 available = true;
             }
         }
-        
+
         return available;
-        
+
     }
 
     /**
@@ -112,9 +122,9 @@ public enum EnumMetaDataItemKeys {
                 description = itemKey.getDescription();
             }
         }
-        
+
         return description;
-        
+
     }
 
     /**
@@ -132,9 +142,9 @@ public enum EnumMetaDataItemKeys {
                 key = itemDescription.getKey();
             }
         }
-        
+
         return key;
-        
+
     }
 
     /**

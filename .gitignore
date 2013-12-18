@@ -21,6 +21,12 @@ local.properties
 #################
 classes/
 
+#################
+## Sonar
+#################
+.sonar/
+sonar-project.properties
+
 # External tool builders
 .externalToolBuilders/
 *~

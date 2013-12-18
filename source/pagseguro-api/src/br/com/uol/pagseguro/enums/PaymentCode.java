@@ -114,9 +114,9 @@ public enum PaymentCode {
 
     public static PaymentCode fromValue(Integer value) {
 
-        for (PaymentCode enumPaymentCode : values()) {
-            if (enumPaymentCode.value.equals(value)) {
-                return enumPaymentCode;
+        for (PaymentCode paymentCode : values()) {
+            if (paymentCode.value.equals(value)) {
+                return paymentCode;
             }
         }
 

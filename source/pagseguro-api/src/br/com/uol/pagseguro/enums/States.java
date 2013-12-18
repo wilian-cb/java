@@ -108,9 +108,9 @@ public enum States {
 
     public static States fromValue(String acronym) {
 
-        for (States enumStates : values()) {
-            if (enumStates.acronym.equals(acronym)) {
-                return enumStates;
+        for (States state : values()) {
+            if (state.acronym.equals(acronym)) {
+                return state;
             }
         }
 
