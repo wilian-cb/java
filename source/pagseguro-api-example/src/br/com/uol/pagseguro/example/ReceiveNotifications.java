@@ -33,12 +33,7 @@ public class ReceiveNotifications {
 
         // Substitute the code below with a notification code for your
         // transaction.
-        // You receive this notification code through a post on the URL that you
-        // specify in
-        // this page:
-        /**
-         * @link https://pagseguro.uol.com.br/integracao/notificacao-de-transacoes .jhtml
-         */
+
         String notificationCode = "ADB456F3BB3EBB3E6ADAA4919F80EEB1118F";
         String notificationType = "transaction";
 
@@ -72,5 +67,8 @@ public class ReceiveNotifications {
             System.out.println("Status da transação: " + transaction.getStatus().getTypeFromValue());
         }
 
+    }
+
+    private ReceiveNotifications() {
     }
 }

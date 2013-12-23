@@ -69,11 +69,9 @@ public class PaymentMethodType {
 
     /**
      * 
-     * @param value
-     * @return PagSeguroPaymentMethodType the corresponding to the informed
-     *         value
+     * @return PagSeguroPaymentMethodType the corresponding to the informed value
      */
-    public String getTypeFromValue(Integer value) {
+    public String getTypeFromValue() {
 
         String type = "";
 

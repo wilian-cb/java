@@ -151,6 +151,12 @@ public class TransactionParser {
 
         }
 
+        // setting <transaction><paymentLink>
+        tagValue = XMLParserUtils.getTagValue("paymentLink", transactionElement);
+        if (tagValue != null) {
+            transaction.setPaymentLink(tagValue);
+        }
+
         // setting <transaction><grossAmount>
         tagValue = XMLParserUtils.getTagValue("grossAmount", transactionElement);
         if (tagValue != null) {
@@ -181,14 +187,29 @@ public class TransactionParser {
             transaction.setExtraAmount(new BigDecimal(tagValue));
         }
 
+        // parsing <transaction><escrowEndDate>
+        tagValue = XMLParserUtils.getTagValue("escrowEndDate", transactionElement);
+        if (tagValue != null) {
+            transaction.setEscrowEndDate(PagSeguroUtil.parse(tagValue));
+        }
+
+        // parsing <transaction><cancellationSource>
+        tagValue = XMLParserUtils.getTagValue("cancellationSource", transactionElement);
+        if (tagValue != null) {
+            transaction.setCancellationSource(tagValue);
+        }
+
         // setting <transaction><installmentCount>
         tagValue = XMLParserUtils.getTagValue("installmentCount", transactionElement);
         if (tagValue != null) {
             transaction.setInstallmentCount(Integer.valueOf(tagValue));
         }
 
-        // setting <transaction><installmentCount>
+        // setting <transaction><itemCount>
         tagValue = XMLParserUtils.getTagValue("itemCount", transactionElement);
+        if (tagValue != null) {
+            transaction.setItemCount(Integer.valueOf(tagValue));
+        }
 
         // setting <transaction><items>
         Element itemsElement = XMLParserUtils.getElement("items", transactionElement);

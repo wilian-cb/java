@@ -26,12 +26,11 @@ import java.util.List;
  * Represents a PagSeguro transaction
  */
 public class Transaction {
-    
+
     private static final int MIN_VALUE = 0;
 
     /**
-     * Last event date Date the last notification about this transaction was
-     * sent
+     * Last event date Date the last notification about this transaction was sent
      */
     private Date lastEventDate;
 
@@ -46,9 +45,8 @@ public class Transaction {
     private String code;
 
     /**
-     * Reference code You can use the reference code to store an identifier so
-     * you can associate the PagSeguro transaction to a transaction in your
-     * system.
+     * You can use the reference code to store an identifier so you can associate the PagSeguro transaction to a
+     * transaction in your system.
      */
     private String reference;
 
@@ -109,6 +107,17 @@ public class Transaction {
     private Integer itemCount;
 
     /**
+     * Escrow End Date
+     */
+    private Date escrowEndDate;
+
+    /** Cancellation Source */
+    private String cancellationSource;
+
+    /** Payment Link */
+    private String paymentLink;
+
+    /**
      * item/product list in this transaction
      * 
      * @see Item
@@ -133,7 +142,7 @@ public class Transaction {
      * Initializes a new instance of the Transaction class
      */
     public Transaction() {
-        
+
         this.date = new Date();
         this.type = new TransactionType();
         this.status = new TransactionStatus();
@@ -142,7 +151,7 @@ public class Transaction {
         this.itemCount = Integer.valueOf(MIN_VALUE);
         this.sender = new Sender();
         this.shipping = new Shipping();
-        
+
     }
 
     /**
@@ -161,6 +170,60 @@ public class Transaction {
      */
     public void setLastEventDate(Date lastEventDate) {
         this.lastEventDate = lastEventDate;
+    }
+
+    /**
+     * Get Escrow End Date
+     * 
+     * @return Date
+     */
+    public Date getEscrowEndDate() {
+        return escrowEndDate;
+    }
+
+    /**
+     * Set Escrow End Date
+     * 
+     * @param escrowEndDate
+     */
+    public void setEscrowEndDate(Date escrowEndDate) {
+        this.escrowEndDate = escrowEndDate;
+    }
+
+    /**
+     * Get Cancellation Source
+     * 
+     * @return String
+     */
+    public String getCancellationSource() {
+        return this.cancellationSource;
+    }
+
+    /**
+     * Set Cancellation Source
+     * 
+     * @param cancellationSource
+     */
+    public void setCancellationSource(String cancellationSource) {
+        this.cancellationSource = cancellationSource;
+    }
+
+    /**
+     * Get Payment Link
+     * 
+     * @return String
+     */
+    public String getPaymentLink() {
+        return this.paymentLink;
+    }
+
+    /**
+     * Set Payment Link
+     * 
+     * @param paymentLink
+     */
+    public void setPaymentLink(String paymentLink) {
+        this.paymentLink = paymentLink;
     }
 
     /**
@@ -196,8 +259,8 @@ public class Transaction {
     }
 
     /**
-     * You can use the reference code to store an identifier so you can
-     * associate the PagSeguro transaction to a transaction in your system.
+     * You can use the reference code to store an identifier so you can associate the PagSeguro transaction to a
+     * transaction in your system.
      * 
      * @return the reference code
      */
@@ -440,14 +503,14 @@ public class Transaction {
 
     @Override
     public String toString() {
-        
+
         String codeValue = "Transaction(Code=" + this.code;
         String dateValue = ",Date=" + this.date;
         String referenceValue = ",Reference=" + this.reference;
         String statusValue = ",Status=" + this.status.getValue().toString();
         String emailValue = ",Email=" + this.sender != null ? this.sender.getEmail() : null;
         String itemsValue = ",ItemsCount=" + this.itemCount;
-        
+
         StringBuilder sb = new StringBuilder();
         sb.append(codeValue);
         sb.append(dateValue);
@@ -456,8 +519,8 @@ public class Transaction {
         sb.append(emailValue);
         sb.append(itemsValue);
         sb.append(")");
-        
+
         return sb.toString();
-        
+
     }
 }

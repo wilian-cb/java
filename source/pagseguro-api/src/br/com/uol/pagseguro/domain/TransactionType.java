@@ -53,19 +53,18 @@ public class TransactionType {
                 auxValue = transactionType.getValue();
             }
         }
-        
+
         if (auxValue > 0) {
             this.value = auxValue;
         }
-        
+
     }
 
     /**
      * 
-     * @param value
      * @return the transaction type corresponding to the informed type value
      */
-    public String getTypeFromValue(Integer value) {
+    public String getTypeFromValue() {
 
         String type = "";
 
@@ -74,9 +73,9 @@ public class TransactionType {
                 type = transactionType.getType();
             }
         }
-        
+
         return type;
-        
+
     }
 
     /**

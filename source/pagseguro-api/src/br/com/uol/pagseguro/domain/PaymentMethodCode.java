@@ -69,10 +69,9 @@ public class PaymentMethodCode {
 
     /**
      * 
-     * @param value
      * @return type corresponding to the informed value
      */
-    public String getTypeFromValue(Integer value) {
+    public String getTypeFromValue() {
 
         String type = "";
 

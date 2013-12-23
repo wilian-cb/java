@@ -22,75 +22,95 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * Represents a summary of a PagSeguro transaction, typically returned by search
- * services.
+ * Represents a summary of a PagSeguro transaction, typically returned by search services.
  */
 public class TransactionSummary {
-    
+
     /** Transaction date */
     private Date date;
-    
+
     /**
-     * Last event date Date the last notification about this transaction was
-     * sent
+     * Last event date Date the last notification about this transaction was sent
      */
     private Date lastEvent;
-    
+
     /** Transaction Code. */
     private String code;
-    
+
     /** Transaction Reference. */
     private String reference;
-    
+
     /** Transaction Gross Amount. */
     private BigDecimal grossAmount;
-    
+
     /** Transaction Type */
     private TransactionType type;
-    
+
     /**
      * Transaction status
      * 
      * @see TransactionStatus
      */
     private TransactionStatus status;
-    
+
     /**
      * Net amount
      */
     private BigDecimal netAmount;
-    
+
     /**
      * Discount amount
      */
     private BigDecimal discountAmount;
-    
+
     /**
      * Fee amount
      */
     private BigDecimal feeAmount;
-    
+
     /**
      * Extra amount
      */
     private BigDecimal extraAmount;
-    
-    /** Payment Method. */
+
+    /**
+     * Payment Method.
+     */
     private PaymentMethod paymentMethod;
-    
+
+    /**
+     * Escrow End Date.
+     */
+    private Date escrowEndDate;
+
+    /**
+     * Cancellation Source
+     */
+    private String cancellationSource;
+
+    /**
+     * Payment Link
+     */
+    private String paymentLink;
+
+    /**
+     * Items count
+     */
+    private Integer itemCount;
+
     /**
      * Get Status
      * 
      * @return TransactionStatus
      */
     public TransactionStatus getStatus() {
-        
+
         if (this.status == null) {
             this.status = new TransactionStatus();
         }
-        
+
         return this.status;
-        
+
     }
 
     /**
@@ -196,6 +216,64 @@ public class TransactionSummary {
     }
 
     /**
+     * Get Escrow End Date
+     * 
+     * @return escrowEndDate
+     */
+    public Date getEscrowEndDate() {
+        if (this.escrowEndDate == null) {
+            this.escrowEndDate = new Date();
+        }
+        return escrowEndDate;
+    }
+
+    /**
+     * Set Escrow End Date
+     * 
+     * @param escrowEndDate
+     */
+    public void setEscrowEndDate(Date escrowEndDate) {
+        this.escrowEndDate = escrowEndDate;
+    }
+
+    /**
+     * Get Cancellation Source
+     * 
+     * @return cancellationSource
+     */
+    public String getCancellationSource() {
+        return this.cancellationSource;
+    }
+
+    /**
+     * Set Cancellation Source
+     * 
+     * @param the
+     *            source of the transaction cancellation
+     */
+    public void setCancellationSource(String cancellationSource) {
+        this.cancellationSource = cancellationSource;
+    }
+
+    /**
+     * Get Payment Link
+     * 
+     * @return the booklet payment url
+     */
+    public String getPaymentLink() {
+        return this.paymentLink;
+    }
+
+    /**
+     * Set Payment Link
+     * 
+     * @param paymentLink
+     */
+    public void setPaymentLink(String paymentLink) {
+        this.paymentLink = paymentLink;
+    }
+
+    /**
      * Set Payment Method
      * 
      * @param paymentMethod
@@ -207,16 +285,16 @@ public class TransactionSummary {
     /**
      * Get Payment Method
      * 
-     * @return PaymentMethod
+     * @return the transaction payment method
      */
     public PaymentMethod getPaymentMethod() {
-        
+
         if (this.paymentMethod == null) {
             this.paymentMethod = new PaymentMethod();
         }
-        
+
         return this.paymentMethod;
-        
+
     }
 
     /**
@@ -225,13 +303,13 @@ public class TransactionSummary {
      * @return Date
      */
     public Date getDate() {
-        
+
         if (this.date == null) {
             this.date = new Date();
         }
-        
+
         return this.date;
-        
+
     }
 
     /**
@@ -303,13 +381,13 @@ public class TransactionSummary {
      * @return TransactionType
      */
     public TransactionType getType() {
-        
+
         if (this.type == null) {
             this.type = new TransactionType();
         }
-        
+
         return this.type;
-        
+
     }
 
     /**
@@ -319,6 +397,22 @@ public class TransactionSummary {
      */
     public void setType(TransactionType type) {
         this.type = type;
+    }
+
+    /**
+     * Sets the items count
+     * 
+     * @param itemCount
+     */
+    public void setItemCount(Integer itemCount) {
+        this.itemCount = itemCount;
+    }
+
+    /**
+     * @return the items/products count in this transaction
+     */
+    public Integer getItemCount() {
+        return this.itemCount;
     }
 
     /**

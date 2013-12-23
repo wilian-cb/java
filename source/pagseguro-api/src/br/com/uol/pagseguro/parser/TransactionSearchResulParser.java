@@ -56,9 +56,8 @@ public class TransactionSearchResulParser extends DefaultHandler {
     private TransactionSearchResult transactionSearchResult;
     private List<TransactionSummary> transactions = new ArrayList<TransactionSummary>();
 
-    
     public TransactionSearchResulParser(TransactionSearchResult transactionSearchResult) {
-        
+
         handledElements = new ArrayList<String>();
         handledElements.add("date");
         handledElements.add("currentPage");
@@ -66,7 +65,7 @@ public class TransactionSearchResulParser extends DefaultHandler {
         handledElements.add("totalPages");
 
         this.transactionSearchResult = transactionSearchResult;
-        
+
     }
 
     public TransactionSearchResult getTransactionSearchResult() {
@@ -81,71 +80,73 @@ public class TransactionSearchResulParser extends DefaultHandler {
     public void characters(char[] buffer, int start, int length) throws SAXException {
 
         StringBuilder buf = new StringBuilder();
-        
+
         if (parentElement.equals(ROOT_ELEMENT)) {
-            
+
             if ("date".equals(currentElement)) {
-                
+
                 try {
                     transactionSearchResult.setDate(PagSeguroUtil.parse(buf.append(buffer, start, length).toString()));
                 } catch (ParseException e) {
                     throw new SAXException(e);
                 }
-                
+
             } else if ("currentPage".equals(currentElement)) {
                 transactionSearchResult.setPage(Integer.parseInt(buf.append(buffer, start, length).toString()));
             } else if ("resultsInThisPage".equals(currentElement)) {
-                transactionSearchResult.setResultsInThisPage(Integer.parseInt(buf.append(buffer, start, length).toString()));
+                transactionSearchResult.setResultsInThisPage(Integer.parseInt(buf.append(buffer, start, length)
+                        .toString()));
             } else if ("totalPages".equals(currentElement)) {
                 transactionSearchResult.setTotalPages(Integer.parseInt(buf.append(buffer, start, length).toString()));
             }
         } else if ("transaction".equals(currentElement)) {
             xmlTransaction.append(buffer, start, length);
         }
-        
+
     }
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        
+
         if (handledElements.contains(qName) && parentElement.equals(ROOT_ELEMENT)) {
             currentElement = qName;
         }
-        
+
         if (qName.equals(TRANSACTIONS_ELEMENT)) {
             parentElement = TRANSACTIONS_ELEMENT;
         }
-        
+
         if ("transaction".equals(qName)) {
             currentElement = "transaction";
             xmlTransaction = new StringBuilder();
         }
-        
+
         if ("transaction".equals(currentElement)) {
             xmlTransaction.append("<" + qName + ">");
         }
-        
+
     }
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-        
+
         if (qName.equals(TRANSACTIONS_ELEMENT)) {
             parentElement = ROOT_ELEMENT;
         }
-        
+
         if ("transaction".equals(currentElement)) {
             xmlTransaction.append("</" + qName + ">");
         }
-        
+
         if ("transaction".equals(qName)) {
-            
+
             try {
-                
-                Transaction transaction = TransactionParser.readTransaction(new ByteArrayInputStream(xmlTransaction.toString().getBytes()));
+
+                Transaction transaction = TransactionParser.readTransaction(new ByteArrayInputStream(xmlTransaction
+                        .toString().getBytes()));
                 TransactionSummary transactionSummary = buildTransactionSummary(transaction);
                 transactions.add(transactionSummary);
-                
+
             } catch (ParserConfigurationException e) {
                 throw new SAXException(e);
             } catch (ParseException e) {
@@ -153,29 +154,29 @@ public class TransactionSearchResulParser extends DefaultHandler {
             } catch (IOException e) {
                 throw new SAXException(e);
             }
-            
+
         }
     }
 
     private TransactionSummary buildTransactionSummary(Transaction transaction) {
-        
+
         TransactionSummary transactionSummary = new TransactionSummary();
-        
-        transactionSummary.setCode(transaction.getCode());
+
         transactionSummary.setDate(transaction.getDate());
-        transactionSummary.setDiscountAmount(transaction.getDiscountAmount());
-        transactionSummary.setExtraAmount(transaction.getExtraAmount());
-        transactionSummary.setFeeAmount(transaction.getFeeAmount());
-        transactionSummary.setGrossAmount(transaction.getGrossAmount());
         transactionSummary.setLastEvent(transaction.getLastEventDate());
-        transactionSummary.setNetAmount(transaction.getNetAmount());
-        transactionSummary.setPaymentMethod(transaction.getPaymentMethod());
+        transactionSummary.setCode(transaction.getCode());
         transactionSummary.setReference(transaction.getReference());
-        transactionSummary.setStatus(transaction.getStatus());
         transactionSummary.setType(transaction.getType());
-        
+        transactionSummary.setStatus(transaction.getStatus());
+        transactionSummary.setPaymentMethod(transaction.getPaymentMethod());
+        transactionSummary.setGrossAmount(transaction.getGrossAmount());
+        transactionSummary.setDiscountAmount(transaction.getDiscountAmount());
+        transactionSummary.setFeeAmount(transaction.getFeeAmount());
+        transactionSummary.setNetAmount(transaction.getNetAmount());
+        transactionSummary.setExtraAmount(transaction.getExtraAmount());
+
         return transactionSummary;
-        
+
     }
 
     @Override
@@ -183,15 +184,17 @@ public class TransactionSearchResulParser extends DefaultHandler {
         transactionSearchResult.setTransactions(transactions);
     }
 
-    public static TransactionSearchResulParser getHandler(InputStream xml, TransactionSearchResult transactionSearchResult) throws ParserConfigurationException, SAXException, IOException {
+    public static TransactionSearchResulParser getHandler(InputStream xml,
+            TransactionSearchResult transactionSearchResult) throws ParserConfigurationException, SAXException,
+            IOException {
 
         SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
         InputSource input = new InputSource(xml);
         TransactionSearchResulParser handler = new TransactionSearchResulParser(transactionSearchResult);
-        
+
         parser.parse(input, handler);
-        
+
         return handler;
-        
+
     }
 }
