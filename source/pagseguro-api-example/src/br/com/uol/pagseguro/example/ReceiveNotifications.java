@@ -41,7 +41,7 @@ public class ReceiveNotifications {
 
         try {
 
-            if (notificationType == NotificationType.TRANSACTION.getType()) {
+            if (notificationType == NotificationType.TRANSACTION.getValue()) {
                 transaction = NotificationService.checkTransaction(PagSeguroConfig.getAccountCredentials(),
                         notificationCode);
             }
@@ -52,8 +52,8 @@ public class ReceiveNotifications {
 
             while (itr.hasNext()) {
                 Error error = (Error) itr.next();
-                System.out.println("Código do erro: " + error.getCode());
-                System.out.println("Mensagem de erro: " + error.getMessage());
+                System.out.println("[Código do erro] " + error.getCode());
+                System.out.println("[Mensagem de erro] " + error.getMessage());
             }
 
         } catch (Exception e) {

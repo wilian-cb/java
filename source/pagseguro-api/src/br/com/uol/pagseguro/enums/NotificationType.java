@@ -61,7 +61,7 @@ public enum NotificationType {
     /**
      * Get Type
      * 
-     * @return type notification
+     * @return notification type
      */
     public String getType() {
         return this.type;
@@ -70,7 +70,7 @@ public enum NotificationType {
     /**
      * Get Value
      * 
-     * @return value notification
+     * @return notification value
      */
     public String getValue() {
         return this.value;
