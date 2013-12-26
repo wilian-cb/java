@@ -244,7 +244,7 @@ public class PaymentParser {
          * 
          * @see MetaData
          */
-        if (payment.getMetaData() != null && payment.getMetaData().getItems() != null && payment.getMetaData().getItems().isEmpty()) {
+        if (payment.getMetaData() != null && payment.getMetaData().getItems() != null && !payment.getMetaData().getItems().isEmpty()) {
 
             Integer count = 0;
 
@@ -270,7 +270,7 @@ public class PaymentParser {
          * 
          * @see Parameter
          */
-        if (payment.getParameter() != null && payment.getParameter().getItems() != null && payment.getParameter().getItems().isEmpty()) {
+        if (payment.getParameter() != null && payment.getParameter().getItems() != null && !payment.getParameter().getItems().isEmpty()) {
 
             for (ParameterItem param : payment.getParameter().getItems()) {
 

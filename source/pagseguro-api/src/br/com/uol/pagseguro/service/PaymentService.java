@@ -20,6 +20,7 @@ package br.com.uol.pagseguro.service;
 
 import java.net.HttpURLConnection;
 import java.util.List;
+import java.util.Map;
 
 import br.com.uol.pagseguro.domain.Credentials;
 import br.com.uol.pagseguro.domain.Error;
@@ -88,14 +89,14 @@ public class PaymentService {
 
         ConnectionData connectionData = new ConnectionData(credentials, PaymentService.SERVICE_NAME);
 
-        String url = PaymentService.buildCheckoutRequestUrl(connectionData) + "&"
-                + PagSeguroUtil.urlQuery(PaymentParser.getData(paymentRequest));
+        Map<Object, Object> data = PaymentParser.getData(paymentRequest);
+        
+        String url = PaymentService.buildCheckoutRequestUrl(connectionData) + "&" + PagSeguroUtil.urlQuery(data);
 
         HttpConnection connection = new HttpConnection();
         HttpStatus httpCodeStatus = null;
 
-        HttpURLConnection response = connection.post(url, PaymentParser.getData(paymentRequest),
-                connectionData.getServiceTimeout(), connectionData.getCharset());
+        HttpURLConnection response = connection.post(url, data, connectionData.getServiceTimeout(), connectionData.getCharset());
 
         try {
 
@@ -117,7 +118,7 @@ public class PaymentService {
 
                 return paymentReturn;
 
-            } else {
+            } else if(HttpURLConnection.HTTP_BAD_REQUEST == httpCodeStatus.getStatus().intValue()) {
 
                 List<Error> errors = ErrorsParser.readErrosXml(response.getErrorStream());
 
@@ -128,6 +129,8 @@ public class PaymentService {
 
                 throw exception;
 
+            } else {
+                throw new PagSeguroServiceException(httpCodeStatus);    
             }
 
         } catch (PagSeguroServiceException e) {
