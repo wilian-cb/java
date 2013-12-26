@@ -186,7 +186,7 @@ public class TransactionSearchService {
 
                 return transaction;
 
-            } else {
+            } else if(HttpURLConnection.HTTP_BAD_REQUEST == httpStatusCode.getStatus().intValue()) {
 
                 List<Error> listErrors = ErrorsParser.readErrosXml(response.getErrorStream());
 
@@ -196,6 +196,8 @@ public class TransactionSearchService {
                         transactionCode, exception.getMessage()));
 
                 throw exception;
+            } else {
+                throw new PagSeguroServiceException(httpStatusCode);    
             }
 
         } catch (PagSeguroServiceException e) {
@@ -256,7 +258,7 @@ public class TransactionSearchService {
 
                 return search;
 
-            } else {
+            } else if(HttpURLConnection.HTTP_BAD_REQUEST == httpStatusCode.getStatus().intValue()) {
 
                 List<Error> listErrors = ErrorsParser.readErrosXml(response.getErrorStream());
 
@@ -266,6 +268,8 @@ public class TransactionSearchService {
                         dtFinal, exception.getMessage()));
 
                 throw exception;
+            } else {
+                throw new PagSeguroServiceException(httpStatusCode);    
             }
 
         } catch (PagSeguroServiceException e) {
