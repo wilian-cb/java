@@ -18,9 +18,6 @@
 
 package br.com.uol.pagseguro.example;
 
-import java.util.Iterator;
-
-import br.com.uol.pagseguro.domain.Error;
 import br.com.uol.pagseguro.domain.Transaction;
 import br.com.uol.pagseguro.enums.NotificationType;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
@@ -32,7 +29,7 @@ public class ReceiveNotifications {
     public static void main(String[] args) {
 
         // Substitute the code below with a notification code for your
-        // transaction.
+        // transaction
 
         String notificationCode = "ADB456F3BB3EBB3E6ADAA4919F80EEB1118F";
         String notificationType = "transaction";
@@ -47,19 +44,7 @@ public class ReceiveNotifications {
             }
 
         } catch (PagSeguroServiceException e) {
-
-            Iterator<Error> itr = e.getErrors().iterator();
-
-            while (itr.hasNext()) {
-                Error error = (Error) itr.next();
-                System.out.println("[Código do erro] " + error.getCode());
-                System.out.println("[Mensagem de erro] " + error.getMessage());
-            }
-
-        } catch (Exception e) {
-
             System.err.println(e.getMessage());
-
         }
 
         if (transaction != null) {

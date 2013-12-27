@@ -112,7 +112,7 @@ public class NotificationService {
 
                 return transaction;
 
-            } else if(HttpURLConnection.HTTP_BAD_REQUEST == httpCodeStatus.getStatus().intValue()) {
+            } else if (HttpURLConnection.HTTP_BAD_REQUEST == httpCodeStatus.getStatus().intValue()) {
 
                 List<Error> errors = ErrorsParser.readErrosXml(response.getErrorStream());
 
@@ -123,7 +123,7 @@ public class NotificationService {
 
                 throw exception;
             } else {
-                throw new PagSeguroServiceException(httpCodeStatus);    
+                throw new PagSeguroServiceException(httpCodeStatus);
             }
 
         } catch (PagSeguroServiceException e) {

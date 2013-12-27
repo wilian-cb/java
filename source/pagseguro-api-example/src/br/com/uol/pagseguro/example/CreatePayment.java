@@ -57,7 +57,7 @@ public class CreatePayment {
                 "Av. Brig. Faria Lima", "1384", "5o andar");
 
         // Sets value of shipping cost for this payment request
-        paymentRequest.setShippingCost(new BigDecimal("2.00"));
+        paymentRequest.setShippingCost(new BigDecimal("2.02"));
 
         // Sets your customer information.
         paymentRequest.setSender("Joao Comprador", "comprador@uol.com.br", "11", "56273440", "CPF", "000.000.001-91");
@@ -72,9 +72,10 @@ public class CreatePayment {
         paymentRequest.addParameter("senderBornDate", "07/05/1981");
 
         paymentRequest.addIndexedParameter("itemId", "0003", 3);
-        paymentRequest.addIndexedParameter("itemDescription", "Notebook prata", 3);
+        paymentRequest.addIndexedParameter("itemDescription", "Notebook Preto", 3);
         paymentRequest.addIndexedParameter("itemQuantity", "1", 3);
         paymentRequest.addIndexedParameter("itemAmount", "200.00", 3);
+        paymentRequest.addIndexedParameter("itemWeight", "320", 3);
 
         // Add checkout metadata information
         paymentRequest.addMetaData("PASSENGER_CPF", "15600944276", 1);
@@ -91,7 +92,7 @@ public class CreatePayment {
             System.out.println(paymentURL);
 
         } catch (PagSeguroServiceException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 
