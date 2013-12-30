@@ -274,12 +274,12 @@ public class PaymentParser {
 
             for (ParameterItem param : payment.getParameter().getItems()) {
 
-                if ((param.getKey() != null && !"".equals(param.getKey()))
+                if ((param.getName() != null && !"".equals(param.getName()))
                         && (param.getValue() != null && !"".equals(param.getValue()))) {
-                    if (param.getGroup() != null) {
-                        data.put(param.getKey() + "" + param.getGroup().toString(), param.getValue());
+                    if (param.getIndex() != null) {
+                        data.put(param.getName() + "" + param.getIndex().toString(), param.getValue());
                     } else {
-                        data.put(param.getKey(), param.getValue());
+                        data.put(param.getName(), param.getValue());
                     }
                 }
             }

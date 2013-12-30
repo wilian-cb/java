@@ -23,44 +23,61 @@ package br.com.uol.pagseguro.enums;
  */
 public enum Currency {
 
-    REAL("REAL", "BRL");
+    // ISO 4217 format
+    BRL("BRL", 986);
 
     /**
-     * String name currency
+     * Currency code
      */
-    private String name;
+    private String code;
 
     /**
-     * String iso code currency
+     * Currency value
      */
-    private String iso;
+    private Integer value;
 
     /**
      * Construct
      * 
-     * @param name
-     * @param iso
+     * @param code
+     * @param value
      */
-    Currency(String name, String iso) {
-        this.name = name;
-        this.iso = iso;
+    Currency(String code, Integer value) {
+        this.setCode(code);
+        this.setValue(value);
     }
 
     /**
-     * Get Name
+     * Get currency code
      * 
-     * @return string name currency
+     * @return currency code
      */
-    public String getName() {
-        return this.name;
+    public String getCode() {
+        return this.code;
     }
 
     /**
-     * Get Iso
-     * 
-     * @return string iso code currency
+     * @param code
+     *            currency code to set
      */
-    public String getIso() {
-        return this.iso;
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    /**
+     * Get currency value
+     * 
+     * @return currency value
+     */
+    public Integer getValue() {
+        return this.value;
+    }
+
+    /**
+     * @param value
+     *            currency value to set
+     */
+    public void setValue(Integer value) {
+        this.value = value;
     }
 }

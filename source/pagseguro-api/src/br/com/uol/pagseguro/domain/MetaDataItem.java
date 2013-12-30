@@ -18,7 +18,7 @@
 
 package br.com.uol.pagseguro.domain;
 
-import br.com.uol.pagseguro.enums.EnumMetaDataItemKeys;
+import br.com.uol.pagseguro.enums.MetaDataItems;
 import br.com.uol.pagseguro.helper.PagSeguroUtil;
 
 /**
@@ -31,7 +31,7 @@ public class MetaDataItem {
     /**
      * Allow add extra information to order String key
      */
-    private String key;
+    private MetaDataItems key;
 
     /**
      * Value of corresponding key String value
@@ -52,7 +52,7 @@ public class MetaDataItem {
      * @param key
      * @param value
      */
-    public MetaDataItem(String key, String value) {
+    public MetaDataItem(MetaDataItems key, String value) {
         this.key = key;
         this.value = value;
     }
@@ -64,7 +64,7 @@ public class MetaDataItem {
      * @param value
      * @param group
      */
-    public MetaDataItem(String key, String value, Integer group) {
+    public MetaDataItem(MetaDataItems key, String value, Integer group) {
         this.key = key;
         this.value = value;
         this.group = group;
@@ -81,11 +81,11 @@ public class MetaDataItem {
 
         parameterValue = PagSeguroUtil.formatString(parameterValue, MAX_VALUE_STRING, "");
 
-        if (this.getKey().equals(EnumMetaDataItemKeys.PASSENGER_CPF.getKey())) {
+        if (this.getKey().equals(MetaDataItems.PASSENGER_CPF.getKey())) {
             parameterValue = PagSeguroUtil.getOnlyNumbers(parameterValue);
         }
 
-        if (this.getKey().equals(EnumMetaDataItemKeys.TIME_IN_GAME_DAYS.getKey())) {
+        if (this.getKey().equals(MetaDataItems.TIME_IN_GAME_DAYS.getKey())) {
             parameterValue = PagSeguroUtil.getOnlyNumbers(parameterValue);
         }
 
@@ -97,7 +97,7 @@ public class MetaDataItem {
      * 
      * @return key
      */
-    public String getKey() {
+    public MetaDataItems getKey() {
         return this.key;
     }
 
@@ -106,7 +106,7 @@ public class MetaDataItem {
      * 
      * @param key
      */
-    public void setKey(String key) {
+    public void setKey(MetaDataItems key) {
         this.key = key;
     }
 

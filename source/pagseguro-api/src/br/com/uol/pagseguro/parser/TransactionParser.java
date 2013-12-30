@@ -40,7 +40,6 @@ import br.com.uol.pagseguro.domain.PaymentMethodCode;
 import br.com.uol.pagseguro.domain.PaymentMethodType;
 import br.com.uol.pagseguro.domain.Phone;
 import br.com.uol.pagseguro.domain.Sender;
-import br.com.uol.pagseguro.domain.SenderDocument;
 import br.com.uol.pagseguro.domain.Shipping;
 import br.com.uol.pagseguro.domain.Transaction;
 import br.com.uol.pagseguro.domain.TransactionStatus;
@@ -288,36 +287,6 @@ public class TransactionParser {
                 }
 
                 sender.setPhone(phone);
-            }
-
-            // setting <transaction><sender><documents>
-            Element documentsElements = XMLParserUtils.getElement("documents", transactionElement);
-            if (documentsElements != null) {
-                List<Element> documents = XMLParserUtils.getElements("document", documentsElements);
-
-                for (int i = 0; i < documents.size(); i++) {
-
-                    // getting document Element
-                    Element docElement = documents.get(i);
-
-                    // creating new SenderDocument object
-                    SenderDocument senderDocument = new SenderDocument();
-
-                    // setting <transaction><sender><documents><document><type>
-                    tagValue = XMLParserUtils.getTagValue("type", docElement);
-                    if (tagValue != null) {
-                        senderDocument.setType(tagValue);
-                    }
-
-                    // setting <transaction><sender><documents><document><value>
-                    tagValue = XMLParserUtils.getTagValue("value", docElement);
-                    if (tagValue != null) {
-                        senderDocument.setValue(tagValue);
-                    }
-
-                    // adding document for sender documents list
-                    sender.getDocuments().add(senderDocument);
-                }
             }
 
             transaction.setSender(sender);

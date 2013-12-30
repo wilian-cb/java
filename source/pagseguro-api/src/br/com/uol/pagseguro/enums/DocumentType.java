@@ -46,27 +46,15 @@ public enum DocumentType {
      * @param description
      */
     DocumentType(String type, String description) {
-        setType(type);
-        setDescription(description);
-    }
-
-    public static DocumentType fromValue(String type) {
-
-        for (DocumentType documentType : values()) {
-            if (documentType.type.equals(type)) {
-                return documentType;
-            }
-        }
-
-        return null;
-
+        this.setType(type);
+        this.setDescription(description);
     }
 
     /**
      * @return the type
      */
     public String getType() {
-        return type;
+        return this.type;
     }
 
     /**
@@ -81,7 +69,7 @@ public enum DocumentType {
      * @return the description
      */
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     /**

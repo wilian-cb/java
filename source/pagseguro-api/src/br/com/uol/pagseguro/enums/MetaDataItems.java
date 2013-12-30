@@ -21,7 +21,7 @@ package br.com.uol.pagseguro.enums;
 /**
  * Represent available metadata item keys EnumMetaDataItemKeys
  */
-public enum EnumMetaDataItemKeys {
+public enum MetaDataItems {
 
     PASSENGER_CPF("PASSENGER_CPF", "CPF do passageiro"),
 
@@ -61,14 +61,14 @@ public enum EnumMetaDataItemKeys {
      * @param key
      * @param description
      */
-    EnumMetaDataItemKeys(String key, String description) {
+    MetaDataItems(String key, String description) {
         this.key = key;
         this.description = description;
     }
 
-    public static EnumMetaDataItemKeys fromValue(String key) {
+    public static MetaDataItems fromValue(String key) {
 
-        for (EnumMetaDataItemKeys enumMetaDataItemKeys : values()) {
+        for (MetaDataItems enumMetaDataItemKeys : values()) {
             if (enumMetaDataItemKeys.key.equals(key)) {
                 return enumMetaDataItemKeys;
             }
@@ -83,8 +83,8 @@ public enum EnumMetaDataItemKeys {
      * 
      * @return array EnumMetaDataItemKeys
      */
-    public static EnumMetaDataItemKeys[] getAvailableItemKeysList() {
-        return EnumMetaDataItemKeys.values();
+    public static MetaDataItems[] getAvailableItemKeysList() {
+        return MetaDataItems.values();
     }
 
     /**
@@ -97,7 +97,7 @@ public enum EnumMetaDataItemKeys {
 
         boolean available = false;
 
-        for (EnumMetaDataItemKeys itemKey : getAvailableItemKeysList()) {
+        for (MetaDataItems itemKey : getAvailableItemKeysList()) {
             if (key.equalsIgnoreCase(itemKey.getKey())) {
                 available = true;
             }
@@ -117,7 +117,7 @@ public enum EnumMetaDataItemKeys {
 
         String description = "";
 
-        for (EnumMetaDataItemKeys itemKey : getAvailableItemKeysList()) {
+        for (MetaDataItems itemKey : getAvailableItemKeysList()) {
             if (key.equalsIgnoreCase(itemKey.getKey())) {
                 description = itemKey.getDescription();
             }
@@ -137,7 +137,7 @@ public enum EnumMetaDataItemKeys {
 
         String key = "";
 
-        for (EnumMetaDataItemKeys itemDescription : getAvailableItemKeysList()) {
+        for (MetaDataItems itemDescription : getAvailableItemKeysList()) {
             if (description.equalsIgnoreCase(itemDescription.getDescription())) {
                 key = itemDescription.getKey();
             }

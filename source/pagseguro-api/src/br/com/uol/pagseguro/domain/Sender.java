@@ -21,6 +21,7 @@ package br.com.uol.pagseguro.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.uol.pagseguro.enums.DocumentType;
 import br.com.uol.pagseguro.helper.PagSeguroUtil;
 
 /**
@@ -148,7 +149,7 @@ public class Sender {
      * @param type
      * @param value
      */
-    public void addDocument(String type, String value) {
+    public void addDocument(DocumentType type, String value) {
         this.getDocuments().add(new SenderDocument(type, value));
     }
 
@@ -157,8 +158,7 @@ public class Sender {
      */
     @Override
     public String toString() {
-        return "Sender [name=" + name + ", email=" + email + ", phone=" + phone
-                + ", documents=" + documents + "]";
+        return "Sender [name=" + name + ", email=" + email + ", phone=" + phone + ", documents=" + documents + "]";
     }
 
 }

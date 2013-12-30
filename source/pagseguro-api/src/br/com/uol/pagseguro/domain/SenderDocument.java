@@ -18,6 +18,7 @@
 
 package br.com.uol.pagseguro.domain;
 
+import br.com.uol.pagseguro.enums.DocumentType;
 import br.com.uol.pagseguro.helper.PagSeguroUtil;
 
 /**
@@ -27,7 +28,7 @@ import br.com.uol.pagseguro.helper.PagSeguroUtil;
 public class SenderDocument {
 
     /** Sender document type */
-    private String type;
+    private DocumentType type;
 
     /** Sender document value */
     private String value;
@@ -42,11 +43,11 @@ public class SenderDocument {
     /**
      * The constructor
      * 
-     * @param type
+     * @param documentType
      * @param value
      */
-    public SenderDocument(String type, String value) {
-        this.type = type.toUpperCase();
+    public SenderDocument(DocumentType type, String value) {
+        this.type = type;
         this.value = PagSeguroUtil.getOnlyNumbers(value);
     }
 
@@ -55,7 +56,7 @@ public class SenderDocument {
      * 
      * @return String
      */
-    public String getType() {
+    public DocumentType getType() {
         return this.type;
     }
 
@@ -65,8 +66,8 @@ public class SenderDocument {
      * @param String
      *            type
      */
-    public void setType(String type) {
-        this.type = type.toUpperCase();
+    public void setType(DocumentType type) {
+        this.type = type;
     }
 
     /**

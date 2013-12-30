@@ -20,14 +20,14 @@ package br.com.uol.pagseguro.domain;
 
 /**
  * 
- * Represent a parameter item*
+ * Represent a parameter item
  */
 public class ParameterItem {
 
     /**
-     * String key
+     * String name
      */
-    private String key;
+    private String name;
 
     /**
      * String value
@@ -37,7 +37,7 @@ public class ParameterItem {
     /**
      * Integer group
      */
-    private Integer group;
+    private Integer index;
 
     /**
      * Construct Default
@@ -48,25 +48,25 @@ public class ParameterItem {
     /**
      * Construct ParameterItem
      * 
-     * @param key
+     * @param name
      * @param value
      */
-    public ParameterItem(String key, String value) {
-        this.key = key;
+    public ParameterItem(String name, String value) {
+        this.name = name;
         this.value = value;
     }
 
     /**
      * Construct ParameterItem
      * 
-     * @param key
+     * @param name
      * @param value
-     * @param group
+     * @param index
      */
-    public ParameterItem(String key, String value, Integer group) {
-        this.key = key;
+    public ParameterItem(String name, String value, Integer index) {
+        this.name = name;
         this.value = value;
-        this.group = group;
+        this.index = index;
     }
 
     /**
@@ -74,8 +74,8 @@ public class ParameterItem {
      * 
      * @return key
      */
-    public String getKey() {
-        return this.key;
+    public String getName() {
+        return this.name;
     }
 
     /**
@@ -83,8 +83,8 @@ public class ParameterItem {
      * 
      * @param key
      */
-    public void setKey(String key) {
-        this.key = key;
+    public void setName(String key) {
+        this.name = key;
     }
 
     /**
@@ -110,17 +110,17 @@ public class ParameterItem {
      * 
      * @return group
      */
-    public Integer getGroup() {
-        return this.group;
+    public Integer getIndex() {
+        return this.index;
     }
 
     /**
      * Set Group
      * 
-     * @param group
+     * @param index
      */
-    public void setGroup(Integer group) {
-        this.group = group;
+    public void setIndex(Integer index) {
+        this.index = index;
     }
 
 }

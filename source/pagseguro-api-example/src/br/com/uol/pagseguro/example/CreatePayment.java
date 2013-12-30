@@ -20,6 +20,9 @@ package br.com.uol.pagseguro.example;
 import java.math.BigDecimal;
 
 import br.com.uol.pagseguro.domain.PaymentRequest;
+import br.com.uol.pagseguro.enums.Currency;
+import br.com.uol.pagseguro.enums.DocumentType;
+import br.com.uol.pagseguro.enums.MetaDataItems;
 import br.com.uol.pagseguro.enums.ShippingType;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
 import br.com.uol.pagseguro.properties.PagSeguroConfig;
@@ -34,9 +37,6 @@ public class CreatePayment {
         // Instantiate a new payment request
         PaymentRequest paymentRequest = new PaymentRequest();
 
-        // Sets the currency
-        paymentRequest.setCurrency("BRL");
-
         // Add an item for this payment request
         paymentRequest.addItem("0001", "Notebook Prata", Integer.valueOf(1), new BigDecimal("2430.00"), new Long(1000),
                 null);
@@ -45,21 +45,25 @@ public class CreatePayment {
         paymentRequest.addItem("0002", "Notebook Rosa", Integer.valueOf(2), new BigDecimal("2560.00"), new Long(750),
                 null);
 
-        // Sets a reference code for this payment request, it's useful to
-        // identify this payment in future notifications.
-        paymentRequest.setReference("REF1234");
+        paymentRequest.setShippingAddress("BRA", "SP", "Sao Paulo", "Jardim Paulistano", "01452002",
+                "Av. Brig. Faria Lima", "1384", "5o andar");
 
         // Sets shipping information for this payment request
         paymentRequest.setShippingType(ShippingType.SEDEX);
-
-        paymentRequest.setShippingAddress("BRA", "SP", "Sao Paulo", "Jardim Paulistano", "01452002",
-                "Av. Brig. Faria Lima", "1384", "5o andar");
 
         // Sets value of shipping cost for this payment request
         paymentRequest.setShippingCost(new BigDecimal("2.02"));
 
         // Sets your customer information.
-        paymentRequest.setSender("Joao Comprador", "comprador@uol.com.br", "11", "56273440", "CPF", "000.000.001-91");
+        paymentRequest.setSender("Joao Comprador", "comprador@uol.com.br", "11", "56273440", DocumentType.CPF,
+                "000.000.001-91");
+
+        // Sets the currency
+        paymentRequest.setCurrency(Currency.BRL);
+
+        // Sets a reference code for this payment request, it's useful to
+        // identify this payment in future notifications.
+        paymentRequest.setReference("REF1234");
 
         // Sets notificationURL information
         paymentRequest.setNotificationURL("http://www.meusite.com.br/notification");
@@ -77,9 +81,9 @@ public class CreatePayment {
         paymentRequest.addIndexedParameter("itemWeight", "320", 3);
 
         // Add checkout metadata information
-        paymentRequest.addMetaData("PASSENGER_CPF", "15600944276", 1);
-        paymentRequest.addMetaData("GAME_NAME", "DOTA");
-        paymentRequest.addMetaData("PASSENGER_PASSPORT", "23456", 1);
+        paymentRequest.addMetaData(MetaDataItems.PASSENGER_CPF, "15600944276", 1);
+        paymentRequest.addMetaData(MetaDataItems.GAME_NAME, "DOTA");
+        paymentRequest.addMetaData(MetaDataItems.PASSENGER_PASSPORT, "23456", 1);
 
         try {
 
