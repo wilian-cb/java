@@ -37,14 +37,13 @@ import br.com.uol.pagseguro.domain.MetaDataItem;
 import br.com.uol.pagseguro.domain.ParameterItem;
 import br.com.uol.pagseguro.domain.PaymentRequest;
 import br.com.uol.pagseguro.domain.SenderDocument;
-import br.com.uol.pagseguro.helper.PagSeguroUtil;
 import br.com.uol.pagseguro.xmlparser.XMLParserUtils;
 
 /**
  * Parses PaymentRequests and responses
  */
 public class PaymentParser {
-    
+
     private PaymentParser() {
     }
 
@@ -84,12 +83,10 @@ public class PaymentParser {
             if (payment.getSender().getPhone() != null) {
 
                 if (payment.getSender().getPhone().getAreaCode() != null) {
-                    data.put("senderAreaCode", payment.getSender().getPhone()
-                            .getAreaCode());
+                    data.put("senderAreaCode", payment.getSender().getPhone().getAreaCode());
                 }
                 if (payment.getSender().getPhone().getNumber() != null) {
-                    data.put("senderPhone", payment.getSender().getPhone()
-                            .getNumber());
+                    data.put("senderPhone", payment.getSender().getPhone().getNumber());
                 }
             }
 
@@ -99,9 +96,9 @@ public class PaymentParser {
              * @see Documents
              */
             if (payment.getSender().getDocuments() != null) {
-                
+
                 List<SenderDocument> documents = payment.getSender().getDocuments();
-                
+
                 if (!documents.isEmpty()) {
                     for (SenderDocument document : documents) {
                         if (document.getValue() != null) {
@@ -109,7 +106,7 @@ public class PaymentParser {
                         }
                     }
                 }
-                
+
             }
         }
 
@@ -155,7 +152,7 @@ public class PaymentParser {
                 }
 
                 if (item.getShippingCost() != null) {
-                    data.put("itemShippingCost" + count.toString(), PagSeguroUtil.decimalFormat(item.getShippingCost().doubleValue()));
+                    data.put("itemShippingCost" + count.toString(), item.getShippingCost());
                 }
             }
 
@@ -165,7 +162,7 @@ public class PaymentParser {
          * SET EXTRA AMOUNT
          */
         if (payment.getExtraAmount() != null) {
-            data.put("extraAmount", PagSeguroUtil.decimalFormat(payment.getExtraAmount().doubleValue()));
+            data.put("extraAmount", payment.getExtraAmount());
         }
         /**
          * SET SHIPPING
@@ -244,14 +241,16 @@ public class PaymentParser {
          * 
          * @see MetaData
          */
-        if (payment.getMetaData() != null && payment.getMetaData().getItems() != null && !payment.getMetaData().getItems().isEmpty()) {
+        if (payment.getMetaData() != null && payment.getMetaData().getItems() != null
+                && !payment.getMetaData().getItems().isEmpty()) {
 
             Integer count = 0;
 
             for (MetaDataItem meta : payment.getMetaData().getItems()) {
 
-                if ((meta.getKey() != null && !"".equals(meta.getKey())) && (meta.getValue() != null && !"".equals(meta.getValue()))) {
-                    
+                if ((meta.getKey() != null && !"".equals(meta.getKey()))
+                        && (meta.getValue() != null && !"".equals(meta.getValue()))) {
+
                     count++;
                     data.put("metadataItemKey" + count.toString(), meta.getKey());
                     data.put("metadataItemValue" + count.toString(), meta.getValue());
@@ -259,10 +258,10 @@ public class PaymentParser {
                     if (meta.getGroup() != null) {
                         data.put("metadataItemGroup" + count.toString(), meta.getGroup());
                     }
-                    
+
                 }
             }
-            
+
         }
 
         /**
@@ -270,11 +269,13 @@ public class PaymentParser {
          * 
          * @see Parameter
          */
-        if (payment.getParameter() != null && payment.getParameter().getItems() != null && !payment.getParameter().getItems().isEmpty()) {
+        if (payment.getParameter() != null && payment.getParameter().getItems() != null
+                && !payment.getParameter().getItems().isEmpty()) {
 
             for (ParameterItem param : payment.getParameter().getItems()) {
 
-                if ((param.getKey() != null && !"".equals(param.getKey())) && (param.getValue() != null && !"".equals(param.getValue()))) {
+                if ((param.getKey() != null && !"".equals(param.getKey()))
+                        && (param.getValue() != null && !"".equals(param.getValue()))) {
                     if (param.getGroup() != null) {
                         data.put(param.getKey() + "" + param.getGroup().toString(), param.getValue());
                     } else {
@@ -282,20 +283,21 @@ public class PaymentParser {
                     }
                 }
             }
-            
+
         }
 
         return data;
 
     }
 
-    public static String readSuccessXml(HttpURLConnection connection) throws ParserConfigurationException, SAXException, IOException {
+    public static String readSuccessXml(HttpURLConnection connection) throws ParserConfigurationException,
+            SAXException, IOException {
 
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(connection.getInputStream());
         Element paymentReturnElement = doc.getDocumentElement();
-        
+
         return XMLParserUtils.getTagValue("code", paymentReturnElement);
 
     }

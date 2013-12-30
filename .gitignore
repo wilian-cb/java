@@ -17,6 +17,12 @@ local.properties
 .loadpath
 
 #################
+## IntelliJ
+#################
+.idea/
+*.iml
+
+#################
 ## Netbeans
 #################
 classes/
