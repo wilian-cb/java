@@ -20,7 +20,6 @@ package br.com.uol.pagseguro.example;
 import java.math.BigDecimal;
 
 import br.com.uol.pagseguro.domain.PaymentRequest;
-import br.com.uol.pagseguro.enums.Currency;
 import br.com.uol.pagseguro.enums.ShippingType;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
 import br.com.uol.pagseguro.properties.PagSeguroConfig;
@@ -36,7 +35,7 @@ public class CreatePayment {
         PaymentRequest paymentRequest = new PaymentRequest();
 
         // Sets the currency
-        paymentRequest.setCurrency(Currency.REAL.getIso());
+        paymentRequest.setCurrency("BRL");
 
         // Add an item for this payment request
         paymentRequest.addItem("0001", "Notebook Prata", Integer.valueOf(1), new BigDecimal("2430.00"), new Long(1000),

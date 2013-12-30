@@ -56,7 +56,7 @@ public class PaymentRequest {
 
     /**
      * Extra amount to be added to the transaction total
-     * 
+     *
      * This value can be used to add an extra charge to the transaction or provide a discount in the case ExtraAmount is
      * a negative value.
      */
@@ -64,7 +64,7 @@ public class PaymentRequest {
 
     /**
      * Reference code
-     * 
+     *
      * Optional. You can use the reference code to store an identifier so you can associate the PagSeguro transaction to
      * a transaction in your system.
      */
@@ -77,7 +77,7 @@ public class PaymentRequest {
 
     /**
      * How long this payment request will remain valid, in seconds.
-     * 
+     *
      * Optional. After this payment request is submitted, the payment code returned will remain valid for the period
      * specified here.
      */
@@ -85,7 +85,7 @@ public class PaymentRequest {
 
     /**
      * How many times the payment redirect uri returned by the payment web service can be accessed.
-     * 
+     *
      * Optional. After this payment request is submitted, the payment redirect uri returned by the payment web service
      * will remain valid for the number of uses specified here.
      */
@@ -93,7 +93,7 @@ public class PaymentRequest {
 
     /**
      * Determines for which url PagSeguro will send the order related notifications codes.
-     * 
+     *
      * Optional. Any change happens in the transaction status, a new notification request will be send to this url. You
      * can use that for update the related order.
      */
@@ -101,18 +101,18 @@ public class PaymentRequest {
 
     /**
      * Extra parameters that user can add to a PagSeguro checkout request
-     * 
+     *
      * Optional.
-     * 
+     *
      * @var MetaData
      */
     private MetaData metaData;
 
     /**
      * Extra parameters that user can add to a PagSeguro checkout request
-     * 
+     *
      * Optional
-     * 
+     *
      * @var PagSeguroParameter
      */
     private Parameter parameter;
@@ -125,7 +125,7 @@ public class PaymentRequest {
 
     /**
      * @return the sender
-     * 
+     *
      *         Party that will be sending the Uri to where the PagSeguro payment page should redirect the user after the
      *         payment information is processed. money
      */
@@ -135,23 +135,20 @@ public class PaymentRequest {
 
     /**
      * Sets the Sender, party that will be sending the money
-     * 
+     *
      * @param sender
-     * @return
      */
-    public PaymentRequest setSender(Sender sender) {
+    public void setSender(Sender sender) {
         this.sender = sender;
-        return this;
     }
 
     /**
      * Sets the Sender, party that will be sending the money
-     * 
+     *
      * @param name
      * @param email
-     * @return
      */
-    public PaymentRequest setSender(String name, String email) {
+    public void setSender(String name, String email) {
 
         if (this.sender == null) {
             this.sender = new Sender();
@@ -160,20 +157,17 @@ public class PaymentRequest {
         this.sender.setName(name);
         this.sender.setEmail(email);
 
-        return this;
-
     }
 
     /**
      * Sets the Sender, party that will be sending the money
-     * 
+     *
      * @param name
      * @param email
      * @param areaCode
      * @param number
-     * @return
      */
-    public PaymentRequest setSender(String name, String email, String areaCode, String number) {
+    public void setSender(String name, String email, String areaCode, String number) {
 
         if (this.sender == null) {
             this.sender = new Sender();
@@ -183,22 +177,20 @@ public class PaymentRequest {
         this.sender.setEmail(email);
         this.sender.setPhone(new Phone(areaCode, number));
 
-        return this;
     }
 
     /**
      * Sets the Sender, party that will be sending the money
-     * 
+     *
      * @param name
      * @param email
      * @param areaCode
      * @param number
      * @param documentType
      * @param documentValue
-     * @return
      */
-    public PaymentRequest setSender(String name, String email, String areaCode, String number, String documentType,
-            String documentValue) {
+    public void setSender(String name, String email, String areaCode, String number, String documentType,
+                          String documentValue) {
 
         if (this.sender == null) {
             this.sender = new Sender();
@@ -209,26 +201,21 @@ public class PaymentRequest {
         this.sender.setPhone(new Phone(areaCode, number));
         this.sender.addDocument(documentType, documentValue);
 
-        return this;
-
     }
 
     /**
      * Sets the Sender phone number, phone of the party that will be sending the money
-     * 
+     *
      * @param areaCode
      * @param number
-     * @return
      */
-    public PaymentRequest setSenderPhone(String areaCode, String number) {
+    public void setSenderPhone(String areaCode, String number) {
 
         if (this.sender == null) {
             this.sender = new Sender();
         }
 
         this.sender.setPhone(new Phone(areaCode, number));
-
-        return this;
 
     }
 
@@ -241,13 +228,11 @@ public class PaymentRequest {
 
     /**
      * Sets the currency
-     * 
+     *
      * @param currency
-     * @return
      */
-    public PaymentRequest setCurrency(String currency) {
+    public void setCurrency(String currency) {
         this.currency = currency;
-        return this;
     }
 
     /**
@@ -266,22 +251,20 @@ public class PaymentRequest {
 
     /**
      * Sets the items/products list in this payment request
-     * 
+     *
      * @see Item
-     * 
+     *
      * @param items
-     * @return
      */
-    public PaymentRequest setItems(List<Item> items) {
+    public void setItems(List<Item> items) {
         this.items = items;
-        return this;
     }
 
     /**
      * Adds a new product/item in this payment request
-     * 
+     *
      * @see Item
-     * 
+     *
      * @param id
      * @param description
      * @param quantity
@@ -290,15 +273,15 @@ public class PaymentRequest {
      * @param shippingCost
      */
     public void addItem(String id, String description, Integer quantity, BigDecimal amount, Long weight,
-            BigDecimal shippingCost) {
+                        BigDecimal shippingCost) {
         this.getItems().add(new Item(id, description, quantity, amount, weight, shippingCost));
     }
 
     /**
      * Adds a new product/item in this payment request
-     * 
+     *
      * @see Item
-     * 
+     *
      * @param item
      */
     public void addItem(Item item) {
@@ -308,7 +291,7 @@ public class PaymentRequest {
     /**
      * Uri to where the PagSeguro payment page should redirect the user after the payment information is processed.
      * Typically this is a confirmation page on your web site.
-     * 
+     *
      * @return the redirectURL
      */
     public String getRedirectURL() {
@@ -317,22 +300,20 @@ public class PaymentRequest {
 
     /**
      * Sets the redirect URL
-     * 
+     *
      * Uri to where the PagSeguro payment page should redirect the user after the payment information is processed.
      * Typically this is a confirmation page on your web site.
-     * 
+     *
      * @param redirectURL
-     * @return
      */
-    public PaymentRequest setRedirectURL(String redirectURL) {
+    public void setRedirectURL(String redirectURL) {
         this.redirectURL = this.verifyURLTest(redirectURL);
-        return this;
     }
 
     /**
      * This value can be used to add an extra charge to the transaction or provide a discount in the case ExtraAmount is
      * a negative value.
-     * 
+     *
      * @return the extra amount
      */
     public BigDecimal getExtraAmount() {
@@ -342,13 +323,11 @@ public class PaymentRequest {
     /**
      * Sets the extra amount This value can be used to add an extra charge to the transaction or provide a discount in
      * the case <b>extraAmount</b> is a negative value.
-     * 
+     *
      * @param extraAmount
-     * @return
      */
-    public PaymentRequest setExtraAmount(BigDecimal extraAmount) {
+    public void setExtraAmount(BigDecimal extraAmount) {
         this.extraAmount = extraAmount;
-        return this;
     }
 
     /**
@@ -360,13 +339,11 @@ public class PaymentRequest {
 
     /**
      * Sets the reference of this payment request
-     * 
+     *
      * @param reference
-     * @return
      */
-    public PaymentRequest setReference(String reference) {
+    public void setReference(String reference) {
         this.reference = reference;
-        return this;
     }
 
     /**
@@ -379,44 +356,39 @@ public class PaymentRequest {
 
     /**
      * Sets the shipping information for this payment request
-     * 
+     *
      * @see Shipping
-     * 
+     *
      * @param shipping
      */
-    public PaymentRequest setShipping(Shipping shipping) {
+    public void setShipping(Shipping shipping) {
         this.shipping = shipping;
-        return this;
     }
 
     /**
      * Sets the shipping type for this payment request
-     * 
+     *
      * @see ShippingType
-     * 
+     *
      * @param type
-     * @return
      */
-    public PaymentRequest setShippingType(ShippingType type) {
+    public void setShippingType(ShippingType type) {
 
         if (this.shipping == null) {
             this.shipping = new Shipping();
         }
 
         this.shipping.setType(type);
-
-        return this;
 
     }
 
     /**
      * Sets the value of the shipping. <br />
      * Use it when you calculate the value of the shipping.
-     * 
+     *
      * @param cost
-     * @return
      */
-    public PaymentRequest setShippingCost(BigDecimal cost) {
+    public void setShippingCost(BigDecimal cost) {
 
         if (this.shipping == null) {
             this.shipping = new Shipping();
@@ -424,13 +396,11 @@ public class PaymentRequest {
 
         this.shipping.setCost(cost);
 
-        return this;
-
     }
 
     /**
      * Sets the shipping information for this payment
-     * 
+     *
      * @param type
      * @param country
      * @param state
@@ -440,10 +410,9 @@ public class PaymentRequest {
      * @param street
      * @param number
      * @param complement
-     * @return
      */
-    public PaymentRequest setShipping(ShippingType type, String country, String state, String city, String district,
-            String postalCode, String street, String number, String complement) {
+    public void setShipping(ShippingType type, String country, String state, String city, String district,
+                            String postalCode, String street, String number, String complement) {
 
         if (this.shipping == null) {
             this.shipping = new Shipping();
@@ -452,13 +421,11 @@ public class PaymentRequest {
         this.shipping.setType(type);
         this.shipping.setAddress(new Address(country, state, city, district, postalCode, street, number, complement));
 
-        return this;
-
     }
 
     /**
      * /** Sets the shipping information for this payment
-     * 
+     *
      * @param type
      * @param country
      * @param state
@@ -469,21 +436,18 @@ public class PaymentRequest {
      * @param number
      * @param complement
      * @param cost
-     * @return
      */
-    public PaymentRequest setShipping(ShippingType type, String country, String state, String city, String district,
-            String postalCode, String street, String number, String complement, BigDecimal cost) {
+    public void setShipping(ShippingType type, String country, String state, String city, String district,
+                            String postalCode, String street, String number, String complement, BigDecimal cost) {
 
         this.setShipping(type, country, state, city, district, postalCode, street, number, complement);
         this.shipping.setCost(cost);
-
-        return this;
 
     }
 
     /**
      * Sets the shipping address for this payment request
-     * 
+     *
      * @param country
      * @param state
      * @param city
@@ -492,10 +456,9 @@ public class PaymentRequest {
      * @param street
      * @param number
      * @param complement
-     * @return
      */
-    public PaymentRequest setShippingAddress(String country, String state, String city, String district,
-            String postalCode, String street, String number, String complement) {
+    public void setShippingAddress(String country, String state, String city, String district,
+                                   String postalCode, String street, String number, String complement) {
 
         if (this.shipping == null) {
             this.shipping = new Shipping();
@@ -503,17 +466,14 @@ public class PaymentRequest {
 
         this.shipping.setAddress(new Address(country, state, city, district, postalCode, street, number, complement));
 
-        return this;
-
     }
 
     /**
      * Sets the shipping address for this payment request
-     * 
+     *
      * @param address
-     * @return
      */
-    public PaymentRequest setShippingAddress(Address address) {
+    public void setShippingAddress(Address address) {
 
         if (this.shipping == null) {
             this.shipping = new Shipping();
@@ -521,13 +481,11 @@ public class PaymentRequest {
 
         this.shipping.setAddress(address);
 
-        return this;
-
     }
 
     /**
      * @return the max age of this payment request
-     * 
+     *
      *         After this payment request is submitted, the payment code returned will remain valid for the period
      *         specified.
      */
@@ -538,19 +496,17 @@ public class PaymentRequest {
     /**
      * Sets the max age of this payment request After this payment request is submitted, the payment code returned will
      * remain valid for the period specified here.
-     * 
+     *
      * @param maxAge
-     * @return
      */
-    public PaymentRequest setMaxAge(BigInteger maxAge) {
+    public void setMaxAge(BigInteger maxAge) {
         this.maxAge = maxAge;
-        return this;
     }
 
     /**
      * After this payment request is submitted, the payment redirect uri returned by the payment web service will remain
      * valid for the number of uses specified here.
-     * 
+     *
      * @return the max uses configured for this payment request
      */
     public BigInteger getMaxUses() {
@@ -559,21 +515,19 @@ public class PaymentRequest {
 
     /**
      * Sets the max uses of this payment request
-     * 
+     *
      * After this payment request is submitted, the payment redirect uri returned by the payment web service will remain
      * valid for the number of uses specified here.
-     * 
+     *
      * @param maxUses
-     * @return
      */
-    public PaymentRequest setMaxUses(BigInteger maxUses) {
+    public void setMaxUses(BigInteger maxUses) {
         this.maxUses = maxUses;
-        return this;
     }
 
     /**
      * Get the notification status url
-     * 
+     *
      * @return String
      */
     public String getNotificationURL() {
@@ -582,7 +536,7 @@ public class PaymentRequest {
 
     /**
      * Sets the url that PagSeguro will send the new notifications statuses
-     * 
+     *
      * @param notificationURL
      */
     public void setNotificationURL(String notificationURL) {
@@ -591,7 +545,7 @@ public class PaymentRequest {
 
     /**
      * Add document for sender documents list
-     * 
+     *
      * @param document
      */
     public void addSenderDocument(SenderDocument document) {
@@ -600,7 +554,7 @@ public class PaymentRequest {
 
     /**
      * Add document for sender documents list
-     * 
+     *
      * @param type
      * @param value
      */
@@ -610,7 +564,7 @@ public class PaymentRequest {
 
     /**
      * Get MetaData
-     * 
+     *
      * @return MetaData
      */
     public MetaData getMetaData() {
@@ -625,7 +579,7 @@ public class PaymentRequest {
 
     /**
      * Sets metadata for PagSeguro checkout requests
-     * 
+     *
      * @param MetaData
      *            metaData
      */
@@ -635,7 +589,7 @@ public class PaymentRequest {
 
     /**
      * add a parameter for PagSeguro metadata checkout request
-     * 
+     *
      * @param key
      * @param value
      * @param group
@@ -646,7 +600,7 @@ public class PaymentRequest {
 
     /**
      * add a parameter for PagSeguro metadata checkout request
-     * 
+     *
      * @param key
      * @param value
      */
@@ -656,7 +610,7 @@ public class PaymentRequest {
 
     /**
      * Gets parameter for PagSeguro checkout requests
-     * 
+     *
      * @return Parameter
      */
     public Parameter getParameter() {
@@ -671,7 +625,7 @@ public class PaymentRequest {
 
     /**
      * Sets parameter for PagSeguro checkout requests
-     * 
+     *
      * @param parameter
      */
     public void setParameter(Parameter parameter) {
@@ -680,7 +634,7 @@ public class PaymentRequest {
 
     /**
      * add a parameter for PagSeguro checkout request
-     * 
+     *
      * @param key
      * @param value
      */
@@ -690,7 +644,7 @@ public class PaymentRequest {
 
     /**
      * add a parameter for PagSeguro checkout request
-     * 
+     *
      * @param key
      * @param value
      * @param group
@@ -701,7 +655,7 @@ public class PaymentRequest {
 
     /**
      * Calls the PagSeguro web service and register this request for payment
-     * 
+     *
      * @param credentials
      * @return The URL to where the user needs to be redirected to in order to complete the payment process
      * @throws PagSeguroServiceException
@@ -712,7 +666,7 @@ public class PaymentRequest {
 
     /**
      * Calls the PagSeguro web service and register this request for payment
-     * 
+     *
      * @param credentials
      * @param onlyCheckoutCode
      * @return The URL to where the user needs to be redirected to in order to complete the payment process or the
@@ -739,7 +693,7 @@ public class PaymentRequest {
 
     /**
      * Verify if the address of notificationURL or redirectURL is for tests and return empty
-     * 
+     *
      * @param type
      *            url
      * @return type

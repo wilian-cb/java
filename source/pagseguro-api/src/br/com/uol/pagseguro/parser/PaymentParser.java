@@ -155,7 +155,7 @@ public class PaymentParser {
                 }
 
                 if (item.getShippingCost() != null) {
-                    data.put("itemShippingCost" + count.toString(), PagSeguroUtil.decimalFormat(item.getShippingCost().doubleValue()));
+                    data.put("itemShippingCost" + count.toString(), item.getShippingCost());
                 }
             }
 
@@ -165,7 +165,7 @@ public class PaymentParser {
          * SET EXTRA AMOUNT
          */
         if (payment.getExtraAmount() != null) {
-            data.put("extraAmount", PagSeguroUtil.decimalFormat(payment.getExtraAmount().doubleValue()));
+            data.put("extraAmount", payment.getExtraAmount());
         }
         /**
          * SET SHIPPING
