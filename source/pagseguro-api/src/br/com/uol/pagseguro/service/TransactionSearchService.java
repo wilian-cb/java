@@ -177,7 +177,7 @@ public class TransactionSearchService {
 
             httpStatusCode = HttpStatus.fromCode(response.getResponseCode());
 
-            if (HttpURLConnection.HTTP_OK == httpStatusCode.getStatus().intValue()) {
+            if (HttpURLConnection.HTTP_OK == httpStatusCode.getCode().intValue()) {
 
                 Transaction transaction = TransactionParser.readTransaction(response.getInputStream());
 
@@ -186,7 +186,7 @@ public class TransactionSearchService {
 
                 return transaction;
 
-            } else if(HttpURLConnection.HTTP_BAD_REQUEST == httpStatusCode.getStatus().intValue()) {
+            } else if(HttpURLConnection.HTTP_BAD_REQUEST == httpStatusCode.getCode().intValue()) {
 
                 List<Error> listErrors = ErrorsParser.readErrosXml(response.getErrorStream());
 
@@ -249,7 +249,7 @@ public class TransactionSearchService {
 
             httpStatusCode = HttpStatus.fromCode(response.getResponseCode());
 
-            if (HttpURLConnection.HTTP_OK == httpStatusCode.getStatus().intValue()) {
+            if (HttpURLConnection.HTTP_OK == httpStatusCode.getCode().intValue()) {
 
                 TransactionSearchResulParser.getHandler(response.getInputStream(), search);
 
@@ -258,7 +258,7 @@ public class TransactionSearchService {
 
                 return search;
 
-            } else if(HttpURLConnection.HTTP_BAD_REQUEST == httpStatusCode.getStatus().intValue()) {
+            } else if(HttpURLConnection.HTTP_BAD_REQUEST == httpStatusCode.getCode().intValue()) {
 
                 List<Error> listErrors = ErrorsParser.readErrosXml(response.getErrorStream());
 

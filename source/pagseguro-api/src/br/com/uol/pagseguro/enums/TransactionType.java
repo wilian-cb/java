@@ -19,27 +19,45 @@
 package br.com.uol.pagseguro.enums;
 
 /**
- * Enum constants that represents notificationTypes that can be returned by PagSeguro
+ * Enum constants that represents a list of known transaction types
  */
-public enum NotificationType {
+public enum TransactionType {
 
-    TRANSACTION("THIS NOTIFICATION REPRESENTS A TRANSACTION", "transaction"),
+    PAYMENT("PAYMENT", 1),
 
-    UNKNOWN_TYPE("UNKNOWN TYPE. SEE ONLINE DOCUMENTATION", "unknown");
+    TRANSFER("TRANSFER", 2),
+
+    FUND_ADDITION("FUND ADDITION", 3),
+
+    WITHDRAW("WITHDRAW", 4),
+
+    CHARGE("CHARGE", 5),
+
+    DONATION("DONATION", 6),
+
+    BONUS("BONUS", 7),
+
+    BONUS_REPASS("BONUS REPASS", 8),
+
+    OPERATIONAL("OPERATIONAL", 9),
+
+    POLITICAL_DONATION("POLITICAL DONATION", 10),
+
+    UNKNOWN_TYPE("UNKNOWN TYPE. SEE ONLINE DOCUMENTATION", -1);
 
     private String description;
 
-    private String value;
+    private Integer value;
 
     /**
      * Initializes a newly created enum constant of this type with the specified arguments
      * 
      * @param description
-     *            - the description of the enum constant
+     *            - the type of the enum constant
      * @param value
      *            - the value of the enum constant
      */
-    NotificationType(String description, String value) {
+    TransactionType(String description, Integer value) {
         this.setDescription(description);
         this.setValue(value);
     }
@@ -52,11 +70,11 @@ public enum NotificationType {
      *            - the value of the enum constant to be returned
      * @return the enum constant from a given value
      */
-    public static NotificationType fromValue(String value) {
+    public static TransactionType fromValue(Integer value) {
 
-        for (NotificationType notificationType : values()) {
-            if (notificationType.value.equals(value)) {
-                return notificationType;
+        for (TransactionType transactionType : values()) {
+            if (transactionType.value.equals(value)) {
+                return transactionType;
             }
         }
 
@@ -69,7 +87,7 @@ public enum NotificationType {
      * @return this enum constant description
      */
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     /**
@@ -83,18 +101,16 @@ public enum NotificationType {
     /**
      * @return this enum constant value
      */
-    public String getValue() {
-        return this.value;
-
+    public Integer getValue() {
+        return value;
     }
 
     /**
      * @param value
      *            - new value for this enum constant
      */
-    public void setValue(String value) {
+    public void setValue(Integer value) {
         this.value = value;
-
     }
 
 }

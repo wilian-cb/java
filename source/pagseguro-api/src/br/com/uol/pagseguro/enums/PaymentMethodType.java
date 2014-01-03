@@ -19,53 +19,59 @@
 package br.com.uol.pagseguro.enums;
 
 /**
- * 
- * EnumPaymentMethodType
+ * Enum constants that represents a list of known paymentMethodTypes
  */
-public enum EnumPaymentMethodType {
+public enum PaymentMethodType {
 
-    CREDIT_CARD("CREDIT_CARD", 1),
+    CREDIT_CARD("CREDIT CARD", 1),
 
-    BOLETO("BOLETO", 2),
+    BOLETO("BANK PAYMENT ORDER", 2),
 
-    ONLINE_TRANSFER("ONLINE_TRANSFER", 3),
+    ONLINE_TRANSFER("WIRE TRANSFER", 3),
 
-    BALANCE("BALANCE", 4),
+    BALANCE("PAGSEGURO BALANCE", 4),
 
-    OI_PAGGO("OI_PAGGO", 5),
+    OI_PAGGO("OI PAGGO - IT'S A KIND OF MOBILE PAYMENT", 5),
 
-    DIRECT_DEPOSIT("DIRECT_DEPOSIT", 7);
+    DIRECT_DEPOSIT("DIRECT DEPOSIT", 7),
 
-    /**
-     * String type method payment
-     */
+    UNKNOWN_TYPE("UNKNOWN TYPE. SEE ONLINE DOCUMENTATION", -1);
+
     private String type;
 
-    /**
-     * Integer value type payment
-     */
     private Integer value;
 
     /**
-     * Construct
+     * Initializes a newly created enum constant of this type with the specified arguments
      * 
      * @param type
+     *            - the type of the enum constant
      * @param value
+     *            - the value of the enum constant
      */
-    EnumPaymentMethodType(String type, Integer value) {
-        setType(type);
-        setValue(value);
+    PaymentMethodType(String type, Integer value) {
+        this.setType(type);
+        this.setValue(value);
     }
 
-    public static EnumPaymentMethodType fromValue(Integer value) {
+    /**
+     * Returns the enum constant of this type with the specified value. If a given value are not recognized return a
+     * generic enum constant <code>UNKNOWN_TYPE</code>
+     * 
+     * @param value
+     *            - the value of the enum constant to be returned
+     * @return the enum constant from a given value
+     */
+    public static PaymentMethodType fromValue(Integer value) {
 
-        for (EnumPaymentMethodType enumPaymentMethodType : values()) {
-            if (enumPaymentMethodType.value.equals(value)) {
-                return enumPaymentMethodType;
+        for (PaymentMethodType paymentMethodType : values()) {
+            if (paymentMethodType.value.equals(value)) {
+                return paymentMethodType;
             }
         }
 
-        return null;
+        UNKNOWN_TYPE.setValue(value);
+        return UNKNOWN_TYPE;
 
     }
 

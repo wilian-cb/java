@@ -54,16 +54,16 @@ public class SearchTransactionByCode {
         System.out.println("date: " + transaction.getDate());
         System.out.println("code: " + transaction.getCode());
         System.out.println("reference: " + transaction.getReference());
-        System.out.println("type: " + transaction.getType().getTypeFromValue());
-        System.out.println("status: " + transaction.getStatus().getTypeFromValue());
+        System.out.println("type: " + transaction.getType());
+        System.out.println("status: " + transaction.getStatus());
 
         if (transaction.getStatus().getValue() == 7) {
             System.out.println("cancellationSource: " + transaction.getCancellationSource());
         }
 
         System.out.println("lastEventDate: " + transaction.getLastEventDate());
-        System.out.println("paymentMethodType: " + transaction.getPaymentMethod().getType().getTypeFromValue());
-        System.out.println("paymentMethodCode: " + transaction.getPaymentMethod().getCode().getTypeFromValue());
+        System.out.println("paymentMethodType: " + transaction.getPaymentMethod().getType());
+        System.out.println("paymentMethodCode: " + transaction.getPaymentMethod().getCode());
 
         if (transaction.getPaymentLink() != null) {
             System.out.println("paymentLink: " + transaction.getPaymentLink());
@@ -105,7 +105,7 @@ public class SearchTransactionByCode {
                 System.out.println("shippingAddressPostalCode: "
                         + transaction.getShipping().getAddress().getPostalCode());
             }
-            System.out.println("shippingType: " + transaction.getShipping().getType().getValue());
+            System.out.println("shippingType: " + transaction.getShipping().getType());
             System.out.println("shippingCost: " + transaction.getShipping().getCost());
         }
 

@@ -21,6 +21,9 @@ package br.com.uol.pagseguro.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import br.com.uol.pagseguro.enums.TransactionStatus;
+import br.com.uol.pagseguro.enums.TransactionType;
+
 /**
  * Represents a summary of a PagSeguro transaction, typically returned by search services.
  */
@@ -104,11 +107,6 @@ public class TransactionSummary {
      * @return TransactionStatus
      */
     public TransactionStatus getStatus() {
-
-        if (this.status == null) {
-            this.status = new TransactionStatus();
-        }
-
         return this.status;
 
     }
@@ -381,11 +379,6 @@ public class TransactionSummary {
      * @return TransactionType
      */
     public TransactionType getType() {
-
-        if (this.type == null) {
-            this.type = new TransactionType();
-        }
-
         return this.type;
 
     }

@@ -19,49 +19,51 @@
 package br.com.uol.pagseguro.enums;
 
 /**
- * HttpStatus
+ * Enum constants that represents the HTTP Status that can be returned on payment requests
  */
 public enum HttpStatus {
 
-    OK(200, "OK"),
+    OK(200, "STANDARD RESPONSE FOR SUCCESSFUL HTTP REQUESTS"),
 
-    BAD_REQUEST(400, "BAD_REQUEST"),
+    BAD_REQUEST(400, "THE REQUEST CANNOT BE FULFILLED DUE TO BAD SYNTAX"),
 
-    UNAUTHORIZED(401, "UNAUTHORIZED"),
+    UNAUTHORIZED(401, "THE AUTHENTICATION IS POSSIBLE BUT HAS FAILED"),
 
-    FORBIDDEN(403, "FORBIDDEN"),
+    FORBIDDEN(403, "THE SERVER REFUSES TO RESPOND TO REQUEST"),
 
-    NOT_FOUND(404, "NOT_FOUND"),
+    NOT_FOUND(404, "THE REQUESTED RESOURCE COULD NOT BE FOUND"),
 
-    INTERNAL_SERVER_ERROR(500, "INTERNAL_SERVER_ERROR"),
+    INTERNAL_SERVER_ERROR(500, "GENERIC ERROR MESSAGE"),
 
-    BAD_GATEWAY(502, "BAD_GATEWAY");
+    BAD_GATEWAY(502, "SERVER RECEIVED AN INVALID RESPONDE FROM UPSTREAM SERVER"),
 
-    /**
-     * The status http Exemple 200
-     * 
-     * @var Integer
-     */
+    UNKNOWN_STATUS(-1, "UNKNOWN STATUS. SEE ONLINE DOCUMENTATION");
+
     private Integer code;
 
-    /**
-     * The type http status Exemple : BAD_REQUEST
-     * 
-     * @var string
-     */
-    private String status;
+    private String description;
 
     /**
-     * Construct
+     * Initializes a newly created enum constant of this type with the specified arguments
      * 
-     * @param status
-     * @param type
+     * @param code
+     *            - the http status code
+     * @param description
+     *            - the http status description
      */
-    HttpStatus(Integer status, String type) {
-        setStatus(status);
-        setType(type);
+    HttpStatus(Integer code, String description) {
+        this.setCode(code);
+        this.setDescription(description);
     }
 
+    /**
+     * Returns the enum constant of this type with the specified value. If a given value are not recognized return a
+     * generic enum constant <code>UNKNOWN_STATUS</code>
+     * 
+     * @param code
+     *            - the http code of the enum constant to be returned
+     * @return the enum constant from a given value
+     */
     public static HttpStatus fromCode(Integer code) {
 
         for (HttpStatus httpStatus : values()) {
@@ -70,38 +72,39 @@ public enum HttpStatus {
             }
         }
 
-        return null;
+        UNKNOWN_STATUS.setCode(code);
+        return UNKNOWN_STATUS;
 
     }
 
     /**
-     * @return the status
+     * @return this enum constant http code
      */
-    public Integer getStatus() {
+    public Integer getCode() {
         return this.code;
     }
 
     /**
-     * @param status
-     *            the status to set
+     * @param code
+     *            - new http code for this enum constant
      */
-    public void setStatus(Integer status) {
-        this.code = status;
+    public void setCode(Integer code) {
+        this.code = code;
     }
 
     /**
-     * @return the type
+     * @return this enum constant http description
      */
-    public String getType() {
-        return this.status;
+    public String getDescription() {
+        return this.description;
     }
 
     /**
-     * @param type
-     *            the type to set
+     * @param description
+     *            - new http description for this enum constant
      */
-    public void setType(String type) {
-        this.status = type;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }

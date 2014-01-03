@@ -68,8 +68,8 @@ public class PagSeguroServiceException extends Exception {
      * @param httpStatus
      */
     public PagSeguroServiceException(HttpStatus httpStatus, Exception exception) {
-        super(String.format("Http: %1$s - %2$s \n %3$s", httpStatus.getStatus(), httpStatus.getType(),
-                exception.getMessage()));
+        super(String.format("HTTP %1$s - %2$s [%3$s] \n %4$s", httpStatus.getCode(), httpStatus,
+                httpStatus.getDescription(), exception.getMessage()));
         this.httpStatus = httpStatus;
     }
 
@@ -79,7 +79,7 @@ public class PagSeguroServiceException extends Exception {
      * @param httpStatus
      */
     public PagSeguroServiceException(HttpStatus httpStatus) {
-        super(String.format("Http Status Code: %1$s - %2$s", httpStatus.getStatus(), httpStatus.getType()));
+        super(String.format("HTTP %1$s - %2$s [%3$s]", httpStatus.getCode(), httpStatus, httpStatus.getDescription()));
         this.httpStatus = httpStatus;
     }
 
@@ -90,7 +90,7 @@ public class PagSeguroServiceException extends Exception {
      * @param erros
      */
     public PagSeguroServiceException(HttpStatus httpStatus, List<Error> erros) {
-        super(String.format("Http Status Code: %1$s - %2$s", httpStatus.getStatus(), httpStatus.getType()));
+        super(String.format("HTTP %1$s - %2$s [%3$s]", httpStatus.getCode(), httpStatus, httpStatus.getDescription()));
         this.httpStatus = httpStatus;
         this.errors = erros;
     }

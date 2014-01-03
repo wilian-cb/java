@@ -18,6 +18,9 @@
 
 package br.com.uol.pagseguro.domain;
 
+import br.com.uol.pagseguro.enums.PaymentMethodCode;
+import br.com.uol.pagseguro.enums.PaymentMethodType;
+
 /**
  * Payment method
  */
@@ -46,17 +49,14 @@ public class PaymentMethod {
      * @param code
      */
     public PaymentMethod(PaymentMethodType type, PaymentMethodCode code) {
-        this.type = type;
-        this.code = code;
+        this.setType(type);
+        this.setCode(code);
     }
 
     /**
      * @return the payment method type
      */
     public PaymentMethodType getType() {
-        if (this.type == null) {
-            this.type = new PaymentMethodType();
-        }
         return this.type;
     }
 
@@ -73,9 +73,6 @@ public class PaymentMethod {
      * @return the payment method code
      */
     public PaymentMethodCode getCode() {
-        if (this.code == null) {
-            this.code = new PaymentMethodCode();
-        }
         return this.code;
     }
 

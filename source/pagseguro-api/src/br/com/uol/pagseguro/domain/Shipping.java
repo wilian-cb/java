@@ -32,10 +32,7 @@ public class Shipping {
      */
     private Address address;
 
-    /**
-     * Shipping type. See the ShippingType helper class for a list of known
-     * shipping types.
-     */
+    /** Shipping types. */
     private ShippingType type;
 
     /**
@@ -47,9 +44,9 @@ public class Shipping {
      * Initializes a new instance of the Shipping class
      */
     public Shipping(Address address, ShippingType type, BigDecimal cost) {
-        this.address = address;
-        this.type = type;
-        this.cost = cost;
+        this.setAddress(address);
+        this.setType(type);
+        this.setCost(cost);
     }
 
     /**
@@ -112,4 +109,5 @@ public class Shipping {
     public BigDecimal getCost() {
         return this.cost;
     }
+
 }

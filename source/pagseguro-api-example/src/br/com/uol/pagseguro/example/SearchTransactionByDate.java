@@ -70,10 +70,9 @@ public class SearchTransactionByDate {
                 System.out.println("date: " + currentTransactionSummary.getDate());
                 System.out.println("reference: " + currentTransactionSummary.getReference());
                 System.out.println("code: " + currentTransactionSummary.getCode());
-                System.out.println("type: " + currentTransactionSummary.getType().getTypeFromValue());
-                System.out.println("status: " + currentTransactionSummary.getStatus().getTypeFromValue());
-                System.out.println("paymentMethodType: "
-                        + currentTransactionSummary.getPaymentMethod().getType().getTypeFromValue());
+                System.out.println("type: " + currentTransactionSummary.getType());
+                System.out.println("status: " + currentTransactionSummary.getStatus());
+                System.out.println("paymentMethodType: " + currentTransactionSummary.getPaymentMethod().getType());
                 System.out.println("grossAount: " + currentTransactionSummary.getGrossAmount());
                 System.out.println("disccountAmount: " + currentTransactionSummary.getDiscountAmount());
                 System.out.println("feeAmount: " + currentTransactionSummary.getFeeAmount());

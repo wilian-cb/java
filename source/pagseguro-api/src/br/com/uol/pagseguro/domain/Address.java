@@ -18,8 +18,6 @@
 
 package br.com.uol.pagseguro.domain;
 
-import br.com.uol.pagseguro.enums.States;
-import br.com.uol.pagseguro.helper.PagSeguroUtil;
 
 /**
  * Represents an address location, typically for shipping or charging purposes.
@@ -44,8 +42,7 @@ public class Address {
     private String number;
 
     /**
-     * Apartment, suite number or any other qualifier after the street/number
-     * pair. Example: Apt 274, building A.
+     * Apartment, suite number or any other qualifier after the street/number pair. Example: Apt 274, building A.
      */
     private String complement;
 
@@ -87,8 +84,8 @@ public class Address {
      * @param number
      * @param complement
      */
-    public Address(String country, String state, String city, String district,
-            String postalCode, String street, String number, String complement) {
+    public Address(String country, String state, String city, String district, String postalCode, String street,
+            String number, String complement) {
         this.street = street;
         this.number = number;
         this.complement = complement;
@@ -206,7 +203,7 @@ public class Address {
      * @param state
      */
     public void setState(String state) {
-        this.state = treatState(state);
+        this.state = state;
     }
 
     /**
@@ -227,47 +224,4 @@ public class Address {
         this.country = country;
     }
 
-    /**
-     * Treat the state to pass in format waited of the PagSeguro
-     * 
-     * @param type
-     *            $defaultState
-     * @return string
-     */
-    public String treatState(String defaultState) {
-
-        if (defaultState.length() == 2) {
-            return treatAcronym(defaultState);
-        }
-
-        defaultState = PagSeguroUtil.removeAccents(defaultState);
-        defaultState = defaultState.replaceAll(" ", "");
-        String stateName = "";
-
-        for (States state : States.values()) {
-            if (defaultState.equalsIgnoreCase(state.getName())) {
-                stateName = state.getAcronym();
-            }
-        }
-
-        return stateName;
-    }
-
-    /**
-     * Treat the acronym to pass in format waited of the PagSeguro
-     * 
-     * @param acronym
-     * @return string
-     */
-    public String treatAcronym(String acronym) {
-
-        String defaultAcronym = "";
-
-        for (States state : States.values()) {
-            if (acronym.equalsIgnoreCase(state.getAcronym())) {
-                defaultAcronym = state.getAcronym();
-            }
-        }
-        return defaultAcronym;
-    }
 }

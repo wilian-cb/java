@@ -19,37 +19,40 @@
 package br.com.uol.pagseguro.enums;
 
 /**
- * ShippingType
+ * Enum constants that represents a list of known shippingTypes
  */
 public enum ShippingType {
 
-    PAC("PAC", 1),
+    PAC("ECONOMIC SHIPMENT", 1),
 
-    SEDEX("SEDEX", 2),
+    SEDEX("EXPRESS SHIPMENT OF DOCUMENTS AND GOODS", 2),
 
-    NOT_SPECIFIED("NOT_SPECIFIED", 3);
+    NOT_SPECIFIED("NOT SPECIFIED SHIPMENT", 3);
 
-    /**
-     * String type shipping
-     */
-    private String type;
+    private String description;
 
-    /**
-     * Integer value
-     */
     private Integer value;
 
     /**
-     * Construct
+     * Initializes a newly created enum constant of this type with the specified arguments
      * 
-     * @param type
+     * @param description
+     *            - the type of the enum constant
      * @param value
+     *            - the value of the enum constant
      */
-    ShippingType(String type, Integer value) {
-        this.setType(type);
+    ShippingType(String description, Integer value) {
+        this.setDescription(description);
         this.setValue(value);
     }
 
+    /**
+     * Returns the enum constant of this type with the specified value.
+     * 
+     * @param value
+     *            - the value of the enum constant to be returned
+     * @return the enum constant from a given value
+     */
     public static ShippingType fromValue(Integer value) {
 
         for (ShippingType shippingType : values()) {
@@ -63,22 +66,22 @@ public enum ShippingType {
     }
 
     /**
-     * @return the type
+     * @return this enum constant description
      */
-    public String getType() {
-        return this.type;
+    public String getDescription() {
+        return this.description;
     }
 
     /**
-     * @param type
-     *            the type to set
+     * @param description
+     *            - new description for this enum constant
      */
-    public void setType(String type) {
-        this.type = type;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /**
-     * @return the value
+     * @return this enum constant value
      */
     public Integer getValue() {
         return this.value;
@@ -86,7 +89,7 @@ public enum ShippingType {
 
     /**
      * @param value
-     *            the value to set
+     *            - new value for this enum constant
      */
     public void setValue(Integer value) {
         this.value = value;

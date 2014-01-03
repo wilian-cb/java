@@ -102,7 +102,7 @@ public class PaymentService {
 
             httpCodeStatus = HttpStatus.fromCode(response.getResponseCode());
 
-            if (HttpURLConnection.HTTP_OK == httpCodeStatus.getStatus().intValue()) {
+            if (HttpURLConnection.HTTP_OK == httpCodeStatus.getCode().intValue()) {
 
                 String paymentReturn = null;
                 String code = PaymentParser.readSuccessXml(response);
@@ -118,7 +118,7 @@ public class PaymentService {
 
                 return paymentReturn;
 
-            } else if(HttpURLConnection.HTTP_BAD_REQUEST == httpCodeStatus.getStatus().intValue()) {
+            } else if(HttpURLConnection.HTTP_BAD_REQUEST == httpCodeStatus.getCode().intValue()) {
 
                 List<Error> errors = ErrorsParser.readErrosXml(response.getErrorStream());
 

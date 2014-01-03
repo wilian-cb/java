@@ -36,15 +36,15 @@ import org.xml.sax.SAXException;
 import br.com.uol.pagseguro.domain.Address;
 import br.com.uol.pagseguro.domain.Item;
 import br.com.uol.pagseguro.domain.PaymentMethod;
-import br.com.uol.pagseguro.domain.PaymentMethodCode;
-import br.com.uol.pagseguro.domain.PaymentMethodType;
 import br.com.uol.pagseguro.domain.Phone;
 import br.com.uol.pagseguro.domain.Sender;
 import br.com.uol.pagseguro.domain.Shipping;
 import br.com.uol.pagseguro.domain.Transaction;
-import br.com.uol.pagseguro.domain.TransactionStatus;
-import br.com.uol.pagseguro.domain.TransactionType;
+import br.com.uol.pagseguro.enums.TransactionStatus;
+import br.com.uol.pagseguro.enums.PaymentMethodCode;
+import br.com.uol.pagseguro.enums.PaymentMethodType;
 import br.com.uol.pagseguro.enums.ShippingType;
+import br.com.uol.pagseguro.enums.TransactionType;
 import br.com.uol.pagseguro.helper.PagSeguroUtil;
 import br.com.uol.pagseguro.logs.Log;
 import br.com.uol.pagseguro.xmlparser.XMLParserUtils;
@@ -119,13 +119,14 @@ public class TransactionParser {
         // parsing <transaction><type>
         tagValue = XMLParserUtils.getTagValue("type", transactionElement);
         if (tagValue != null) {
-            transaction.setType(new TransactionType(Integer.valueOf(tagValue)));
+            // transaction.setType(new TransactionType(Integer.valueOf(tagValue)));
+            transaction.setType(TransactionType.fromValue((Integer.valueOf(tagValue))));
         }
 
         // parsing <transaction><status>
         tagValue = XMLParserUtils.getTagValue("status", transactionElement);
         if (tagValue != null) {
-            transaction.setStatus(new TransactionStatus(Integer.valueOf(tagValue)));
+            transaction.setStatus(TransactionStatus.fromValue(Integer.valueOf(tagValue)));
         }
 
         // parsing <transaction><paymentMethod>
@@ -136,13 +137,13 @@ public class TransactionParser {
             // parsing <transaction><paymentMethod><type>
             tagValue = XMLParserUtils.getTagValue("type", paymentMethodElement);
             if (tagValue != null) {
-                paymentMethod.setType(new PaymentMethodType(Integer.valueOf(tagValue)));
+                paymentMethod.setType(PaymentMethodType.fromValue(Integer.valueOf(tagValue)));
             }
 
             // parsing <transaction><paymentMethod><code>
             tagValue = XMLParserUtils.getTagValue("code", paymentMethodElement);
             if (tagValue != null) {
-                paymentMethod.setCode(new PaymentMethodCode(Integer.valueOf(tagValue)));
+                paymentMethod.setCode(PaymentMethodCode.fromValue(Integer.valueOf(tagValue)));
             }
 
             // setting transaction payment method

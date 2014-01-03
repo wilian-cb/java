@@ -19,7 +19,6 @@
 package br.com.uol.pagseguro.example;
 
 import br.com.uol.pagseguro.domain.Transaction;
-import br.com.uol.pagseguro.enums.NotificationType;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
 import br.com.uol.pagseguro.properties.PagSeguroConfig;
 import br.com.uol.pagseguro.service.NotificationService;
@@ -28,28 +27,24 @@ public class ReceiveNotifications {
 
     public static void main(String[] args) {
 
-        // Substitute the code below with a notification code for your
-        // transaction
-
+        // The notificationCode receveived by your system
         String notificationCode = "ADB456F3BB3EBB3E6ADAA4919F80EEB1118F";
-        String notificationType = "transaction";
 
         Transaction transaction = null;
 
         try {
 
-            if (notificationType == NotificationType.TRANSACTION.getValue()) {
-                transaction = NotificationService.checkTransaction(PagSeguroConfig.getAccountCredentials(),
-                        notificationCode);
-            }
+            transaction = NotificationService.checkTransaction(PagSeguroConfig.getAccountCredentials(),
+                    notificationCode);
 
         } catch (PagSeguroServiceException e) {
             System.err.println(e.getMessage());
         }
 
         if (transaction != null) {
-            System.out.println("ID da transação: " + transaction.getCode());
-            System.out.println("Status da transação: " + transaction.getStatus().getTypeFromValue());
+            System.out.println("TRANSACTION CODE: " + transaction.getCode());
+            System.out.println("TRANSACTION REFERENCE: " + transaction.getReference());
+            System.out.println("TRANSACTION STATUS: " + transaction.getStatus());
         }
 
     }

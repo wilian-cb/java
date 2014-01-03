@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import br.com.uol.pagseguro.enums.TransactionStatus;
+import br.com.uol.pagseguro.enums.TransactionType;
+
 /**
  * Represents a PagSeguro transaction
  */
@@ -29,92 +32,55 @@ public class Transaction {
 
     private static final int MIN_VALUE = 0;
 
-    /**
-     * Last event date Date the last notification about this transaction was sent
-     */
+    /** Date the last notification about this transaction was sent */
     private Date lastEventDate;
 
-    /**
-     * Transaction date
-     */
+    /** Transaction date */
     private Date date;
 
-    /**
-     * Transaction code
-     */
+    /** Transaction code */
     private String code;
 
-    /**
-     * You can use the reference code to store an identifier so you can associate the PagSeguro transaction to a
-     * transaction in your system.
-     */
+    /** A reference to associate the PagSeguro transaction to a transaction in your system. */
     private String reference;
 
-    /**
-     * Transaction type
-     * 
-     * @see TransactionType
-     */
+    /** Transaction type */
     private TransactionType type;
 
-    /**
-     * Transaction status
-     * 
-     * @see TransactionStatus
-     */
+    /** Transaction status */
     private TransactionStatus status;
 
-    /**
-     * Payment method
-     * 
-     * @see PaymentMethod
-     */
+    /** Transaction payment method */
     private PaymentMethod paymentMethod;
 
-    /**
-     * Gross amount of the transaction
-     */
+    /** Transaction gross amount */
     private BigDecimal grossAmount;
 
-    /**
-     * Discount amount
-     */
+    /** Transaction discount amount */
     private BigDecimal discountAmount;
 
-    /**
-     * Fee amount
-     */
+    /** Transaction fee amount */
     private BigDecimal feeAmount;
 
-    /**
-     * Net amount
-     */
+    /** Transaction net amount */
     private BigDecimal netAmount;
 
-    /**
-     * Extra amount
-     */
+    /** Transaction extra/discount amount */
     private BigDecimal extraAmount;
 
-    /**
-     * Installment count
-     */
+    /** Transaction installment count */
     private Integer installmentCount;
 
-    /**
-     * Items count
-     */
+    /** Transaction items count */
     private Integer itemCount;
 
-    /**
-     * Escrow End Date
-     */
+    /** Transaction escrow end date */
     private Date escrowEndDate;
 
-    /** Cancellation Source */
+    /** Cancellation source */
     private String cancellationSource;
 
-    /** Payment Link */
+    /** Transaction payment link */
     private String paymentLink;
 
     /**
@@ -144,8 +110,6 @@ public class Transaction {
     public Transaction() {
 
         this.date = new Date();
-        this.type = new TransactionType();
-        this.status = new TransactionStatus();
         this.paymentMethod = new PaymentMethod();
         this.items = new ArrayList<Item>();
         this.itemCount = Integer.valueOf(MIN_VALUE);

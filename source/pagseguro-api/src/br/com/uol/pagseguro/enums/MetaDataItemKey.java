@@ -19,36 +19,56 @@
 package br.com.uol.pagseguro.enums;
 
 /**
- * Enum constants that represents the senderDocument type accepted by PagSeguro on payment requests
+ * Enum constants that represents the metaDataItemKeys accepted by PagSeguro on payment requests
  */
-public enum DocumentType {
+public enum MetaDataItemKey {
 
-    CPF("Cadastro de Pessoa Física");
+    PASSENGER_CPF("PASSENGER CPF NUMBER"),
+
+    PASSENGER_PASSPORT("PASSENGER PASSPORT NUMBER"),
+
+    ORIGIN_CITY("ORIGIN CITY"),
+
+    DESTINATION_CITY("DESTINATION CITY"),
+
+    ORIGIN_AIRPORT_CODE("ORIGIN AIRPORT CODE"),
+
+    DESTINATION_AIRPORT_CODE("DESTINATION AIRPORT CODE"),
+
+    GAME_NAME("GAME NAME"),
+
+    PLAYER_ID("PLAYER ID"),
+
+    TIME_IN_GAME_DAYS("TIME IN GAME - MUST BE GIVEN IN DAYS"),
+
+    MOBILE_NUMBER("MOBILE NUMBER THAT WILL RECEIVE THE RECHARGE"),
+
+    PASSENGER_NAME("PASSENGER NAME");
 
     private String description;
 
     /**
-     * Initializes a newly created enum constant of this type with the specified argument
+     * Initializes a newly created enum constant of this type with the specified arguments
      * 
-     * @param description
-     *            - the description of the enum constant
+     * @param value
+     *            - the value of the enum constant
      */
-    DocumentType(String description) {
-        this.setDescription(description);
+    MetaDataItemKey(String description) {
+        this.description = description;
     }
 
     /**
      * @return this enum constant description
      */
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     /**
      * @param description
      *            - new description for this enum constant
      */
-    private void setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 }

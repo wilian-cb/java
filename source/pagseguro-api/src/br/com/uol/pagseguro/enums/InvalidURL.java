@@ -19,7 +19,8 @@
 package br.com.uol.pagseguro.enums;
 
 /**
- * InvalidURL
+ * Enum constants that represents local URLs not accepted on payment requests
+ * 
  */
 public enum InvalidURL {
 
@@ -29,42 +30,36 @@ public enum InvalidURL {
 
     IP_V6("::1");
 
-    /**
-     * String value url
-     */
     private String value;
 
     /**
-     * Construct EnumInvali * dURL
+     * Initializes a newly created enum constant of this type with the specified arguments
      * 
      * @param value
+     *            - the value of the enum constant
      */
     InvalidURL(String value) {
         this.setValue(value);
     }
 
     /**
-     * Get EnumInvalidURL
      * 
-     * @return array EnumInvalidURL
+     * @return an array of enum constants
      */
     public InvalidURL[] getEnumInvalidURL() {
         return InvalidURL.values();
     }
 
     /**
-     * Get Value
-     * 
-     * @return value
+     * @return this enum constant value
      */
     public String getValue() {
         return this.value;
     }
 
     /**
-     * Set Value
-     * 
      * @param value
+     *            - new value for this enum constant
      */
     public void setValue(String value) {
         this.value = value;

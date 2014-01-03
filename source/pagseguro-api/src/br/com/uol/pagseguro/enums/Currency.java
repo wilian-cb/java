@@ -19,65 +19,57 @@
 package br.com.uol.pagseguro.enums;
 
 /**
- * Currency
+ * Enum constants that represents the currencies accepted by PagSeguro on payment requests
  */
 public enum Currency {
 
-    // ISO 4217 format
-    BRL("BRL", 986);
+    /** ISO 4217 */
+    BRL("BRAZILIAN REAL", 986);
+
+    private String name;
+
+    private Integer num;
 
     /**
-     * Currency code
-     */
-    private String code;
-
-    /**
-     * Currency value
-     */
-    private Integer value;
-
-    /**
-     * Construct
+     * Initializes a newly created enum constant of this type with the specified arguments
      * 
-     * @param code
-     * @param value
+     * @param name
+     *            - the currency name
+     * @param num
+     *            - the currency code number
      */
-    Currency(String code, Integer value) {
-        this.setCode(code);
-        this.setValue(value);
+    Currency(String name, Integer num) {
+        this.setCurrency(name);
+        this.setNum(num);
     }
 
     /**
-     * Get currency code
-     * 
-     * @return currency code
+     * @return this enum constant currency name
      */
-    public String getCode() {
-        return this.code;
+    public String getCurrency() {
+        return this.name;
     }
 
     /**
-     * @param code
-     *            currency code to set
+     * @param name
+     *            - new currency name for this enum constant
      */
-    public void setCode(String code) {
-        this.code = code;
+    public void setCurrency(String name) {
+        this.name = name;
     }
 
     /**
-     * Get currency value
-     * 
-     * @return currency value
+     * @return this enum constant currency code number
      */
-    public Integer getValue() {
-        return this.value;
+    public Integer getNum() {
+        return this.num;
     }
 
     /**
-     * @param value
-     *            currency value to set
+     * @param num
+     *            - new currency code number for this enum constant
      */
-    public void setValue(Integer value) {
-        this.value = value;
+    public void setNum(Integer num) {
+        this.num = num;
     }
 }

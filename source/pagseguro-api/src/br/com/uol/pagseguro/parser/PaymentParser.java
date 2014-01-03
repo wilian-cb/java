@@ -241,12 +241,12 @@ public class PaymentParser {
          * 
          * @see MetaData
          */
-        if (payment.getMetaData() != null && payment.getMetaData().getItems() != null
-                && !payment.getMetaData().getItems().isEmpty()) {
+        if (payment.getMetaData() != null && payment.getMetaData().getItem() != null
+                && !payment.getMetaData().getItem().isEmpty()) {
 
             Integer count = 0;
 
-            for (MetaDataItem meta : payment.getMetaData().getItems()) {
+            for (MetaDataItem meta : payment.getMetaData().getItem()) {
 
                 if ((meta.getKey() != null && !"".equals(meta.getKey()))
                         && (meta.getValue() != null && !"".equals(meta.getValue()))) {

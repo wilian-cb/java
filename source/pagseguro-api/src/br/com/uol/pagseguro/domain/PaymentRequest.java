@@ -26,7 +26,7 @@ import java.util.List;
 import br.com.uol.pagseguro.enums.Currency;
 import br.com.uol.pagseguro.enums.DocumentType;
 import br.com.uol.pagseguro.enums.InvalidURL;
-import br.com.uol.pagseguro.enums.MetaDataItems;
+import br.com.uol.pagseguro.enums.MetaDataItemKey;
 import br.com.uol.pagseguro.enums.ShippingType;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
 import br.com.uol.pagseguro.service.PaymentService;
@@ -109,7 +109,7 @@ public class PaymentRequest {
      * 
      * @var MetaData
      */
-    private MetaData metaData;
+    private MetaDataItem metaData;
 
     /**
      * Extra parameters that user can add to a PagSeguro checkout request
@@ -570,10 +570,10 @@ public class PaymentRequest {
      * 
      * @return MetaData
      */
-    public MetaData getMetaData() {
+    public MetaDataItem getMetaData() {
 
         if (this.metaData == null) {
-            this.metaData = new MetaData();
+            this.metaData = new MetaDataItem();
         }
 
         return this.metaData;
@@ -583,10 +583,10 @@ public class PaymentRequest {
     /**
      * Sets metadata for PagSeguro checkout requests
      * 
-     * @param MetaData
+     * @param MetaDataItem
      *            metaData
      */
-    public void setMetaData(MetaData metaData) {
+    public void setMetaData(MetaDataItem metaData) {
         this.metaData = metaData;
     }
 
@@ -597,7 +597,7 @@ public class PaymentRequest {
      * @param value
      * @param group
      */
-    public void addMetaData(MetaDataItems key, String value, Integer group) {
+    public void addMetaDataItem(MetaDataItemKey key, String value, Integer group) {
         this.getMetaData().addItem(new MetaDataItem(key, value, group));
     }
 
@@ -607,7 +607,7 @@ public class PaymentRequest {
      * @param key
      * @param value
      */
-    public void addMetaData(MetaDataItems key, String value) {
+    public void addMetaDataItem(MetaDataItemKey key, String value) {
         this.getMetaData().addItem(new MetaDataItem(key, value));
     }
 
@@ -648,7 +648,7 @@ public class PaymentRequest {
     }
 
     /**
-     * Add parameters in the checkout request.
+     * Add indexed parameters in the checkout request.
      * 
      * See availables <a href="https://pagseguro.uol.com.br/v2/guia-de-integracao/api-de-pagamentos.html">parameters</a>
      * 
@@ -676,8 +676,7 @@ public class PaymentRequest {
      * 
      * @param credentials
      * @param onlyCheckoutCode
-     * @return The URL to where the user needs to be redirected to in order to complete the payment process or the
-     *         checkout code when use Checkout Lightbox
+     * @return The checkout code
      * @throws PagSeguroServiceException
      */
     public String register(Credentials credentials, Boolean onlyCheckoutCode) throws PagSeguroServiceException {

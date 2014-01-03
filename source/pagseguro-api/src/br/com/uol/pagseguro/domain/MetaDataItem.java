@@ -18,129 +18,147 @@
 
 package br.com.uol.pagseguro.domain;
 
-import br.com.uol.pagseguro.enums.MetaDataItems;
+import java.util.ArrayList;
+import java.util.List;
+
+import br.com.uol.pagseguro.enums.MetaDataItemKey;
 import br.com.uol.pagseguro.helper.PagSeguroUtil;
 
 /**
- * Represent a metadata item
+ * Represents a metaDataItem in a transaction
  */
 public class MetaDataItem {
 
-    private static final int MAX_VALUE_STRING = 100;
+    private MetaDataItemKey key;
 
-    /**
-     * Allow add extra information to order String key
-     */
-    private MetaDataItems key;
-
-    /**
-     * Value of corresponding key String value
-     */
     private String value;
 
-    /**
-     * Used for grouping values of metadata items Integer group
-     */
     private Integer group;
 
+    private List<MetaDataItem> item;
+
+    /**
+     * Initializes a newly created object of this type
+     * 
+     */
     public MetaDataItem() {
     }
 
     /**
-     * Construct MetaDataItem
+     * Initializes a newly created object of this type with the specified arguments
      * 
      * @param key
+     *            - the metaDataItemKey of the object
      * @param value
+     *            - the metaDataItemValue of the object
      */
-    public MetaDataItem(MetaDataItems key, String value) {
-        this.key = key;
-        this.value = value;
+    public MetaDataItem(MetaDataItemKey key, String value) {
+        this.setKey(key);
+        this.setValue(value);
     }
 
     /**
-     * Construct MetaDataItem
+     * Initializes a newly created object of this type with the specified arguments
      * 
      * @param key
+     *            - the metaDataItemKey of the object
      * @param value
+     *            - the metaDataItemValue of the object
      * @param group
+     *            - the metaDataItemGroup of the object
      */
-    public MetaDataItem(MetaDataItems key, String value, Integer group) {
-        this.key = key;
-        this.value = value;
-        this.group = group;
+    public MetaDataItem(MetaDataItemKey key, String value, Integer group) {
+        this.setKey(key);
+        this.setValue(value);
+        this.setGroup(group);
     }
 
     /**
-     * Normalize metadata item value
-     * 
-     * @param string
-     *            parameterValue
-     * @return string
+     * @param item
+     *            - add a new item on the end of this list
      */
-    private String normalizeParameter(String parameterValue) {
-
-        parameterValue = PagSeguroUtil.formatString(parameterValue, MAX_VALUE_STRING, "");
-
-        if (this.getKey().equals(MetaDataItems.PASSENGER_CPF.getKey())) {
-            parameterValue = PagSeguroUtil.getOnlyNumbers(parameterValue);
-        }
-
-        if (this.getKey().equals(MetaDataItems.TIME_IN_GAME_DAYS.getKey())) {
-            parameterValue = PagSeguroUtil.getOnlyNumbers(parameterValue);
-        }
-
-        return parameterValue;
+    public void addItem(MetaDataItem item) {
+        this.getItem().add(item);
     }
 
     /**
-     * Get Key
-     * 
-     * @return key
+     * @param item
+     *            - new item list for this MetaDataItem
      */
-    public MetaDataItems getKey() {
+    public void setItem(List<MetaDataItem> item) {
+        this.item = item;
+    }
+
+    /**
+     * @return a list of MetaDataItems
+     */
+    public List<MetaDataItem> getItem() {
+        if (this.item == null) {
+            this.item = new ArrayList<MetaDataItem>();
+        }
+
+        return this.item;
+    }
+
+    /**
+     * Normalize a given metaDataItemValue
+     * 
+     * @param value
+     *            - the metaDataItemValue of the object
+     */
+    private String normalizeValue(String value) {
+
+        if (this.getKey().equals(MetaDataItemKey.PASSENGER_CPF)) {
+            value = PagSeguroUtil.getOnlyNumbers(value);
+        }
+
+        if (this.getKey().equals(MetaDataItemKey.TIME_IN_GAME_DAYS)) {
+            value = PagSeguroUtil.getOnlyNumbers(value);
+        }
+
+        return value;
+    }
+
+    /**
+     * @return this MetaDataItem key
+     */
+    public MetaDataItemKey getKey() {
         return this.key;
     }
 
     /**
-     * Set Key
-     * 
      * @param key
+     *            - new key for this MetaDataItem
      */
-    public void setKey(MetaDataItems key) {
+    public void setKey(MetaDataItemKey key) {
         this.key = key;
     }
 
     /**
-     * Get Value
-     * 
-     * @return value
+     * @return this MetaDataItem value
      */
     public String getValue() {
         return this.value;
     }
 
     /**
-     * Set Value
-     * 
      * @param value
+     *            - new normalized value for this MetaDataItem
      */
     public void setValue(String value) {
-        this.value = normalizeParameter(value);
+        this.value = normalizeValue(value);
     }
 
     /**
-     * Get Group
-     * 
-     * @return group
+     * @return this MetaDataItem group
      */
     public Integer getGroup() {
         return this.group;
     }
 
     /**
-     * Set Group
-     * 
      * @param group
+     *            - new group for this MetaDataItem
      */
     public void setGroup(Integer group) {
         this.group = group;

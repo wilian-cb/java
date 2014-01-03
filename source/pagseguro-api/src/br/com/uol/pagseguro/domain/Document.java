@@ -49,8 +49,8 @@ public class Document {
      * @param value
      */
     public Document(DocumentType type, String value) {
-        this.type = type;
-        this.value = PagSeguroUtil.getOnlyNumbers(value);
+        this.setType(type);
+        this.setValue(PagSeguroUtil.getOnlyNumbers(value));
     }
 
     /**
@@ -64,7 +64,7 @@ public class Document {
      * @param type
      *            the type to set
      */
-    public void setType(DocumentType type) {
+    private void setType(DocumentType type) {
         this.type = type;
     }
 
@@ -79,25 +79,8 @@ public class Document {
      * @param value
      *            the value to set
      */
-    public void setValue(String value) {
+    private void setValue(String value) {
         this.value = value;
     }
 
-    /**
-     * Check if document type is available for PagSeguro
-     * 
-     * @param type
-     * @return
-     */
-    public static boolean isDocumentTypeAvailable(String type) {
-        boolean available = false;
-
-        for (DocumentType documentType : DocumentType.values()) {
-            if (type.equalsIgnoreCase(documentType.getType())) {
-                available = true;
-            }
-        }
-
-        return available;
-    }
 }
