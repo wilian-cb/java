@@ -42,8 +42,8 @@ public enum ShippingType {
      *            - the value of the enum constant
      */
     ShippingType(String description, Integer value) {
-        this.setDescription(description);
-        this.setValue(value);
+        this.description = description;
+        this.value = value;
     }
 
     /**

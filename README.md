@@ -47,10 +47,11 @@ Changelog
 
 2.1.0
 
- - Compatibildiade com Java 1.5+
- - Remoção de arquivos desnecessários
- - Alterado método de envio para HTTP
- - Adicionado possibilidade de envio de SenderCPF, MetaData e Parameter Generics
+ - Compatibildiade com Java 1.5+.
+ - Remoção de arquivos desnecessários.
+ - Alterado método de envio para HTTP.
+ - Adicionado possibilidade de envio de SenderCPF, MetaData e Parameter Generics.
+ - Correções de bugs.
  
 2.0.4
 

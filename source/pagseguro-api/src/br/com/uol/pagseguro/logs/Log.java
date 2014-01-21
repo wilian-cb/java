@@ -26,12 +26,10 @@ import br.com.uol.pagseguro.properties.PagSeguroConfig;
 public class Log implements Logger {
 
     /**
-     * Log4j Após adicionar o log4j na sua aplicação, descomente as seguintes
-     * linhas : private org.apache.log4j.Logger log; log =
-     * org.apache.log4j.Logger.getLogger(c);
+     * Log4j Após adicionar o log4j na sua aplicação, descomente as seguintes linhas: private org.apache.log4j.Logger
+     * log; log = org.apache.log4j.Logger.getLogger(c);
      * 
-     * E remova ou comente as seguintes linhas : private LogDefault log; log =
-     * new LogDefault();
+     * E remova ou comente as seguintes linhas: private LogDefault log; log = new LogDefault();
      * 
      */
 

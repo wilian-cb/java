@@ -75,6 +75,11 @@ public class PaymentParser {
             if (payment.getSender().getEmail() != null) {
                 data.put("senderEmail", payment.getSender().getEmail());
             }
+
+            if (payment.getSender().getBornDate() != null) {
+                data.put("senderBornDate", payment.getSender().getBornDate());
+            }
+
             /**
              * SET PHONE
              * 
@@ -108,6 +113,7 @@ public class PaymentParser {
                 }
 
             }
+
         }
 
         /**

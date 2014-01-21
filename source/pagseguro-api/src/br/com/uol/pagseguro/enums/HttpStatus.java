@@ -52,8 +52,8 @@ public enum HttpStatus {
      *            - the http status description
      */
     HttpStatus(Integer code, String description) {
-        this.setCode(code);
-        this.setDescription(description);
+        this.code = code;
+        this.description = description;
     }
 
     /**

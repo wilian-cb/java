@@ -39,8 +39,8 @@ public enum Currency {
      *            - the currency code number
      */
     Currency(String name, Integer num) {
-        this.setCurrency(name);
-        this.setNum(num);
+        this.name = name;
+        this.num = num;
     }
 
     /**

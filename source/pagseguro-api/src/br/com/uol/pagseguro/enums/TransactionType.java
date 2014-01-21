@@ -58,8 +58,8 @@ public enum TransactionType {
      *            - the value of the enum constant
      */
     TransactionType(String description, Integer value) {
-        this.setDescription(description);
-        this.setValue(value);
+        this.description = description;
+        this.value = value;
     }
 
     /**

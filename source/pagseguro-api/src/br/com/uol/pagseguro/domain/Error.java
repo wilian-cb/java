@@ -29,29 +29,27 @@ public class Error {
 
     /**
      * Error code
-     * 
-     * @var string
      */
     private String code;
 
     /**
      * Error description
-     * 
-     * @var string
      */
     private String message;
 
     /**
-     * Initializes a new instance of the PagSeguroError class
+     * Initializes a newly created instance of this type
      */
     public Error() {
     }
 
     /**
-     * Initializes a new instance of the PagSeguroError class
+     * Initializes a newly created instance of this type with the specified arguments
      * 
      * @param code
+     *            the ws error code, i.e. 13001
      * @param message
+     *            the ws error description, i.e. invalid notification code value: {0}
      */
     public Error(String code, String message) {
         this.code = code;
@@ -59,32 +57,30 @@ public class Error {
     }
 
     /**
-     * @return the code
+     * @return the ws error code
      */
     public String getCode() {
         return this.code;
     }
 
     /**
-     * Sets the code
-     * 
      * @param code
+     *            the ws error code to set, i.e. 13001
      */
     public void setCode(String code) {
         this.code = code;
     }
 
     /**
-     * @return the error description
+     * @return the ws error description
      */
     public String getMessage() {
         return this.message;
     }
 
     /**
-     * Sets the error description
-     * 
      * @param message
+     *            the ws error description to set, i.e. invalid notification code value: {0}
      */
     public void setMessage(String message) {
         this.message = message;

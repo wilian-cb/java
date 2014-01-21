@@ -40,7 +40,8 @@ public enum TransactionStatus {
     CANCELLED("THE TRANSACTION HAS BEEN CANCELLED", 7),
 
     SELLER_CHARGEBACK(
-            "THE PAYMENT WAS CONTESTED BY THE BUYER AND THE TRANSACTION AMOUNT WAS DEBITED FROM YOUR BALANCE", 8),
+            "THE PAYMENT WAS CONTESTED BY THE BUYER AND THE TRANSACTION AMOUNT PREVIOUSLY BLOCKED WAS DEBITED FROM YOUR BALANCE",
+            8),
 
     CONTESTATION(
             "THE PAYMENT WAS CONTESTED BY THE BUYER AND THE TRANSACTION AMOUNT WAS BLOCKED. YOU MUST CONTACT OUR CUSTOMER SERVICE",
@@ -48,21 +49,27 @@ public enum TransactionStatus {
 
     UNKNOWN_STATUS("UNKNOWN STATUS. SEE ONLINE DOCUMENTATION", -1);
 
+    /**
+     * Enum description
+     */
     private String description;
 
+    /**
+     * Enum value
+     */
     private Integer value;
 
     /**
      * Initializes a newly created enum constant of this type with the specified arguments
      * 
      * @param description
-     *            - the description of the enum constant
+     *            the description of the enum constant
      * @param value
-     *            - the value of the enum constant
+     *            the value of the enum constant
      */
     TransactionStatus(String description, Integer value) {
-        this.setDescription(description);
-        this.setValue(value);
+        this.description = description;
+        this.value = value;
     }
 
     /**
@@ -70,7 +77,7 @@ public enum TransactionStatus {
      * generic enum constant <code>UNKNOWN_STATUS</code>
      * 
      * @param value
-     *            - the value of the enum constant to be returned
+     *            the value of the enum constant to be returned
      * @return the enum constant from a given value
      */
     public static TransactionStatus fromValue(Integer value) {
@@ -87,7 +94,7 @@ public enum TransactionStatus {
     }
 
     /**
-     * @return this enum constant description
+     * @return the enum constant description
      */
     public String getDescription() {
         return this.description;
@@ -95,14 +102,14 @@ public enum TransactionStatus {
 
     /**
      * @param description
-     *            - new description for this enum constant
+     *            the description for this enum constant
      */
     public void setDescription(String description) {
         this.description = description;
     }
 
     /**
-     * @return this enum constant value
+     * @return the enum constant value
      */
     public Integer getValue() {
         return this.value;
@@ -110,7 +117,7 @@ public enum TransactionStatus {
 
     /**
      * @param value
-     *            - new value for this enum constant
+     *            the value for this enum constant
      */
     public void setValue(Integer value) {
         this.value = value;

@@ -27,7 +27,7 @@ import br.com.uol.pagseguro.exception.PagSeguroServiceException;
  * Encapsulates PagSeguro configuration for API calls
  */
 public class PagSeguroConfig {
-    
+
     private PagSeguroConfig() {
     }
 
@@ -55,8 +55,8 @@ public class PagSeguroConfig {
     }
 
     /**
-     * To activate the PagSeguro logging tool, set the <b>log.path<b> property
-     * in <b>pagseguro-config.properties</b> file.
+     * To activate the PagSeguro logging tool, set the <b>log.path<b> property in <b>pagseguro-config.properties</b>
+     * file.
      * 
      * @return the path to PagSeguro log file
      */
@@ -69,18 +69,15 @@ public class PagSeguroConfig {
     }
 
     /**
-     * Account credentials read from config file
-     * <b>pagseguro-config.properties</b> To read the account credentials from
-     * config, you have to set <b>credential.email</b> and
-     * <b>credential.token</b> in the <b>pagseguro-config.properties</b> file
+     * Account credentials read from config file <b>pagseguro-config.properties</b> To read the account credentials from
+     * config, you have to set <b>credential.email</b> and <b>credential.token</b> in the
+     * <b>pagseguro-config.properties</b> file
      * 
-     * @return the account credentials read from
-     *         <b>pagseguro-config.properties</b> file.
+     * @return the account credentials read from <b>pagseguro-config.properties</b> file.
      * @throws Exception
      * 
      */
-    public static AccountCredentials getAccountCredentials()
-            throws PagSeguroServiceException {
+    public static AccountCredentials getAccountCredentials() throws PagSeguroServiceException {
 
         String email = resourceBundle.getString("credential.email");
         String token = resourceBundle.getString("credential.token");
@@ -90,15 +87,13 @@ public class PagSeguroConfig {
 
         // it is validated at this point to put a error message in the exception
         if (email == null || "".equals(email) || token == null || "".equals(token)) {
-            
-            throw new PagSeguroServiceException(
-                    "To use credentials from config.properties file you must "
-                            + "configure the properties credential.email and credential.token. Currently "
-                            + "credential.email=[" + email
-                            + "] and credential.token=[" + token + "].");
-            
+
+            throw new PagSeguroServiceException("To use credentials from config.properties file you must "
+                    + "configure the properties credential.email and credential.token. Currently "
+                    + "credential.email=[" + email + "] and credential.token=[" + token + "].");
+
         }
-        
+
         return new AccountCredentials(email, token);
     }
 
@@ -148,26 +143,10 @@ public class PagSeguroConfig {
     }
 
     /**
-     * Set Version Cms.
-     * 
-     * @param cmsVersion
-     */
-    public static void setCmsVersion(String cmsVersion) {
-        PagSeguroConfig.cmsVersion = cmsVersion;
-    }
-
-    /**
      * @return boolean
      */
     public static boolean getLogActive() {
         return "true".equals(resourceBundle.getString("log.active"));
-    }
-
-    /**
-     * @return boolean
-     */
-    public static boolean getCheckoutLightbox() {
-        return "true".equals(resourceBundle.getString("checkout.lightbox"));
     }
 
 }

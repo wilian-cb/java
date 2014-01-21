@@ -226,15 +226,6 @@ public class TransactionSummary {
     }
 
     /**
-     * Set Escrow End Date
-     * 
-     * @param escrowEndDate
-     */
-    public void setEscrowEndDate(Date escrowEndDate) {
-        this.escrowEndDate = escrowEndDate;
-    }
-
-    /**
      * Get Cancellation Source
      * 
      * @return cancellationSource

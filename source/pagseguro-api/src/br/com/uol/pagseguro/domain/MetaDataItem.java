@@ -1,32 +1,8 @@
-/*
- ************************************************************************
- Copyright [2011] [PagSeguro Internet Ltda.]
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- ************************************************************************
- */
-
 package br.com.uol.pagseguro.domain;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import br.com.uol.pagseguro.enums.MetaDataItemKey;
 import br.com.uol.pagseguro.helper.PagSeguroUtil;
 
-/**
- * Represents a metaDataItem in a transaction
- */
 public class MetaDataItem {
 
     private MetaDataItemKey key;
@@ -34,8 +10,6 @@ public class MetaDataItem {
     private String value;
 
     private Integer group;
-
-    private List<MetaDataItem> item;
 
     /**
      * Initializes a newly created object of this type
@@ -53,8 +27,8 @@ public class MetaDataItem {
      *            - the metaDataItemValue of the object
      */
     public MetaDataItem(MetaDataItemKey key, String value) {
-        this.setKey(key);
-        this.setValue(value);
+        this.key = key;
+        this.value = value;
     }
 
     /**
@@ -71,33 +45,6 @@ public class MetaDataItem {
         this.setKey(key);
         this.setValue(value);
         this.setGroup(group);
-    }
-
-    /**
-     * @param item
-     *            - add a new item on the end of this list
-     */
-    public void addItem(MetaDataItem item) {
-        this.getItem().add(item);
-    }
-
-    /**
-     * @param item
-     *            - new item list for this MetaDataItem
-     */
-    public void setItem(List<MetaDataItem> item) {
-        this.item = item;
-    }
-
-    /**
-     * @return a list of MetaDataItems
-     */
-    public List<MetaDataItem> getItem() {
-        if (this.item == null) {
-            this.item = new ArrayList<MetaDataItem>();
-        }
-
-        return this.item;
     }
 
     /**
@@ -163,5 +110,4 @@ public class MetaDataItem {
     public void setGroup(Integer group) {
         this.group = group;
     }
-
 }

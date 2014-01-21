@@ -39,7 +39,7 @@ public enum InvalidURL {
      *            - the value of the enum constant
      */
     InvalidURL(String value) {
-        this.setValue(value);
+        this.value = value;
     }
 
     /**

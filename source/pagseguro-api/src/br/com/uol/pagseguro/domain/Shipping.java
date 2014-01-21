@@ -44,9 +44,9 @@ public class Shipping {
      * Initializes a new instance of the Shipping class
      */
     public Shipping(Address address, ShippingType type, BigDecimal cost) {
-        this.setAddress(address);
-        this.setType(type);
-        this.setCost(cost);
+        this.address = address;
+        this.type = type;
+        this.cost = cost;
     }
 
     /**

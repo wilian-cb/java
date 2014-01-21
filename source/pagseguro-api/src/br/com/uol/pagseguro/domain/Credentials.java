@@ -31,7 +31,7 @@ public abstract class Credentials {
     public abstract Map<Object, Object> getAttributes();
 
     /**
-     * @return string a string that represents the current object
+     * @return a string that represents the current object
      */
     @Override
     public abstract String toString();

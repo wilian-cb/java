@@ -102,8 +102,8 @@ public enum PaymentMethodCode {
      *            - the value of the enum constant
      */
     PaymentMethodCode(String description, Integer value) {
-        this.setDescription(description);
-        this.setValue(value);
+        this.description = description;
+        this.value = value;
     }
 
     /**

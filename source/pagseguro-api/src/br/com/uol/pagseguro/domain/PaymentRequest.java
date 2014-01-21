@@ -47,7 +47,7 @@ public class PaymentRequest {
     private Currency currency;
 
     /**
-     * Products/items in this payment request
+     * List of products/items in this payment request
      */
     private List<Item> items;
 
@@ -58,10 +58,10 @@ public class PaymentRequest {
     private String redirectURL;
 
     /**
-     * Extra amount to be added to the transaction total
+     * Extra/discount amount to be added to the transaction total
      * 
-     * This value can be used to add an extra charge to the transaction or provide a discount in the case ExtraAmount is
-     * a negative value.
+     * Optional. This value can be used to add an extra charge to the transaction or provide a discount in the case
+     * ExtraAmount is a negative value.
      */
     private BigDecimal extraAmount;
 
@@ -87,18 +87,18 @@ public class PaymentRequest {
     private BigInteger maxAge;
 
     /**
-     * How many times the payment redirect uri returned by the payment web service can be accessed.
+     * How many times the payment redirect url returned by the payment web service can be accessed.
      * 
-     * Optional. After this payment request is submitted, the payment redirect uri returned by the payment web service
+     * Optional. After this payment request is submitted, the payment redirect url returned by the payment web service
      * will remain valid for the number of uses specified here.
      */
     private BigInteger maxUses;
 
     /**
-     * Determines for which url PagSeguro will send the order related notifications codes.
+     * Determines for which url PagSeguro will send the order related notifications changes.
      * 
-     * Optional. Any change happens in the transaction status, a new notification request will be send to this url. You
-     * can use that for update the related order.
+     * Optional. A new notification will be send to this url if any change happens in the transaction status. You can
+     * use that for update the related order.
      */
     private String notificationURL;
 
@@ -109,7 +109,7 @@ public class PaymentRequest {
      * 
      * @var MetaData
      */
-    private MetaDataItem metaData;
+    private MetaData metaData;
 
     /**
      * Extra parameters that user can add to a PagSeguro checkout request
@@ -140,6 +140,8 @@ public class PaymentRequest {
      * Sets the Sender, party that will be sending the money
      * 
      * @param sender
+     * 
+     * @see Sender
      */
     public void setSender(Sender sender) {
         this.sender = sender;
@@ -149,7 +151,9 @@ public class PaymentRequest {
      * Sets the Sender, party that will be sending the money
      * 
      * @param name
+     *            the sender full name or at least first and surname
      * @param email
+     *            the sender e-mail address
      */
     public void setSender(String name, String email) {
 
@@ -166,7 +170,30 @@ public class PaymentRequest {
      * Sets the Sender, party that will be sending the money
      * 
      * @param name
+     *            the sender full name or at least first and surname
      * @param email
+     *            the sender e-mail address
+     * @param number
+     */
+    public void setSender(String name, String email, Phone number) {
+
+        if (this.sender == null) {
+            this.sender = new Sender();
+        }
+
+        this.sender.setName(name);
+        this.sender.setEmail(email);
+        this.sender.setPhone(number);
+
+    }
+
+    /**
+     * Sets the Sender, party that will be sending the money
+     * 
+     * @param name
+     *            the sender full name or at least first and surname
+     * @param email
+     *            the sender e-mail address
      * @param areaCode
      * @param number
      */
@@ -186,7 +213,56 @@ public class PaymentRequest {
      * Sets the Sender, party that will be sending the money
      * 
      * @param name
+     *            the sender full name or at least first and surname
      * @param email
+     *            the sender e-mail address
+     * @param areaCode
+     * @param number
+     * @param bornDate
+     */
+    public void setSender(String name, String email, String areaCode, String number, String bornDate) {
+
+        if (this.sender == null) {
+            this.sender = new Sender();
+        }
+
+        this.sender.setName(name);
+        this.sender.setEmail(email);
+        this.sender.setPhone(new Phone(areaCode, number));
+        this.sender.setBornDate(bornDate);
+
+    }
+
+    /**
+     * Sets the Sender, party that will be sending the money
+     * 
+     * @param name
+     *            the sender full name or at least first and surname
+     * @param email
+     *            the sender e-mail address
+     * @param areaCode
+     * @param number
+     */
+    public void setSender(String name, String email, Phone number, String bornDate) {
+
+        if (this.sender == null) {
+            this.sender = new Sender();
+        }
+
+        this.sender.setName(name);
+        this.sender.setEmail(email);
+        this.sender.setPhone(number);
+        this.sender.setBornDate(bornDate);
+
+    }
+
+    /**
+     * Sets the Sender, party that will be sending the money
+     * 
+     * @param name
+     *            the sender full name or at least first and surname
+     * @param email
+     *            the sender e-mail address
      * @param areaCode
      * @param number
      * @param documentType
@@ -203,6 +279,85 @@ public class PaymentRequest {
         this.sender.setEmail(email);
         this.sender.setPhone(new Phone(areaCode, number));
         this.sender.addDocument(documentType, documentValue);
+
+    }
+
+    /**
+     * Sets the Sender, party that will be sending the money
+     * 
+     * @param name
+     *            the sender full name or at least first and surname
+     * @param email
+     *            the sender e-mail address
+     * @param number
+     * @param documentType
+     * @param documentValue
+     */
+    public void setSender(String name, String email, Phone number, DocumentType documentType, String documentValue) {
+
+        if (this.sender == null) {
+            this.sender = new Sender();
+        }
+
+        this.sender.setName(name);
+        this.sender.setEmail(email);
+        this.sender.setPhone(number);
+        this.sender.addDocument(documentType, documentValue);
+
+    }
+
+    /**
+     * Sets the Sender, party that will be sending the money
+     * 
+     * @param name
+     *            the sender full name or at least first and surname
+     * @param email
+     *            the sender e-mail address
+     * @param areaCode
+     * @param number
+     * @param documentType
+     * @param documentValue
+     * @param bornDate
+     */
+    public void setSender(String name, String email, String areaCode, String number, DocumentType documentType,
+            String documentValue, String bornDate) {
+
+        if (this.sender == null) {
+            this.sender = new Sender();
+        }
+
+        this.sender.setName(name);
+        this.sender.setEmail(email);
+        this.sender.setPhone(new Phone(areaCode, number));
+        this.sender.addDocument(documentType, documentValue);
+        this.sender.setBornDate(bornDate);
+
+    }
+
+    /**
+     * Sets the Sender, party that will be sending the money
+     * 
+     * @param name
+     *            the sender full name or at least first and surname
+     * @param email
+     *            the sender e-mail address
+     * @param number
+     * @param documentType
+     * @param documentValue
+     * @param bornDate
+     */
+    public void setSender(String name, String email, Phone number, DocumentType documentType, String documentValue,
+            String bornDate) {
+
+        if (this.sender == null) {
+            this.sender = new Sender();
+        }
+
+        this.sender.setName(name);
+        this.sender.setEmail(email);
+        this.sender.setPhone(number);
+        this.sender.addDocument(documentType, documentValue);
+        this.sender.setBornDate(bornDate);
 
     }
 
@@ -570,10 +725,10 @@ public class PaymentRequest {
      * 
      * @return MetaData
      */
-    public MetaDataItem getMetaData() {
+    public MetaData getMetaData() {
 
         if (this.metaData == null) {
-            this.metaData = new MetaDataItem();
+            this.metaData = new MetaData();
         }
 
         return this.metaData;
@@ -583,10 +738,10 @@ public class PaymentRequest {
     /**
      * Sets metadata for PagSeguro checkout requests
      * 
-     * @param MetaDataItem
+     * @param MetaData
      *            metaData
      */
-    public void setMetaData(MetaDataItem metaData) {
+    public void setMetaData(MetaData metaData) {
         this.metaData = metaData;
     }
 

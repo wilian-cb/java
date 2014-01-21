@@ -29,13 +29,14 @@ import br.com.uol.pagseguro.helper.PagSeguroUtil;
  */
 public class Sender {
 
-    private static final int NUMBER_50 = 50;
-
     /** Sender name */
     private String name;
 
     /** Sender email */
     private String email;
+
+    /** Sender born date */
+    private String bornDate;
 
     /** Sender phone */
     private Phone phone;
@@ -56,10 +57,11 @@ public class Sender {
      * @param email
      * @param phone
      */
-    public Sender(String name, String email, Phone phone) {
-        this.name = PagSeguroUtil.formatString(name, NUMBER_50, "");
+    public Sender(String name, String email, Phone phone, String bornDate) {
+        this.name = PagSeguroUtil.removeExtraSpaces(name);
         this.email = email;
         this.phone = phone;
+        this.bornDate = bornDate;
     }
 
     /**
@@ -68,7 +70,7 @@ public class Sender {
      * @param name
      */
     public void setName(String name) {
-        this.name = PagSeguroUtil.formatString(name, NUMBER_50, "");
+        this.name = PagSeguroUtil.removeExtraSpaces(name);
     }
 
     /**
@@ -92,6 +94,22 @@ public class Sender {
      */
     public String getEmail() {
         return this.email;
+    }
+
+    /**
+     * Sets the Sender born date
+     * 
+     * @param email
+     */
+    public void setBornDate(String bornDate) {
+        this.bornDate = bornDate;
+    }
+
+    /**
+     * @return the sender born date
+     */
+    public String getBornDate() {
+        return this.bornDate;
     }
 
     /**
@@ -158,7 +176,8 @@ public class Sender {
      */
     @Override
     public String toString() {
-        return "Sender [name=" + name + ", email=" + email + ", phone=" + phone + ", documents=" + documents + "]";
+        return "Sender [name=" + name + ", email=" + email + ", phone=" + phone + ", documents=" + documents
+                + ", bornDate=" + bornDate + "]";
     }
 
 }

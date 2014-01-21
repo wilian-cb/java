@@ -20,14 +20,10 @@ package br.com.uol.pagseguro.domain;
 
 import java.math.BigDecimal;
 
-import br.com.uol.pagseguro.helper.PagSeguroUtil;
-
 /**
  * Represents a product/item in a transaction
  */
 public class Item {
-
-    private static final int MAX_VALUE_STRING = 255;
 
     /**
      * Product identifier, such as SKU
@@ -60,24 +56,29 @@ public class Item {
     private BigDecimal shippingCost;
 
     /**
-     * Initializes a new instance of the Item class
+     * Initializes a newly created instance of this type
      */
     public Item() {
 
     }
 
     /**
-     * Initializes a new instance of the Item class
+     * Initializes a newly created instance of this type with the specified arguments
      * 
      * @param id
+     *            the product identifier
      * @param description
+     *            the product description
      * @param quantity
+     *            the product quantity
      * @param amount
+     *            the product unit price
      * @param weight
+     *            the product weight, in grams
      * @param shippingCost
+     *            the product unit shippingCost
      */
-    public Item(String id, String description, Integer quantity,
-            BigDecimal amount, Long weight, BigDecimal shippingCost) {
+    public Item(String id, String description, Integer quantity, BigDecimal amount, Long weight, BigDecimal shippingCost) {
         this.id = id;
         this.description = description;
         this.quantity = quantity;
@@ -94,9 +95,8 @@ public class Item {
     }
 
     /**
-     * Sets the product identifier
-     * 
      * @param id
+     *            the product identifier to set
      */
     public void setId(String id) {
         this.id = id;
@@ -110,73 +110,68 @@ public class Item {
     }
 
     /**
-     * Sets the product description
-     * 
      * @param description
+     *            the product description to set
      */
     public void setDescription(String description) {
-        this.description = PagSeguroUtil.formatString(description, MAX_VALUE_STRING, "");
+        this.description = description;
     }
 
     /**
-     * @return the quantity
+     * @return the product quantity
      */
     public Integer getQuantity() {
         return this.quantity;
     }
 
     /**
-     * Sets the quantity
-     * 
      * @param quantity
+     *            the product quantity to set
      */
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
     /**
-     * @return the amount
+     * @return the product unit price
      */
     public BigDecimal getAmount() {
         return this.amount;
     }
 
     /**
-     * Sets the unit amount for this item
-     * 
      * @param amount
+     *            the product unit price to set
      */
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
     /**
-     * @return the weight
+     * @return the product unit weight, in grams
      */
     public Long getWeight() {
         return this.weight;
     }
 
     /**
-     * Sets the single unit weight
-     * 
      * @param weight
+     *            the product unit weight, in grams, to set
      */
     public void setWeight(Long weight) {
         this.weight = weight;
     }
 
     /**
-     * @return the unit shipping cost for this item
+     * @return the product unit shipping cost
      */
     public BigDecimal getShippingCost() {
         return this.shippingCost;
     }
 
     /**
-     * Sets the unit shipping cost for this item
-     * 
      * @param shippingCost
+     *            the product unit shipping cost to set
      */
     public void setShippingCost(BigDecimal shippingCost) {
         this.shippingCost = shippingCost;

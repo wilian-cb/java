@@ -40,8 +40,8 @@ public enum NotificationType {
      *            - the value of the enum constant
      */
     NotificationType(String description, String value) {
-        this.setDescription(description);
-        this.setValue(value);
+        this.description = description;
+        this.value = value;
     }
 
     /**

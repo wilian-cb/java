@@ -50,8 +50,8 @@ public enum PaymentMethodType {
      *            - the value of the enum constant
      */
     PaymentMethodType(String type, Integer value) {
-        this.setType(type);
-        this.setValue(value);
+        this.type = type;
+        this.value = value;
     }
 
     /**

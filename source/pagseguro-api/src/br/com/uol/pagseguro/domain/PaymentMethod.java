@@ -49,8 +49,8 @@ public class PaymentMethod {
      * @param code
      */
     public PaymentMethod(PaymentMethodType type, PaymentMethodCode code) {
-        this.setType(type);
-        this.setCode(code);
+        this.type = type;
+        this.code = code;
     }
 
     /**

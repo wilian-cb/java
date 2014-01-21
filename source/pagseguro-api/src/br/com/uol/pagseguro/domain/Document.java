@@ -22,39 +22,41 @@ import br.com.uol.pagseguro.enums.DocumentType;
 import br.com.uol.pagseguro.helper.PagSeguroUtil;
 
 /**
- * Represents document
+ * Represents a taxpayer identification document, issued to Brazilians and foreigners
  */
 public class Document {
 
     /**
-     * The type document
+     * Document type
      */
     private DocumentType type;
 
     /**
-     * The value document
+     * Document value
      */
     private String value;
 
     /**
-     * Construct Default
+     * Initializes a newly created instance of this type
      */
     public Document() {
     }
 
     /**
-     * Construct
+     * Initializes a newly created instance of this type with the specified arguments
      * 
      * @param type
+     *            the document type
      * @param value
+     *            the document value
      */
     public Document(DocumentType type, String value) {
-        this.setType(type);
-        this.setValue(PagSeguroUtil.getOnlyNumbers(value));
+        this.type = type;
+        this.value = PagSeguroUtil.getOnlyNumbers(value);
     }
 
     /**
-     * @return the type
+     * @return the document type
      */
     public DocumentType getType() {
         return this.type;
@@ -62,14 +64,14 @@ public class Document {
 
     /**
      * @param type
-     *            the type to set
+     *            the document type to set
      */
-    private void setType(DocumentType type) {
+    public void setType(DocumentType type) {
         this.type = type;
     }
 
     /**
-     * @return the value
+     * @return the document value
      */
     public String getValue() {
         return this.value;
@@ -77,9 +79,9 @@ public class Document {
 
     /**
      * @param value
-     *            the value to set
+     *            the document value to set
      */
-    private void setValue(String value) {
+    public void setValue(String value) {
         this.value = value;
     }
 

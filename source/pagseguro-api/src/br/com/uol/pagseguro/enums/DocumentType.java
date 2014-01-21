@@ -34,7 +34,7 @@ public enum DocumentType {
      *            - the description of the enum constant
      */
     DocumentType(String description) {
-        this.setDescription(description);
+        this.description = description;
     }
 
     /**
@@ -48,7 +48,7 @@ public enum DocumentType {
      * @param description
      *            - new description for this enum constant
      */
-    private void setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 }

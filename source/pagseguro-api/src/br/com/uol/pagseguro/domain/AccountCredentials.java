@@ -24,29 +24,31 @@ import java.util.Map;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
 
 /**
- * Identifies a PagSeguro account
+ * Represents an PagSeguro account identification
  */
 public class AccountCredentials extends Credentials {
 
     private static final int HASH_SIZE = 3;
 
     /**
-     * Primary email associated with this account
+     * PagSeguro email account
      */
     private String email;
 
     /**
-     * PagSeguro token
+     * PagSeguro account security token
      */
     private String token;
 
     /**
-     * Initializes a new instance of the AccountCredentials class
+     * Initializes a newly created instance of this type with the specified arguments
      * 
      * @param email
+     *            the pagseguro email account. Max length 60 characters.
      * @param token
+     *            the pagseguro account security token. A sequence of 32 characters
      */
-    public AccountCredentials(String email, String token)throws PagSeguroServiceException {
+    public AccountCredentials(String email, String token) throws PagSeguroServiceException {
 
         if (email == null || "".equals(email.trim()) || token == null || "".equals(token.trim())) {
             throw new PagSeguroServiceException("Credentials not set.");
@@ -57,7 +59,7 @@ public class AccountCredentials extends Credentials {
     }
 
     /**
-     * @return the email
+     * @return the email account
      */
     public String getEmail() {
         return this.email;
@@ -65,14 +67,14 @@ public class AccountCredentials extends Credentials {
 
     /**
      * @param email
-     *            the email to set
+     *            the email account to set. Max length 60 characters.
      */
     public void setEmail(String email) {
         this.email = email;
     }
 
     /**
-     * @return the token
+     * @return the account security token
      */
     public String getToken() {
         return this.token;
@@ -80,25 +82,24 @@ public class AccountCredentials extends Credentials {
 
     /**
      * @param token
-     *            the token to set
+     *            the account security token to set. A sequence of 32 characters
      */
     public void setToken(String token) {
         this.token = token;
     }
 
     /**
-     * @return array a map of name value pairs that compose this set of
-     *         credentials
+     * @return array a map of name value pairs that compose this set of credentials
      */
     @Override
     public Map<Object, Object> getAttributes() {
-        
+
         Map<Object, Object> attributeMap = new HashMap<Object, Object>(HASH_SIZE);
         attributeMap.put("email", this.email);
         attributeMap.put("token", this.token);
-        
+
         return attributeMap;
-        
+
     }
 
     /**
