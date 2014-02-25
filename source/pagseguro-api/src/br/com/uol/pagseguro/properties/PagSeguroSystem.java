@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  * 
  */
 public class PagSeguroSystem {
-    
+
     private PagSeguroSystem() {
     }
 
@@ -33,10 +33,11 @@ public class PagSeguroSystem {
 
     private static final String LIB_VERSION = "2.1.0";
 
-    private static final String LANGUAGE_ENGINE_DESCRIPTION = System.getProperty("java.version") + ":" + System.getProperty("java.vendor");
+    private static final String LANGUAGE_ENGINE_DESCRIPTION = System.getProperty("java.version") + ":"
+            + System.getProperty("java.vendor");
 
     static {
-            resourceBundle = ResourceBundle.getBundle("pagseguro-system", Locale.getDefault());
+        resourceBundle = ResourceBundle.getBundle("pagseguro-system", Locale.getDefault());
     }
 
     public static String getCheckoutUrl() {
@@ -76,10 +77,6 @@ public class PagSeguroSystem {
 
     public static String getNotificationUrl() {
         return resourceBundle.getString("notificationService.url");
-    }
-    
-    public static String getUrlAbandoned() {
-        return resourceBundle.getString("url.abandoned");
     }
 
     public static String getUrlNotification() {
