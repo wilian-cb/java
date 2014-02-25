@@ -1,26 +1,34 @@
-/**
- * Copyright [2011] [PagSeguro Internet Ltda.]
+/*
+ * ***********************************************************************
+ Copyright [2011] [PagSeguro Internet Ltda.]
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+ http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ * ***********************************************************************
  */
+
 package br.com.uol.pagseguro.domain;
 
 /**
- * Represents an address location, typically for shipping or charging purposes.
+ * Represents an address location, typically for shipping or billing purposes
  * 
  * @see Shipping
  */
 public class Address {
+
+    /**
+     * Zip/postal code
+     */
+    private String postalCode;
 
     /**
      * Street name
@@ -38,7 +46,7 @@ public class Address {
     private String complement;
 
     /**
-     * District, country or neighborhood, if applicable
+     * District, county or neighborhood
      */
     private String district;
 
@@ -48,37 +56,40 @@ public class Address {
     private String city;
 
     /**
-     * State or province
+     * State or province acronym
      */
     private String state;
 
     /**
-     * Country
+     * Country code (ISO 3166-1 Alfa-3)
      */
     private String country;
 
     /**
-     * Postal/Zip code
-     */
-    private String postalCode;
-
-    /**
-     * Initializes a new instance of the Address class
+     * Initializes a newly created instance of this type
      */
     public Address() {
     }
 
     /**
-     * Initializes a new instance of the Address class
+     * Initializes a newly created instance of this type with the specified arguments
      * 
      * @param country
+     *            the country code (ISO 3166-1 Alfa-3), i.e BRA
      * @param state
+     *            the state/province acronym, i.e. SP
      * @param city
+     *            the city name, i.e. São Paulo
      * @param district
+     *            the district, county or neighborhood name, i.e. Pinheiros
      * @param postalCode
+     *            the zip/postal code, i.e. 01452002
      * @param street
+     *            the street name, i.e. Brigadeiro Faria Lima
      * @param number
+     *            the number, i.e. 1384
      * @param complement
+     *            the complement details, i.e. 3o andar
      */
     public Address(String country, String state, String city, String district, String postalCode, String street,
             String number, String complement) {
@@ -93,130 +104,123 @@ public class Address {
     }
 
     /**
-     * @return the street
+     * @return the street name
      */
     public String getStreet() {
-        return street;
+        return this.street;
     }
 
     /**
      * @return the number
      */
     public String getNumber() {
-        return number;
+        return this.number;
     }
 
     /**
-     * @return the complement
+     * @return the complement details
      */
     public String getComplement() {
-        return complement;
+        return this.complement;
     }
 
     /**
-     * @return the district
+     * @return the district, county or neighborhood name
      */
     public String getDistrict() {
-        return district;
+        return this.district;
     }
 
     /**
-     * @return the city
+     * @return the city name
      */
     public String getCity() {
-        return city;
+        return this.city;
     }
 
     /**
-     * @return the state
+     * @return the state/province acronym
      */
     public String getState() {
-        return state;
+        return this.state;
     }
 
     /**
-     * @return the postal code
+     * @return the zip/postal code
      */
     public String getPostalCode() {
-        return postalCode;
+        return this.postalCode;
     }
 
     /**
-     * @return the country
+     * @return the country code (ISO 3166-1 Alfa-3)
      */
     public String getCountry() {
-        return country;
+        return this.country;
     }
 
     /**
-     * Sets the street
-     * 
      * @param street
+     *            the street name to set
      */
     public void setStreet(String street) {
         this.street = street;
     }
 
     /**
-     * Sets the number
-     * 
      * @param number
+     *            the number to set
      */
     public void setNumber(String number) {
         this.number = number;
     }
 
     /**
-     * Sets the complement
-     * 
      * @param complement
+     *            the complement details to set
      */
     public void setComplement(String complement) {
         this.complement = complement;
     }
 
     /**
-     * Sets the district
-     * 
      * @param district
+     *            the district, county or neighborhood to set
      */
     public void setDistrict(String district) {
         this.district = district;
     }
 
     /**
-     * sets the city
-     * 
      * @param city
+     *            the city name to set
      */
     public void setCity(String city) {
         this.city = city;
     }
 
     /**
-     * Sets the state
-     * 
      * @param state
+     *            the state/province acronym to set
      */
     public void setState(String state) {
         this.state = state;
     }
 
     /**
-     * Sets the postalCode
-     * 
      * @param postalCode
+     *            the zip/postal code to set
      */
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
 
     /**
-     * Sets the country
-     * 
      * @param country
+     *            the country code to set (ISO 3166-1 Alfa-3)
      */
     public void setCountry(String country) {
         this.country = country;
     }
+
 }

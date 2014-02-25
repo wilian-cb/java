@@ -1,21 +1,26 @@
-/**
- * Copyright [2011] [PagSeguro Internet Ltda.]
+/*
+ ************************************************************************
+ Copyright [2011] [PagSeguro Internet Ltda.]
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+ http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ ************************************************************************
  */
+
 package br.com.uol.pagseguro.domain;
 
 import java.math.BigDecimal;
+
+import br.com.uol.pagseguro.enums.ShippingType;
 
 /**
  * Shipping information
@@ -27,15 +32,22 @@ public class Shipping {
      */
     private Address address;
 
-    /**
-     * Shipping type. See the ShippingType helper class for a list of known shipping types.
-     */
+    /** Shipping types. */
     private ShippingType type;
 
     /**
      * shipping cost.
      */
     private BigDecimal cost;
+
+    /**
+     * Initializes a new instance of the Shipping class
+     */
+    public Shipping(Address address, ShippingType type, BigDecimal cost) {
+        this.address = address;
+        this.type = type;
+        this.cost = cost;
+    }
 
     /**
      * Initializes a new instance of the Shipping class
@@ -58,7 +70,10 @@ public class Shipping {
      * @see Address
      */
     public Address getAddress() {
-        return address;
+        if (this.address == null) {
+            this.address = new Address();
+        }
+        return this.address;
     }
 
     /**
@@ -76,7 +91,7 @@ public class Shipping {
      * @see ShippingType
      */
     public ShippingType getType() {
-        return type;
+        return this.type;
     }
 
     /**
@@ -92,6 +107,7 @@ public class Shipping {
      * @return the cost
      */
     public BigDecimal getCost() {
-        return cost;
+        return this.cost;
     }
+
 }

@@ -1,84 +1,143 @@
-/**
- * Copyright [2011] [PagSeguro Internet Ltda.]
+/*
+ ************************************************************************
+ Copyright [2011] [PagSeguro Internet Ltda.]
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+ http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ ************************************************************************
  */
+
 package br.com.uol.pagseguro.service;
 
 import java.net.HttpURLConnection;
+import java.util.List;
 
 import br.com.uol.pagseguro.domain.Credentials;
+import br.com.uol.pagseguro.domain.Error;
 import br.com.uol.pagseguro.domain.Transaction;
+import br.com.uol.pagseguro.enums.HttpStatus;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
-import br.com.uol.pagseguro.infra.HttpURLConnectionUtil;
-import br.com.uol.pagseguro.logs.Logger;
-import br.com.uol.pagseguro.logs.PagSeguroLoggerFactory;
+import br.com.uol.pagseguro.logs.Log;
+import br.com.uol.pagseguro.parser.TransactionParser;
 import br.com.uol.pagseguro.properties.PagSeguroSystem;
-import br.com.uol.pagseguro.util.UrlUtil;
-import br.com.uol.pagseguro.xmlparser.TransactionParser;
+import br.com.uol.pagseguro.utils.HttpConnection;
+import br.com.uol.pagseguro.xmlparser.ErrorsParser;
 
 /**
  * Encapsulates web service calls regarding PagSeguro notifications
  */
 public class NotificationService {
 
-    /**
-     * PagSeguro Log tool
-     * 
-     * @see Logger
-     */
-    static Logger log = PagSeguroLoggerFactory.getLogger(PaymentService.class);
+    private NotificationService() {
+    }
 
     /**
-     * Url of Search Web Service
+     * @var String
      */
-    private static final String URL_SERVICE = PagSeguroSystem.getUrlNotification();
+    private static String SERVICE_NAME = "notificationService";
 
     /**
-     * Get/Post content type used in the Search Web Service
+     * @var Log
      */
-    private static final String CONTENT_TYPE = PagSeguroSystem.getContentTypeFormUrlEncoded();
+    private static Log log = new Log(NotificationService.class);
 
     /**
-     * Returns a transaction from a notification code
+     * @var String
+     */
+    private static final String CHECK_TRANSACTION = "NotificationService.CheckTransaction(notificationCode= %1s) - error %2s";
+
+    /**
+     * @var String
+     */
+    private static final String CHECK_TRANSACTION_BEGIN = "NotificationService.CheckTransaction(notificationCode= %s ) - begin ";
+
+    /**
+     * @param connectionData
+     * @param notificationCode
+     * @return
+     * @throws PagSeguroServiceException
+     */
+    private static String buildTransactionNotificationUrl(ConnectionData connectionData, String notificationCode)
+            throws PagSeguroServiceException {
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(PagSeguroSystem.getNotificationUrl()).append(notificationCode).append("?")
+                .append(connectionData.getCredentialsUrlQuery());
+
+        return sb.toString();
+    }
+
+    /**
+     * checkTransaction
      * 
      * @param credentials
      * @param notificationCode
-     * @return a transaction from a notification code
-     * @throws PagSeguroServiceException
+     * @throws Exception
      */
     public static Transaction checkTransaction(Credentials credentials, String notificationCode)
             throws PagSeguroServiceException {
 
-        log.info("NotificationService.CheckTransaction(notificationCode=" + notificationCode + ") - begin");
+        NotificationService.log.info(String.format(NotificationService.CHECK_TRANSACTION_BEGIN, notificationCode));
 
-        // calling transaction notifications webservice
-        HttpURLConnection connection = HttpURLConnectionUtil.getHttpGetConnection(
-                buildURL(credentials, notificationCode), CONTENT_TYPE);
+        ConnectionData connectionData = new ConnectionData(credentials, NotificationService.SERVICE_NAME);
+
+        HttpConnection connection = new HttpConnection();
+        HttpStatus httpCodeStatus = null;
+        Transaction transaction = null;
+
+        HttpURLConnection response = connection.get(
+                NotificationService.buildTransactionNotificationUrl(connectionData, notificationCode),
+                connectionData.getServiceTimeout(), connectionData.getCharset());
 
         try {
-            // Parsing the transaction
-            Transaction transaction = TransactionParser.readTransaction(connection.getInputStream());
-            log.info("NotificationService.CheckTransaction(notificationCode=" + notificationCode + ") - end - "
-                    + transaction);
-            return transaction;
+
+            httpCodeStatus = HttpStatus.fromCode(response.getResponseCode());
+
+            if (HttpURLConnection.HTTP_OK == httpCodeStatus.getCode().intValue()) {
+
+                transaction = TransactionParser.readTransaction(response.getInputStream());
+
+                NotificationService.log.info(String.format(NotificationService.CHECK_TRANSACTION, notificationCode,
+                        transaction.toString()));
+
+                return transaction;
+
+            } else if (HttpURLConnection.HTTP_BAD_REQUEST == httpCodeStatus.getCode().intValue()) {
+
+                List<Error> errors = ErrorsParser.readErrosXml(response.getErrorStream());
+
+                PagSeguroServiceException exception = new PagSeguroServiceException(httpCodeStatus, errors);
+
+                NotificationService.log.error(String.format(NotificationService.CHECK_TRANSACTION, notificationCode,
+                        exception.getMessage()));
+
+                throw exception;
+            } else {
+                throw new PagSeguroServiceException(httpCodeStatus);
+            }
+
+        } catch (PagSeguroServiceException e) {
+            throw e;
         } catch (Exception e) {
-            log.error("NotificationService.CheckTransaction(notificationCode=" + notificationCode + ") - ", e);
-            throw new RuntimeException(e);
+
+            NotificationService.log.error(String.format(NotificationService.CHECK_TRANSACTION, notificationCode,
+                    e.getMessage()));
+
+            throw new PagSeguroServiceException(httpCodeStatus, e);
+
+        } finally {
+            response.disconnect();
         }
     }
 
-    private static String buildURL(Credentials credentials, String notificationCode) {
-        return URL_SERVICE + "/" + notificationCode + "/?" + UrlUtil.buildQueryString(credentials.getAttributes());
-    }
 }

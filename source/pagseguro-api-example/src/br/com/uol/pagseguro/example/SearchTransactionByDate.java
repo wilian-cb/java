@@ -1,18 +1,21 @@
-/**
- * Copyright [2011] [PagSeguro Internet Ltda.]
+/*
+ ************************************************************************
+ Copyright [2011] [PagSeguro Internet Ltda.]
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+ http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ ************************************************************************
  */
+
 package br.com.uol.pagseguro.example;
 
 import java.lang.reflect.InvocationTargetException;
@@ -20,10 +23,10 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import br.com.uol.pagseguro.domain.AccountCredentials;
 import br.com.uol.pagseguro.domain.TransactionSearchResult;
 import br.com.uol.pagseguro.domain.TransactionSummary;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
+import br.com.uol.pagseguro.properties.PagSeguroConfig;
 import br.com.uol.pagseguro.service.TransactionSearchService;
 
 public class SearchTransactionByDate {
@@ -31,50 +34,59 @@ public class SearchTransactionByDate {
     public static void main(String[] args) throws SecurityException, NoSuchFieldException, IllegalArgumentException,
             IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 
-        TransactionSearchResult result = null;
+        TransactionSearchResult transactionSearchResult = null;
         try {
-            Calendar initialCalendar = Calendar.getInstance();
-            initialCalendar.set(2013, Calendar.MAY, 1, 0, 00);
-            Calendar finalCalendar = Calendar.getInstance();
-            finalCalendar.set(2013, Calendar.MAY, 14, 00, 00);
 
-            // Substitute the parameters below with your credentials (e-mail and
-            // token)
-            AccountCredentials credentials = new AccountCredentials("suporte@lojamodelo.com.br",
-                    "95112EE828D94278BD394E91C4388F20");
+            Calendar initialDate = Calendar.getInstance();
+            initialDate.set(2013, Calendar.NOVEMBER, 01, 0, 00);
 
-            result = TransactionSearchService.searchByDate(credentials, initialCalendar.getTime(),
-                    finalCalendar.getTime(), new Integer(1), new Integer(10));
+            Calendar finalDate = Calendar.getInstance();
+            finalDate.set(2013, Calendar.NOVEMBER, 30, 00, 00);
+
+            Integer page = Integer.valueOf(1);
+
+            Integer maxPageResults = Integer.valueOf(10);
+
+            // Set your account credentials on src/pagseguro-config.properties
+            transactionSearchResult = TransactionSearchService.searchByDate(PagSeguroConfig.getAccountCredentials(),
+                    initialDate.getTime(), finalDate.getTime(), page, maxPageResults);
+
         } catch (PagSeguroServiceException e) {
-            System.err.println(e.toString());
-            return;
+            System.err.println(e.getMessage());
         }
 
-        if (result != null) {
-            System.out.println("Search date: " + result.getDate());
-            System.out.println(result.getResultsInThisPage() + " results in the page " + result.getPage() + " of "
-                    + result.getTotalPages() + " pages.");
+        if (transactionSearchResult != null) {
+            System.out.println("Search date: " + transactionSearchResult.getDate());
 
-            List listTransactionSummaries = result.getTransactionSummaries();
-            Iterator transactionSummariesIterator = listTransactionSummaries.iterator();
+            List<TransactionSummary> listTransactionSummaries = transactionSearchResult.getTransactionSummaries();
+            Iterator<TransactionSummary> transactionSummariesIterator = listTransactionSummaries.iterator();
+
             int counter = 0;
+
             while (transactionSummariesIterator.hasNext()) {
                 TransactionSummary currentTransactionSummary = (TransactionSummary) transactionSummariesIterator.next();
                 System.out.println();
                 System.out.println("Transaction: " + ++counter);
-                System.out.println("Code: " + currentTransactionSummary.getCode());
-                System.out.println("Reference: " + currentTransactionSummary.getReference());
-                System.out.println("Date: " + currentTransactionSummary.getDate());
-                System.out.println("Disccount amount: " + currentTransactionSummary.getDiscountAmount());
-                System.out.println("Extra amount: " + currentTransactionSummary.getExtraAmount());
-                System.out.println("Fee amount: " + currentTransactionSummary.getFeeAmount());
-                System.out.println("Transaction amount: " + currentTransactionSummary.getGrossAmount());
-                System.out.println("Last event date: " + currentTransactionSummary.getLastEvent());
-                System.out.println("Net amount: " + currentTransactionSummary.getNetAmount());
-                System.out.println("Payment method type: " + currentTransactionSummary.getPaymentMethodType());
-                System.out.println("Status: " + currentTransactionSummary.getStatus());
-                System.out.println("Type: " + currentTransactionSummary.getType());
+                System.out.println("date: " + currentTransactionSummary.getDate());
+                System.out.println("reference: " + currentTransactionSummary.getReference());
+                System.out.println("code: " + currentTransactionSummary.getCode());
+                System.out.println("type: " + currentTransactionSummary.getType());
+                System.out.println("status: " + currentTransactionSummary.getStatus());
+                System.out.println("paymentMethodType: " + currentTransactionSummary.getPaymentMethod().getType());
+                System.out.println("grossAount: " + currentTransactionSummary.getGrossAmount());
+                System.out.println("disccountAmount: " + currentTransactionSummary.getDiscountAmount());
+                System.out.println("feeAmount: " + currentTransactionSummary.getFeeAmount());
+                System.out.println("netAmount: " + currentTransactionSummary.getNetAmount());
+                System.out.println("extraAmount: " + currentTransactionSummary.getExtraAmount());
+                System.out.println("lastEventDate: " + currentTransactionSummary.getLastEvent());
             }
+
+            System.out.println();
+            System.out.println(transactionSearchResult.getResultsInThisPage() + " result(s) in the page "
+                    + transactionSearchResult.getPage() + " of " + transactionSearchResult.getTotalPages() + " pages.");
         }
+    }
+
+    private SearchTransactionByDate() {
     }
 }

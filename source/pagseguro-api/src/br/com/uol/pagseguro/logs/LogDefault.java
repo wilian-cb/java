@@ -15,56 +15,32 @@
  limitations under the License.
  ************************************************************************
  */
+
 package br.com.uol.pagseguro.logs;
 
 /**
- * 
- * Interface Logger
+ * The class LogDefault should be used when library of log4j is not
+ * added in project.
  */
-public interface Logger {
+public class LogDefault implements Logger {
 
-    /**
-     * Logger Debug
-     * 
-     * @param message
-     */
-    void debug(String message);
+    public void debug(String message) {
+    	
+    }
 
-    /**
-     * Logger Info
-     * 
-     * @param message
-     */
-    void info(String message);
+    public void info(String message) {
+    }
 
-    /**
-     * Logger Warn
-     * 
-     * @param message
-     */
-    void warn(String message);
+    public void warn(String message) {
+    }
 
-    /**
-     * Logger error
-     * 
-     * @param message
-     */
-    void error(String message);
+    public void error(String message) {
+    }
 
-    /**
-     * Logger Warn
-     * 
-     * @param message
-     * @param t
-     */
-    void warn(String message, Throwable t);
+    public void warn(String message, Throwable t) {
+    }
 
-    /**
-     * Logger Error
-     * 
-     * @param message
-     * @param t
-     */
-    void error(String message, Throwable t);
+    public void error(String message, Throwable t) {
+    }
 
 }

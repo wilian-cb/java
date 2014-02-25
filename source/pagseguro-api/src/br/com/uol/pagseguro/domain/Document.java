@@ -1,5 +1,5 @@
 /*
- * ***********************************************************************
+ ************************************************************************
  Copyright [2011] [PagSeguro Internet Ltda.]
 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +13,7 @@
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
- * ***********************************************************************
+ ************************************************************************
  */
 
 package br.com.uol.pagseguro.domain;
@@ -22,78 +22,67 @@ import br.com.uol.pagseguro.enums.DocumentType;
 import br.com.uol.pagseguro.helper.PagSeguroUtil;
 
 /**
- * Class that represents a Sender Document
- * 
+ * Represents a taxpayer identification document, issued to Brazilians and foreigners
  */
-public class SenderDocument {
+public class Document {
 
-    /** Sender document type */
+    /**
+     * Document type
+     */
     private DocumentType type;
 
-    /** Sender document value */
+    /**
+     * Document value
+     */
     private String value;
 
     /**
-     * The constructor
+     * Initializes a newly created instance of this type
      */
-    public SenderDocument() {
-
+    public Document() {
     }
 
     /**
-     * The constructor
+     * Initializes a newly created instance of this type with the specified arguments
      * 
-     * @param documentType
+     * @param type
+     *            the document type
      * @param value
+     *            the document value
      */
-    public SenderDocument(DocumentType type, String value) {
+    public Document(DocumentType type, String value) {
         this.type = type;
         this.value = PagSeguroUtil.getOnlyNumbers(value);
     }
 
     /**
-     * Gets document type
-     * 
-     * @return String
+     * @return the document type
      */
     public DocumentType getType() {
         return this.type;
     }
 
     /**
-     * Sets document type
-     * 
-     * @param String
-     *            type
+     * @param type
+     *            the document type to set
      */
     public void setType(DocumentType type) {
         this.type = type;
     }
 
     /**
-     * Gets document value
-     * 
-     * @return Long
+     * @return the document value
      */
     public String getValue() {
         return this.value;
     }
 
     /**
-     * Sets document value
-     * 
-     * @param String
-     *            value
+     * @param value
+     *            the document value to set
      */
     public void setValue(String value) {
-        this.value = PagSeguroUtil.getOnlyNumbers(value);
+        this.value = value;
     }
 
-    /**
-     * Gets toString class return string
-     */
-    @Override
-    public String toString() {
-        return "PagSeguroSenderDocument [type=" + type + ", value=" + value + "]";
-    }
 }

@@ -1,112 +1,94 @@
-/**
- * Copyright [2011] [PagSeguro Internet Ltda.]
+/*
+ ************************************************************************
+ Copyright [2011] [PagSeguro Internet Ltda.]
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+ http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ ************************************************************************
  */
 package br.com.uol.pagseguro.domain;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import br.com.uol.pagseguro.enums.TransactionStatus;
+import br.com.uol.pagseguro.enums.TransactionType;
 
 /**
  * Represents a PagSeguro transaction
  */
 public class Transaction {
 
-    /**
-     * Last event date Date the last notification about this transaction was sent
-     */
+    private static final int MIN_VALUE = 0;
+
+    /** Date the last notification about this transaction was sent */
     private Date lastEventDate;
 
-    /**
-     * Transaction date
-     */
+    /** Transaction date */
     private Date date;
 
-    /**
-     * Transaction code
-     */
+    /** Transaction code */
     private String code;
 
-    /**
-     * Reference code You can use the reference code to store an identifier so you can associate the PagSeguro
-     * transaction to a transaction in your system.
-     */
+    /** A reference to associate the PagSeguro transaction to a transaction in your system. */
     private String reference;
 
-    /**
-     * Transaction type
-     * 
-     * @see TransactionType
-     */
+    /** Transaction type */
     private TransactionType type;
 
-    /**
-     * Transaction status
-     * 
-     * @see TransactionStatus
-     */
+    /** Transaction status */
     private TransactionStatus status;
 
-    /**
-     * Payment method
-     * 
-     * @see PaymentMethod
-     */
+    /** Transaction payment method */
     private PaymentMethod paymentMethod;
 
-    /**
-     * Gross amount of the transaction
-     */
+    /** Transaction gross amount */
     private BigDecimal grossAmount;
 
-    /**
-     * Discount amount
-     */
+    /** Transaction discount amount */
     private BigDecimal discountAmount;
 
-    /**
-     * Fee amount
-     */
+    /** Transaction fee amount */
     private BigDecimal feeAmount;
 
-    /**
-     * Net amount
-     */
+    /** Transaction net amount */
     private BigDecimal netAmount;
 
-    /**
-     * Extra amount
-     */
+    /** Transaction extra/discount amount */
     private BigDecimal extraAmount;
 
-    /**
-     * Installment count
-     */
+    /** Transaction installment count */
     private Integer installmentCount;
 
-    /**
-     * Items count
-     */
+    /** Transaction items count */
     private Integer itemCount;
+
+    /** Transaction escrow end date */
+    private Date escrowEndDate;
+
+    /** Cancellation source */
+    private String cancellationSource;
+
+    /** Transaction payment link */
+    private String paymentLink;
 
     /**
      * item/product list in this transaction
      * 
      * @see Item
      */
-    private List items;
+    private List<Item> items;
 
     /**
      * Payer information, who is sending money
@@ -126,6 +108,14 @@ public class Transaction {
      * Initializes a new instance of the Transaction class
      */
     public Transaction() {
+
+        this.date = new Date();
+        this.paymentMethod = new PaymentMethod();
+        this.items = new ArrayList<Item>();
+        this.itemCount = Integer.valueOf(MIN_VALUE);
+        this.sender = new Sender();
+        this.shipping = new Shipping();
+
     }
 
     /**
@@ -134,7 +124,7 @@ public class Transaction {
      * @return the last event date
      */
     public Date getLastEventDate() {
-        return lastEventDate;
+        return this.lastEventDate;
     }
 
     /**
@@ -147,10 +137,64 @@ public class Transaction {
     }
 
     /**
+     * Get Escrow End Date
+     * 
+     * @return Date
+     */
+    public Date getEscrowEndDate() {
+        return escrowEndDate;
+    }
+
+    /**
+     * Set Escrow End Date
+     * 
+     * @param escrowEndDate
+     */
+    public void setEscrowEndDate(Date escrowEndDate) {
+        this.escrowEndDate = escrowEndDate;
+    }
+
+    /**
+     * Get Cancellation Source
+     * 
+     * @return String
+     */
+    public String getCancellationSource() {
+        return this.cancellationSource;
+    }
+
+    /**
+     * Set Cancellation Source
+     * 
+     * @param cancellationSource
+     */
+    public void setCancellationSource(String cancellationSource) {
+        this.cancellationSource = cancellationSource;
+    }
+
+    /**
+     * Get Payment Link
+     * 
+     * @return String
+     */
+    public String getPaymentLink() {
+        return this.paymentLink;
+    }
+
+    /**
+     * Set Payment Link
+     * 
+     * @param paymentLink
+     */
+    public void setPaymentLink(String paymentLink) {
+        this.paymentLink = paymentLink;
+    }
+
+    /**
      * @return the transaction date
      */
     public Date getDate() {
-        return date;
+        return this.date;
     }
 
     /**
@@ -166,7 +210,7 @@ public class Transaction {
      * @return the transaction code
      */
     public String getCode() {
-        return code;
+        return this.code;
     }
 
     /**
@@ -202,7 +246,7 @@ public class Transaction {
      * @see TransactionType
      */
     public TransactionType getType() {
-        return type;
+        return this.type;
     }
 
     /**
@@ -221,7 +265,7 @@ public class Transaction {
      * @see TransactionStatus
      */
     public TransactionStatus getStatus() {
-        return status;
+        return this.status;
     }
 
     /**
@@ -240,7 +284,7 @@ public class Transaction {
      * @see PaymentMethod
      */
     public PaymentMethod getPaymentMethod() {
-        return paymentMethod;
+        return this.paymentMethod;
     }
 
     /**
@@ -256,7 +300,7 @@ public class Transaction {
      * @return the transaction gross amount
      */
     public BigDecimal getGrossAmount() {
-        return grossAmount;
+        return this.grossAmount;
     }
 
     /**
@@ -272,7 +316,7 @@ public class Transaction {
      * @return the discount amount
      */
     public BigDecimal getDiscountAmount() {
-        return discountAmount;
+        return this.discountAmount;
     }
 
     /**
@@ -288,7 +332,7 @@ public class Transaction {
      * @return the fee amount
      */
     public BigDecimal getFeeAmount() {
-        return feeAmount;
+        return this.feeAmount;
     }
 
     /**
@@ -304,7 +348,7 @@ public class Transaction {
      * @return the net amount
      */
     public BigDecimal getNetAmount() {
-        return netAmount;
+        return this.netAmount;
     }
 
     /**
@@ -320,7 +364,7 @@ public class Transaction {
      * @return the extra amount
      */
     public BigDecimal getExtraAmount() {
-        return extraAmount;
+        return this.extraAmount;
     }
 
     /**
@@ -336,7 +380,7 @@ public class Transaction {
      * @return the installment count
      */
     public Integer getInstallmentCount() {
-        return installmentCount;
+        return this.installmentCount;
     }
 
     /**
@@ -361,15 +405,15 @@ public class Transaction {
      * @return the items/products count in this transaction
      */
     public Integer getItemCount() {
-        return itemCount == null ? new Integer(0) : itemCount;
+        return this.itemCount;
     }
 
     /**
      * @return the items/products list in this transaction
      * @see Item
      */
-    public List getItems() {
-        return items;
+    public List<Item> getItems() {
+        return this.items;
     }
 
     /**
@@ -379,7 +423,7 @@ public class Transaction {
      * 
      * @param items
      */
-    public void setItems(List items) {
+    public void setItems(List<Item> items) {
         this.items = items;
     }
 
@@ -388,7 +432,7 @@ public class Transaction {
      * @see Sender
      */
     public Sender getSender() {
-        return sender;
+        return this.sender;
     }
 
     /**
@@ -407,7 +451,7 @@ public class Transaction {
      * @see Shipping
      */
     public Shipping getShipping() {
-        return shipping;
+        return this.shipping;
     }
 
     /**
@@ -421,15 +465,26 @@ public class Transaction {
         this.shipping = shipping;
     }
 
+    @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer(256);
-        sb.append("Transaction(Code=" + getCode());
-        sb.append(",Date=" + getDate());
-        sb.append(",Reference=" + getReference());
-        sb.append(",Status=" + status.getValue());
-        sb.append(",Email=" + sender != null ? sender.getEmail() : null);
-        sb.append(",ItemsCount=" + getItemCount());
+
+        String codeValue = "Transaction(Code=" + this.code;
+        String dateValue = ",Date=" + this.date;
+        String referenceValue = ",Reference=" + this.reference;
+        String statusValue = ",Status=" + this.status.getValue().toString();
+        String emailValue = ",Email=" + this.sender != null ? this.sender.getEmail() : null;
+        String itemsValue = ",ItemsCount=" + this.itemCount;
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(codeValue);
+        sb.append(dateValue);
+        sb.append(referenceValue);
+        sb.append(statusValue);
+        sb.append(emailValue);
+        sb.append(itemsValue);
         sb.append(")");
+
         return sb.toString();
+
     }
 }

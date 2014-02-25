@@ -1,17 +1,19 @@
-/**
- * Copyright [2011] [PagSeguro Internet Ltda.]
+/*
+ ************************************************************************
+ Copyright [2011] [PagSeguro Internet Ltda.]
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+ http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ ************************************************************************
  */
 package br.com.uol.pagseguro.properties;
 
@@ -19,24 +21,37 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import br.com.uol.pagseguro.domain.AccountCredentials;
+import br.com.uol.pagseguro.exception.PagSeguroServiceException;
 
 /**
  * Encapsulates PagSeguro configuration for API calls
  */
 public class PagSeguroConfig {
 
+    private PagSeguroConfig() {
+    }
+
+    /**
+     * @see ResourceBundle
+     */
     private static ResourceBundle resourceBundle;
 
+    /**
+     * Module Version
+     * 
+     * @var string
+     */
     private static String moduleVersion;
 
+    /**
+     * Cms Version
+     * 
+     * @var String
+     */
     private static String cmsVersion;
 
     static {
-        try {
-            resourceBundle = ResourceBundle.getBundle("pagseguro-config", Locale.getDefault());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        resourceBundle = ResourceBundle.getBundle("pagseguro-config", Locale.getDefault());
     }
 
     /**
@@ -59,9 +74,10 @@ public class PagSeguroConfig {
      * <b>pagseguro-config.properties</b> file
      * 
      * @return the account credentials read from <b>pagseguro-config.properties</b> file.
+     * @throws Exception
      * 
      */
-    public static AccountCredentials getAccountCredentials() {
+    public static AccountCredentials getAccountCredentials() throws PagSeguroServiceException {
 
         String email = resourceBundle.getString("credential.email");
         String token = resourceBundle.getString("credential.token");
@@ -70,30 +86,67 @@ public class PagSeguroConfig {
         token = token == null ? null : token.trim();
 
         // it is validated at this point to put a error message in the exception
-        if (email == null || email.equals("") || token == null || token.equals("")) {
-            throw new RuntimeException("To use credentials from config.properties file you must "
+        if (email == null || "".equals(email) || token == null || "".equals(token)) {
+
+            throw new PagSeguroServiceException("To use credentials from config.properties file you must "
                     + "configure the properties credential.email and credential.token. Currently "
                     + "credential.email=[" + email + "] and credential.token=[" + token + "].");
+
         }
 
         return new AccountCredentials(email, token);
-
     }
 
+    /**
+     * Get environment
+     * 
+     * @return string
+     */
+    public static String getEnvironment() {
+        return resourceBundle.getString("environment.environment");
+    }
+
+    /**
+     * Get Charset UTF-8, ISO-8859-1
+     * 
+     * @return string
+     */
+    public static String getApplicationCharset() {
+        return resourceBundle.getString("application.charset");
+    }
+
+    /**
+     * Get module version
+     * 
+     * @return string
+     */
     public static String getModuleVersion() {
         return moduleVersion;
     }
 
+    /**
+     * Set module version
+     * 
+     * @param moduleVersion
+     */
     public static void setModuleVersion(String moduleVersion) {
         PagSeguroConfig.moduleVersion = moduleVersion;
     }
 
+    /**
+     * Get Cms Version
+     * 
+     * @return string
+     */
     public static String getCmsVersion() {
         return cmsVersion;
     }
 
-    public static void setCmsVersion(String cmsVersion) {
-        PagSeguroConfig.cmsVersion = cmsVersion;
+    /**
+     * @return boolean
+     */
+    public static boolean getLogActive() {
+        return "true".equals(resourceBundle.getString("log.active"));
     }
 
 }

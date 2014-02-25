@@ -1,26 +1,33 @@
-/**
- * Copyright [2011] [PagSeguro Internet Ltda.]
+/*
+ ************************************************************************
+ Copyright [2011] [PagSeguro Internet Ltda.]
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+ http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ ************************************************************************
  */
+
 package br.com.uol.pagseguro.domain;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.uol.pagseguro.enums.Currency;
+import br.com.uol.pagseguro.enums.DocumentType;
+import br.com.uol.pagseguro.enums.InvalidURL;
+import br.com.uol.pagseguro.enums.MetaDataItemKey;
+import br.com.uol.pagseguro.enums.ShippingType;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
 import br.com.uol.pagseguro.service.PaymentService;
 
@@ -36,15 +43,13 @@ public class PaymentRequest {
 
     /**
      * Payment currency.
-     * 
-     * @see Currency
      */
-    private String currency;
+    private Currency currency;
 
     /**
-     * Products/items in this payment request
+     * List of products/items in this payment request
      */
-    private List items;
+    private List<Item> items;
 
     /**
      * Uri to where the PagSeguro payment page should redirect the user after the payment information is processed.
@@ -53,10 +58,10 @@ public class PaymentRequest {
     private String redirectURL;
 
     /**
-     * Extra amount to be added to the transaction total
+     * Extra/discount amount to be added to the transaction total
      * 
-     * This value can be used to add an extra charge to the transaction or provide a discount in the case ExtraAmount is
-     * a negative value.
+     * Optional. This value can be used to add an extra charge to the transaction or provide a discount in the case
+     * ExtraAmount is a negative value.
      */
     private BigDecimal extraAmount;
 
@@ -82,26 +87,43 @@ public class PaymentRequest {
     private BigInteger maxAge;
 
     /**
-     * How many times the payment redirect uri returned by the payment web service can be accessed.
+     * How many times the payment redirect url returned by the payment web service can be accessed.
      * 
-     * Optional. After this payment request is submitted, the payment redirect uri returned by the payment web service
+     * Optional. After this payment request is submitted, the payment redirect url returned by the payment web service
      * will remain valid for the number of uses specified here.
      */
     private BigInteger maxUses;
 
     /**
-     * Determines for which url PagSeguro will send the order related notifications codes.
+     * Determines for which url PagSeguro will send the order related notifications changes.
      * 
-     * Optional. Any change happens in the transaction status, a new notification request will be send to this url. You
-     * can use that for update the related order.
+     * Optional. A new notification will be send to this url if any change happens in the transaction status. You can
+     * use that for update the related order.
      */
     private String notificationURL;
+
+    /**
+     * Extra parameters that user can add to a PagSeguro checkout request
+     * 
+     * Optional.
+     * 
+     * @var MetaData
+     */
+    private MetaData metaData;
+
+    /**
+     * Extra parameters that user can add to a PagSeguro checkout request
+     * 
+     * Optional
+     * 
+     * @var PagSeguroParameter
+     */
+    private Parameter parameter;
 
     /**
      * Initializes a new instance of the PaymentRequest class
      */
     public PaymentRequest() {
-        items = new ArrayList();
     }
 
     /**
@@ -111,76 +133,232 @@ public class PaymentRequest {
      *         payment information is processed. money
      */
     public Sender getSender() {
-        return sender;
+        return this.sender;
     }
 
     /**
      * Sets the Sender, party that will be sending the money
      * 
      * @param sender
-     * @return
+     * 
+     * @see Sender
      */
-    public PaymentRequest setSender(Sender sender) {
+    public void setSender(Sender sender) {
         this.sender = sender;
-        return this;
     }
 
     /**
      * Sets the Sender, party that will be sending the money
      * 
      * @param name
+     *            the sender full name or at least first and surname
      * @param email
-     * @return
+     *            the sender e-mail address
      */
-    public PaymentRequest setSender(String name, String email) {
-        if (sender == null) {
-            sender = new Sender();
+    public void setSender(String name, String email) {
+
+        if (this.sender == null) {
+            this.sender = new Sender();
         }
-        sender.setName(name);
-        sender.setEmail(email);
-        return this;
+
+        this.sender.setName(name);
+        this.sender.setEmail(email);
+
     }
 
     /**
      * Sets the Sender, party that will be sending the money
      * 
      * @param name
+     *            the sender full name or at least first and surname
      * @param email
+     *            the sender e-mail address
+     * @param number
+     */
+    public void setSender(String name, String email, Phone number) {
+
+        if (this.sender == null) {
+            this.sender = new Sender();
+        }
+
+        this.sender.setName(name);
+        this.sender.setEmail(email);
+        this.sender.setPhone(number);
+
+    }
+
+    /**
+     * Sets the Sender, party that will be sending the money
+     * 
+     * @param name
+     *            the sender full name or at least first and surname
+     * @param email
+     *            the sender e-mail address
      * @param areaCode
      * @param number
-     * @return
      */
-    public PaymentRequest setSender(String name, String email, String areaCode, String number) {
-        if (sender == null) {
-            sender = new Sender();
+    public void setSender(String name, String email, String areaCode, String number) {
+
+        if (this.sender == null) {
+            this.sender = new Sender();
         }
-        sender.setName(name);
-        sender.setEmail(email);
-        sender.setPhone(new Phone(areaCode, number));
-        return this;
+
+        this.sender.setName(name);
+        this.sender.setEmail(email);
+        this.sender.setPhone(new Phone(areaCode, number));
+
     }
 
     /**
      * Sets the Sender, party that will be sending the money
      * 
      * @param name
+     *            the sender full name or at least first and surname
      * @param email
+     *            the sender e-mail address
+     * @param areaCode
+     * @param number
+     * @param bornDate
+     */
+    public void setSender(String name, String email, String areaCode, String number, String bornDate) {
+
+        if (this.sender == null) {
+            this.sender = new Sender();
+        }
+
+        this.sender.setName(name);
+        this.sender.setEmail(email);
+        this.sender.setPhone(new Phone(areaCode, number));
+        this.sender.setBornDate(bornDate);
+
+    }
+
+    /**
+     * Sets the Sender, party that will be sending the money
+     * 
+     * @param name
+     *            the sender full name or at least first and surname
+     * @param email
+     *            the sender e-mail address
+     * @param areaCode
+     * @param number
+     */
+    public void setSender(String name, String email, Phone number, String bornDate) {
+
+        if (this.sender == null) {
+            this.sender = new Sender();
+        }
+
+        this.sender.setName(name);
+        this.sender.setEmail(email);
+        this.sender.setPhone(number);
+        this.sender.setBornDate(bornDate);
+
+    }
+
+    /**
+     * Sets the Sender, party that will be sending the money
+     * 
+     * @param name
+     *            the sender full name or at least first and surname
+     * @param email
+     *            the sender e-mail address
      * @param areaCode
      * @param number
      * @param documentType
      * @param documentValue
-     * @return
      */
-    public PaymentRequest setSender(String name, String email, String areaCode, String number, String documentType,
+    public void setSender(String name, String email, String areaCode, String number, DocumentType documentType,
             String documentValue) {
-        if (sender == null) {
-            sender = new Sender();
+
+        if (this.sender == null) {
+            this.sender = new Sender();
         }
-        sender.setName(name);
-        sender.setEmail(email);
-        sender.setPhone(new Phone(areaCode, number));
-        sender.addDocument(documentType, documentValue);
-        return this;
+
+        this.sender.setName(name);
+        this.sender.setEmail(email);
+        this.sender.setPhone(new Phone(areaCode, number));
+        this.sender.addDocument(documentType, documentValue);
+
+    }
+
+    /**
+     * Sets the Sender, party that will be sending the money
+     * 
+     * @param name
+     *            the sender full name or at least first and surname
+     * @param email
+     *            the sender e-mail address
+     * @param number
+     * @param documentType
+     * @param documentValue
+     */
+    public void setSender(String name, String email, Phone number, DocumentType documentType, String documentValue) {
+
+        if (this.sender == null) {
+            this.sender = new Sender();
+        }
+
+        this.sender.setName(name);
+        this.sender.setEmail(email);
+        this.sender.setPhone(number);
+        this.sender.addDocument(documentType, documentValue);
+
+    }
+
+    /**
+     * Sets the Sender, party that will be sending the money
+     * 
+     * @param name
+     *            the sender full name or at least first and surname
+     * @param email
+     *            the sender e-mail address
+     * @param areaCode
+     * @param number
+     * @param documentType
+     * @param documentValue
+     * @param bornDate
+     */
+    public void setSender(String name, String email, String areaCode, String number, DocumentType documentType,
+            String documentValue, String bornDate) {
+
+        if (this.sender == null) {
+            this.sender = new Sender();
+        }
+
+        this.sender.setName(name);
+        this.sender.setEmail(email);
+        this.sender.setPhone(new Phone(areaCode, number));
+        this.sender.addDocument(documentType, documentValue);
+        this.sender.setBornDate(bornDate);
+
+    }
+
+    /**
+     * Sets the Sender, party that will be sending the money
+     * 
+     * @param name
+     *            the sender full name or at least first and surname
+     * @param email
+     *            the sender e-mail address
+     * @param number
+     * @param documentType
+     * @param documentValue
+     * @param bornDate
+     */
+    public void setSender(String name, String email, Phone number, DocumentType documentType, String documentValue,
+            String bornDate) {
+
+        if (this.sender == null) {
+            this.sender = new Sender();
+        }
+
+        this.sender.setName(name);
+        this.sender.setEmail(email);
+        this.sender.setPhone(number);
+        this.sender.addDocument(documentType, documentValue);
+        this.sender.setBornDate(bornDate);
+
     }
 
     /**
@@ -188,43 +366,45 @@ public class PaymentRequest {
      * 
      * @param areaCode
      * @param number
-     * @return
      */
-    public PaymentRequest setSenderPhone(String areaCode, String number) {
-        if (sender == null) {
-            sender = new Sender();
+    public void setSenderPhone(String areaCode, String number) {
+
+        if (this.sender == null) {
+            this.sender = new Sender();
         }
-        sender.setPhone(new Phone(areaCode, number));
-        return this;
+
+        this.sender.setPhone(new Phone(areaCode, number));
+
     }
 
     /**
      * @return the currency Example: BRL
-     * @see Currency
      */
-    public String getCurrency() {
-        return currency;
+    public Currency getCurrency() {
+        return this.currency;
     }
 
     /**
      * Sets the currency
      * 
-     * @see Currency
-     * 
      * @param currency
-     * @return
      */
-    public PaymentRequest setCurrency(String currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
-        return this;
     }
 
     /**
      * @return the items/products list in this payment request
      * @see Item
      */
-    public List getItems() {
-        return items;
+    public List<Item> getItems() {
+
+        if (this.items == null) {
+            this.items = new ArrayList<Item>();
+        }
+
+        return this.items;
+
     }
 
     /**
@@ -233,11 +413,9 @@ public class PaymentRequest {
      * @see Item
      * 
      * @param items
-     * @return
      */
-    public PaymentRequest setItems(List items) {
+    public void setItems(List<Item> items) {
         this.items = items;
-        return this;
     }
 
     /**
@@ -254,10 +432,7 @@ public class PaymentRequest {
      */
     public void addItem(String id, String description, Integer quantity, BigDecimal amount, Long weight,
             BigDecimal shippingCost) {
-        if (items == null) {
-            items = new ArrayList();
-        }
-        items.add(new Item(id, description, quantity, amount, weight, shippingCost));
+        this.getItems().add(new Item(id, description, quantity, amount, weight, shippingCost));
     }
 
     /**
@@ -268,10 +443,7 @@ public class PaymentRequest {
      * @param item
      */
     public void addItem(Item item) {
-        if (items == null) {
-            items = new ArrayList();
-        }
-        items.add(item);
+        this.getItems().add(item);
     }
 
     /**
@@ -281,7 +453,7 @@ public class PaymentRequest {
      * @return the redirectURL
      */
     public String getRedirectURL() {
-        return redirectURL;
+        return this.redirectURL;
     }
 
     /**
@@ -291,11 +463,9 @@ public class PaymentRequest {
      * Typically this is a confirmation page on your web site.
      * 
      * @param redirectURL
-     * @return
      */
-    public PaymentRequest setRedirectURL(String redirectURL) {
-        this.redirectURL = redirectURL;
-        return this;
+    public void setRedirectURL(String redirectURL) {
+        this.redirectURL = this.verifyURLTest(redirectURL);
     }
 
     /**
@@ -305,7 +475,7 @@ public class PaymentRequest {
      * @return the extra amount
      */
     public BigDecimal getExtraAmount() {
-        return extraAmount;
+        return this.extraAmount;
     }
 
     /**
@@ -313,29 +483,25 @@ public class PaymentRequest {
      * the case <b>extraAmount</b> is a negative value.
      * 
      * @param extraAmount
-     * @return
      */
-    public PaymentRequest setExtraAmount(BigDecimal extraAmount) {
+    public void setExtraAmount(BigDecimal extraAmount) {
         this.extraAmount = extraAmount;
-        return this;
     }
 
     /**
      * @return the reference of this payment request
      */
     public String getReference() {
-        return reference;
+        return this.reference;
     }
 
     /**
      * Sets the reference of this payment request
      * 
      * @param reference
-     * @return
      */
-    public PaymentRequest setReference(String reference) {
+    public void setReference(String reference) {
         this.reference = reference;
-        return this;
     }
 
     /**
@@ -343,7 +509,7 @@ public class PaymentRequest {
      * @see Shipping
      */
     public Shipping getShipping() {
-        return shipping;
+        return this.shipping;
     }
 
     /**
@@ -353,9 +519,8 @@ public class PaymentRequest {
      * 
      * @param shipping
      */
-    public PaymentRequest setShipping(Shipping shipping) {
+    public void setShipping(Shipping shipping) {
         this.shipping = shipping;
-        return this;
     }
 
     /**
@@ -364,14 +529,15 @@ public class PaymentRequest {
      * @see ShippingType
      * 
      * @param type
-     * @return
      */
-    public PaymentRequest setShippingType(ShippingType type) {
-        if (shipping == null) {
-            shipping = new Shipping();
+    public void setShippingType(ShippingType type) {
+
+        if (this.shipping == null) {
+            this.shipping = new Shipping();
         }
-        shipping.setType(type);
-        return this;
+
+        this.shipping.setType(type);
+
     }
 
     /**
@@ -379,14 +545,15 @@ public class PaymentRequest {
      * Use it when you calculate the value of the shipping.
      * 
      * @param cost
-     * @return
      */
-    public PaymentRequest setShippingCost(BigDecimal cost) {
-        if (shipping == null) {
-            shipping = new Shipping();
+    public void setShippingCost(BigDecimal cost) {
+
+        if (this.shipping == null) {
+            this.shipping = new Shipping();
         }
-        shipping.setCost(cost);
-        return this;
+
+        this.shipping.setCost(cost);
+
     }
 
     /**
@@ -401,16 +568,17 @@ public class PaymentRequest {
      * @param street
      * @param number
      * @param complement
-     * @return
      */
-    public PaymentRequest setShipping(ShippingType type, String country, String state, String city, String district,
+    public void setShipping(ShippingType type, String country, String state, String city, String district,
             String postalCode, String street, String number, String complement) {
-        if (shipping == null) {
-            shipping = new Shipping();
+
+        if (this.shipping == null) {
+            this.shipping = new Shipping();
         }
-        shipping.setType(type);
-        shipping.setAddress(new Address(country, state, city, district, postalCode, street, number, complement));
-        return this;
+
+        this.shipping.setType(type);
+        this.shipping.setAddress(new Address(country, state, city, district, postalCode, street, number, complement));
+
     }
 
     /**
@@ -426,15 +594,12 @@ public class PaymentRequest {
      * @param number
      * @param complement
      * @param cost
-     * @return
      */
-    public PaymentRequest setShipping(ShippingType type, String country, String state, String city, String district,
+    public void setShipping(ShippingType type, String country, String state, String city, String district,
             String postalCode, String street, String number, String complement, BigDecimal cost) {
 
-        setShipping(type, country, state, city, district, postalCode, street, number, complement);
-        shipping.setCost(cost);
-
-        return this;
+        this.setShipping(type, country, state, city, district, postalCode, street, number, complement);
+        this.shipping.setCost(cost);
 
     }
 
@@ -449,15 +614,31 @@ public class PaymentRequest {
      * @param street
      * @param number
      * @param complement
-     * @return
      */
-    public PaymentRequest setShippingAddress(String country, String state, String city, String district,
-            String postalCode, String street, String number, String complement) {
-        if (shipping == null) {
-            shipping = new Shipping();
+    public void setShippingAddress(String country, String state, String city, String district, String postalCode,
+            String street, String number, String complement) {
+
+        if (this.shipping == null) {
+            this.shipping = new Shipping();
         }
-        shipping.setAddress(new Address(country, state, city, district, postalCode, street, number, complement));
-        return this;
+
+        this.shipping.setAddress(new Address(country, state, city, district, postalCode, street, number, complement));
+
+    }
+
+    /**
+     * Sets the shipping address for this payment request
+     * 
+     * @param address
+     */
+    public void setShippingAddress(Address address) {
+
+        if (this.shipping == null) {
+            this.shipping = new Shipping();
+        }
+
+        this.shipping.setAddress(address);
+
     }
 
     /**
@@ -467,7 +648,7 @@ public class PaymentRequest {
      *         specified.
      */
     public BigInteger getMaxAge() {
-        return maxAge;
+        return this.maxAge;
     }
 
     /**
@@ -475,11 +656,9 @@ public class PaymentRequest {
      * remain valid for the period specified here.
      * 
      * @param maxAge
-     * @return
      */
-    public PaymentRequest setMaxAge(BigInteger maxAge) {
+    public void setMaxAge(BigInteger maxAge) {
         this.maxAge = maxAge;
-        return this;
     }
 
     /**
@@ -489,7 +668,7 @@ public class PaymentRequest {
      * @return the max uses configured for this payment request
      */
     public BigInteger getMaxUses() {
-        return maxUses;
+        return this.maxUses;
     }
 
     /**
@@ -499,11 +678,9 @@ public class PaymentRequest {
      * valid for the number of uses specified here.
      * 
      * @param maxUses
-     * @return
      */
-    public PaymentRequest setMaxUses(BigInteger maxUses) {
+    public void setMaxUses(BigInteger maxUses) {
         this.maxUses = maxUses;
-        return this;
     }
 
     /**
@@ -512,7 +689,7 @@ public class PaymentRequest {
      * @return String
      */
     public String getNotificationURL() {
-        return notificationURL;
+        return this.notificationURL;
     }
 
     /**
@@ -521,7 +698,7 @@ public class PaymentRequest {
      * @param notificationURL
      */
     public void setNotificationURL(String notificationURL) {
-        this.notificationURL = notificationURL;
+        this.notificationURL = verifyURLTest(notificationURL);
     }
 
     /**
@@ -539,18 +716,103 @@ public class PaymentRequest {
      * @param type
      * @param value
      */
-    public void addSenderDocument(String type, Long value) {
+    public void addSenderDocument(DocumentType type, String value) {
         this.getSender().addDocument(type, value);
     }
 
     /**
-     * Add document for sender documents list
+     * Get MetaData
      * 
-     * @param type
+     * @return MetaData
+     */
+    public MetaData getMetaData() {
+
+        if (this.metaData == null) {
+            this.metaData = new MetaData();
+        }
+
+        return this.metaData;
+
+    }
+
+    /**
+     * Sets metadata for PagSeguro checkout requests
+     * 
+     * @param MetaData
+     *            metaData
+     */
+    public void setMetaData(MetaData metaData) {
+        this.metaData = metaData;
+    }
+
+    /**
+     * Add extra information, grouped, on the payment request.
+     * 
+     * @param key
+     * @param value
+     * @param group
+     */
+    public void addMetaDataItem(MetaDataItemKey key, String value, Integer group) {
+        this.getMetaData().addItem(new MetaDataItem(key, value, group));
+    }
+
+    /**
+     * Add extra information, not grouped, on the payment request.
+     * 
+     * @param key
      * @param value
      */
-    public void addSenderDocument(String type, String value) {
-        this.getSender().addDocument(type, value);
+    public void addMetaDataItem(MetaDataItemKey key, String value) {
+        this.getMetaData().addItem(new MetaDataItem(key, value));
+    }
+
+    /**
+     * Gets parameter for PagSeguro checkout requests
+     * 
+     * @return Parameter
+     */
+    public Parameter getParameter() {
+
+        if (this.parameter == null) {
+            this.parameter = new Parameter();
+        }
+
+        return this.parameter;
+
+    }
+
+    /**
+     * Sets parameter for PagSeguro checkout requests
+     * 
+     * @param parameter
+     */
+    public void setParameter(Parameter parameter) {
+        this.parameter = parameter;
+    }
+
+    /**
+     * Add parameters in the checkout request.
+     * 
+     * See availables <a href="https://pagseguro.uol.com.br/v2/guia-de-integracao/api-de-pagamentos.html">parameters</a>
+     * 
+     * @param name
+     * @param value
+     */
+    public void addParameter(String name, String value) {
+        this.getParameter().addItem(new ParameterItem(name, value));
+    }
+
+    /**
+     * Add indexed parameters in the checkout request.
+     * 
+     * See availables <a href="https://pagseguro.uol.com.br/v2/guia-de-integracao/api-de-pagamentos.html">parameters</a>
+     * 
+     * @param name
+     * @param value
+     * @param index
+     */
+    public void addIndexedParameter(String name, String value, Integer index) {
+        this.getParameter().addItem(new ParameterItem(name, value, index));
     }
 
     /**
@@ -560,18 +822,55 @@ public class PaymentRequest {
      * @return The URL to where the user needs to be redirected to in order to complete the payment process
      * @throws PagSeguroServiceException
      */
-    public URL register(Credentials credentials) throws PagSeguroServiceException {
-        return PaymentService.doPayment(credentials, this);
+    public String register(Credentials credentials) throws PagSeguroServiceException {
+        return this.register(credentials, false);
     }
 
+    /**
+     * Calls the PagSeguro web service and register this request for payment
+     * 
+     * @param credentials
+     * @param onlyCheckoutCode
+     * @return The checkout code
+     * @throws PagSeguroServiceException
+     */
+    public String register(Credentials credentials, Boolean onlyCheckoutCode) throws PagSeguroServiceException {
+        return PaymentService.createCheckoutRequest(credentials, this, onlyCheckoutCode);
+    }
+
+    /**
+     * @return string
+     */
+    @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer(128);
+        StringBuilder sb = new StringBuilder();
         sb.append("PaymentRequest(Reference=");
         sb.append(reference);
         sb.append(",SenderEmail=");
         sb.append(sender != null ? sender.getEmail() : null);
         sb.append(")");
         return sb.toString();
+    }
+
+    /**
+     * Verify if the address of notificationURL or redirectURL is for tests and return empty
+     * 
+     * @param type
+     *            url
+     * @return type
+     */
+    public String verifyURLTest(String url) {
+
+        String urlReturn = url;
+
+        for (InvalidURL invalid : InvalidURL.values()) {
+            if (url.toLowerCase().contains(invalid.getValue().toLowerCase())) {
+                urlReturn = "";
+            }
+        }
+
+        return urlReturn;
+
     }
 
 }

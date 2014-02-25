@@ -15,56 +15,40 @@
  limitations under the License.
  ************************************************************************
  */
-package br.com.uol.pagseguro.logs;
+
+package br.com.uol.pagseguro.enums;
 
 /**
- * 
- * Interface Logger
+ * Enum constants that represents the senderDocument type accepted by PagSeguro on payment requests
  */
-public interface Logger {
+public enum DocumentType {
+
+    CPF("Cadastro de Pessoa Física");
+
+    private String description;
 
     /**
-     * Logger Debug
+     * Initializes a newly created enum constant of this type with the specified argument
      * 
-     * @param message
+     * @param description
+     *            - the description of the enum constant
      */
-    void debug(String message);
+    DocumentType(String description) {
+        this.description = description;
+    }
 
     /**
-     * Logger Info
-     * 
-     * @param message
+     * @return this enum constant description
      */
-    void info(String message);
+    public String getDescription() {
+        return this.description;
+    }
 
     /**
-     * Logger Warn
-     * 
-     * @param message
+     * @param description
+     *            - new description for this enum constant
      */
-    void warn(String message);
-
-    /**
-     * Logger error
-     * 
-     * @param message
-     */
-    void error(String message);
-
-    /**
-     * Logger Warn
-     * 
-     * @param message
-     * @param t
-     */
-    void warn(String message, Throwable t);
-
-    /**
-     * Logger Error
-     * 
-     * @param message
-     * @param t
-     */
-    void error(String message, Throwable t);
-
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

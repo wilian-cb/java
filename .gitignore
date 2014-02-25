@@ -17,9 +17,21 @@ local.properties
 .loadpath
 
 #################
+## IntelliJ
+#################
+.idea/
+*.iml
+
+#################
 ## Netbeans
 #################
 classes/
+
+#################
+## Sonar
+#################
+.sonar/
+sonar-project.properties
 
 # External tool builders
 .externalToolBuilders/

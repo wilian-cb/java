@@ -16,7 +16,7 @@ A biblioteca PagSeguro em Java é um conjunto de classes de domínio que facilit
 Requisitos
 ----------
 ---
- - [Java] 1.4+
+ - [Java] 1.5+
 
 
 Instalação
@@ -44,6 +44,15 @@ Mais informações estão disponíveis na [documentação oficial].
 Changelog
 ---------
 ---
+
+2.1.0
+
+ - Compatibildiade com Java 1.5+.
+ - Remoção de arquivos desnecessários.
+ - Alterado método de envio para HTTP.
+ - Adicionado possibilidade de envio de SenderCPF, MetaData e Parameter Generics.
+ - Correções de bugs.
+ 
 2.0.4
 
  - Atualização dos códigos de meios de pagamento.
