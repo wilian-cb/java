@@ -27,7 +27,7 @@ public class ReceiveNotifications {
 
     public static void main(String[] args) {
 
-        // The notificationCode receveived by your system
+        // The notificationCode received by your system
         String notificationCode = "ADB456F3BB3EBB3E6ADAA4919F80EEB1118F";
 
         Transaction transaction = null;
@@ -42,9 +42,9 @@ public class ReceiveNotifications {
         }
 
         if (transaction != null) {
-            System.out.println("TRANSACTION CODE: " + transaction.getCode());
-            System.out.println("TRANSACTION REFERENCE: " + transaction.getReference());
-            System.out.println("TRANSACTION STATUS: " + transaction.getStatus());
+            System.out.println("code: " + transaction.getCode());
+            System.out.println("reference: " + transaction.getReference());
+            System.out.println("status: " + transaction.getStatus());
         }
 
     }
