@@ -32,6 +32,7 @@ import java.util.Map.Entry;
 import java.util.TimeZone;
 
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
+import br.com.uol.pagseguro.properties.PagSeguroConfig;
 
 /**
  * @author asilva
@@ -39,7 +40,7 @@ import br.com.uol.pagseguro.exception.PagSeguroServiceException;
  */
 /**
  * @author asilva
- *
+ * 
  */
 public class PagSeguroUtil {
 
@@ -52,10 +53,10 @@ public class PagSeguroUtil {
     private static final int NUMBER_0 = 0;
 
     private static final int NUMBER_100 = 100;
-    
+
     private PagSeguroUtil() {
     }
-    
+
     /**
      * @param s
      * @return
@@ -84,9 +85,9 @@ public class PagSeguroUtil {
 
         int tzHour = Integer.parseInt(timeZone.substring(NUMBER_1, NUMBER_3));
         int tzMin = Integer.parseInt(timeZone.substring(NUMBER_4, NUMBER_6));
-        
+
         boolean plus = "+".equals(timeZone.substring(NUMBER_0, NUMBER_1));
-        
+
         if (plus) {
             calendar.add(Calendar.HOUR, -tzHour);
             calendar.add(Calendar.MINUTE, -tzMin);
@@ -227,9 +228,9 @@ public class PagSeguroUtil {
             }
 
             try {
-                sb.append(URLEncoder.encode(pay.getKey().toString(), "UTF-8"));
+                sb.append(URLEncoder.encode(pay.getKey().toString(), PagSeguroConfig.getApplicationCharset()));
                 sb.append("=");
-                sb.append(URLEncoder.encode(pay.getValue().toString(), "UTF-8"));
+                sb.append(pay.getValue().toString());
             } catch (UnsupportedEncodingException e) {
                 throw new PagSeguroServiceException("Error when trying enconde", e);
             } catch (Exception e) {

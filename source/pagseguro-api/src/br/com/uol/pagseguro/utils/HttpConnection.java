@@ -59,7 +59,8 @@ public class HttpConnection {
      * @throws SAXException
      * @throws ParserConfigurationException
      */
-    public HttpURLConnection post(String url, Map<Object, Object> data, String timeout, String charset) throws PagSeguroServiceException {
+    public HttpURLConnection post(String url, Map<Object, Object> data, String timeout, String charset)
+            throws PagSeguroServiceException {
         return this.connection("POST", url, charset);
     }
 
@@ -107,7 +108,8 @@ public class HttpConnection {
 
             connection.setRequestProperty("Content-type", "application/x-www-form-urlencoded; charset=" + charset);
             connection.setRequestProperty("lib-description", "java:" + PagSeguroSystem.getLibversion());
-            connection.setRequestProperty("language-engine-description", "java:" + PagSeguroSystem.getLanguageEnginedescription());
+            connection.setRequestProperty("language-engine-description",
+                    "java:" + PagSeguroSystem.getLanguageEnginedescription());
 
             String moduleVersion = PagSeguroConfig.getModuleVersion();
             if (moduleVersion != null) {
@@ -120,7 +122,7 @@ public class HttpConnection {
             }
 
             if ("POST".equalsIgnoreCase(method)) {
-                connection.getOutputStream().write(urlPS.getBytes("UTF-8"));
+                connection.getOutputStream().write(urlPS.getBytes(PagSeguroConfig.getApplicationCharset()));
             }
 
             return connection;

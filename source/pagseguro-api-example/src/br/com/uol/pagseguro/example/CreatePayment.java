@@ -36,8 +36,8 @@ public class CreatePayment {
 
         PaymentRequest paymentRequest = new PaymentRequest();
 
-        paymentRequest.addItem("0001", "Notebook Prata", Integer.valueOf(1), new BigDecimal("2430.00"), new Long(1000),
-                null);
+        paymentRequest.addItem("0001", "Notebook ÁÉÍÓÚÇ", Integer.valueOf(1), new BigDecimal("2430.00"),
+                new Long(1000), null);
         paymentRequest.addItem("0002", "Notebook Rosa", Integer.valueOf(2), new BigDecimal("2560.00"), new Long(750),
                 null);
 

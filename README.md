@@ -45,6 +45,10 @@ Changelog
 ---------
 ---
 
+2.1.1
+
+ - Correções de bugs.
+
 2.1.0
 
  - Compatibildiade com Java 1.5+.
