@@ -32,7 +32,7 @@ import java.util.Map.Entry;
 import java.util.TimeZone;
 
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
-import br.com.uol.pagseguro.properties.PagSeguroConfig;
+import br.com.uol.pagseguro.properties.PagSeguroSystem;
 
 /**
  * @author asilva
@@ -167,7 +167,7 @@ public class PagSeguroUtil {
     }
 
     /**
-     * Removes ascentos and special characters
+     * Removes Accents and special characters
      * 
      * @param value
      * @return
@@ -228,17 +228,15 @@ public class PagSeguroUtil {
             }
 
             try {
-                sb.append(URLEncoder.encode(pay.getKey().toString(), PagSeguroConfig.getApplicationCharset()));
+                sb.append(URLEncoder.encode(pay.getKey().toString(), PagSeguroSystem.getPagSeguroEncoding()));
                 sb.append("=");
-                sb.append(pay.getValue().toString());
+                sb.append(URLEncoder.encode(pay.getValue().toString(), PagSeguroSystem.getPagSeguroEncoding()));
             } catch (UnsupportedEncodingException e) {
                 throw new PagSeguroServiceException("Error when trying enconde", e);
             } catch (Exception e) {
                 throw new PagSeguroServiceException("Error when trying enconde", e);
             }
         }
-
         return sb.toString();
     }
-
 }

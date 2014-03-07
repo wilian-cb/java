@@ -122,7 +122,7 @@ public class HttpConnection {
             }
 
             if ("POST".equalsIgnoreCase(method)) {
-                connection.getOutputStream().write(urlPS.getBytes(PagSeguroConfig.getApplicationCharset()));
+                connection.getOutputStream().write(urlPS.getBytes("UTF-8"));
             }
 
             return connection;
