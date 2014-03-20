@@ -19,6 +19,9 @@
 package br.com.uol.pagseguro.utils;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -106,7 +109,8 @@ public class HttpConnection {
             connection.setDoInput(true);
             connection.setRequestMethod(method);
 
-            connection.setRequestProperty("Content-type", "application/x-www-form-urlencoded; charset=" + charset);
+            connection.setRequestProperty("Content-type", PagSeguroSystem.getContentTypeFormUrlEncoded());
+            connection.setRequestProperty("charset", charset);
             connection.setRequestProperty("lib-description", "java:" + PagSeguroSystem.getLibversion());
             connection.setRequestProperty("language-engine-description",
                     "java:" + PagSeguroSystem.getLanguageEnginedescription());
@@ -122,7 +126,13 @@ public class HttpConnection {
             }
 
             if ("POST".equalsIgnoreCase(method)) {
-                connection.getOutputStream().write(urlPS.getBytes("UTF-8"));
+                
+                OutputStream out = connection.getOutputStream();
+                Writer write = new OutputStreamWriter(out, charset);
+                write.write(urlPS);
+                
+                write.close();
+                out.close();
             }
 
             return connection;
