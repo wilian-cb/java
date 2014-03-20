@@ -28,7 +28,7 @@ public class ReceiveNotifications {
     public static void main(String[] args) {
 
         // The notificationCode received by your system
-        String notificationCode = "ADB456F3BB3EBB3E6ADAA4919F80EEB1118F";
+        String notificationCode = "83C949615C535C53ECEAA453CF8848D59180";
 
         Transaction transaction = null;
 

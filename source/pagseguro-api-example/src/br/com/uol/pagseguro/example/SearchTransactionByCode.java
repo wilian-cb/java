@@ -30,7 +30,7 @@ public class SearchTransactionByCode {
         // Substitute the code below with a valid transaction code for your
         // account
 
-        String transactionCode = "C620EB89-0E63-4EF0-AD16-C3A6D3369FD9";
+        String transactionCode = "4EDCA6AD-112D-4474-BA4E-E613A095B93A";
 
         Transaction transaction = null;
 

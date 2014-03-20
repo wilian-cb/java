@@ -38,10 +38,10 @@ public class SearchTransactionByDate {
         try {
 
             Calendar initialDate = Calendar.getInstance();
-            initialDate.set(2014, Calendar.JANUARY, 01, 0, 00);
+            initialDate.set(2014, Calendar.FEBRUARY, 01, 0, 00);
 
             Calendar finalDate = Calendar.getInstance();
-            finalDate.set(2014, Calendar.JANUARY, 30, 00, 00);
+            finalDate.set(2014, Calendar.FEBRUARY, 07, 17, 30);
 
             Integer page = Integer.valueOf(1);
 
