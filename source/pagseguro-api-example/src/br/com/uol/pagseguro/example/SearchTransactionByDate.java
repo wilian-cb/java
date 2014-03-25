@@ -41,7 +41,7 @@ public class SearchTransactionByDate {
             initialDate.set(2014, Calendar.FEBRUARY, 01, 0, 00);
 
             Calendar finalDate = Calendar.getInstance();
-            finalDate.set(2014, Calendar.FEBRUARY, 07, 17, 30);
+            finalDate.set(2014, Calendar.FEBRUARY, 28, 17, 30);
 
             Integer page = Integer.valueOf(1);
 
@@ -73,7 +73,7 @@ public class SearchTransactionByDate {
                 System.out.println("type: " + currentTransactionSummary.getType());
                 System.out.println("status: " + currentTransactionSummary.getStatus());
                 System.out.println("paymentMethodType: " + currentTransactionSummary.getPaymentMethod().getType());
-                System.out.println("grossAount: " + currentTransactionSummary.getGrossAmount());
+                System.out.println("grossAmount: " + currentTransactionSummary.getGrossAmount());
                 System.out.println("disccountAmount: " + currentTransactionSummary.getDiscountAmount());
                 System.out.println("feeAmount: " + currentTransactionSummary.getFeeAmount());
                 System.out.println("netAmount: " + currentTransactionSummary.getNetAmount());
