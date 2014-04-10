@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
+import br.com.uol.pagseguro.properties.PagSeguroConfig;
 
 /**
  * Represents an PagSeguro account identification
@@ -36,17 +37,22 @@ public class AccountCredentials extends Credentials {
     private String email;
 
     /**
-     * PagSeguro account security token
+     * PagSeguro production account security token
      */
-    private String token;
+    private String productionToken;
 
+    /**
+     * PagSeguro sandbox account security token
+     */
+    private String sandboxToken;
+    
     /**
      * Initializes a newly created instance of this type with the specified arguments
      * 
      * @param email
      *            the pagseguro email account. Max length 60 characters.
      * @param token
-     *            the pagseguro account security token. A sequence of 32 characters
+     *            the production pagseguro account security token. A sequence of 32 characters
      */
     public AccountCredentials(String email, String token) throws PagSeguroServiceException {
 
@@ -55,7 +61,30 @@ public class AccountCredentials extends Credentials {
         }
 
         this.email = email.trim();
-        this.token = token.trim();
+        this.productionToken = token.trim();
+    }
+    
+    /**
+     * Initializes a newly created instance of this type with the specified arguments
+     * 
+     * @param email
+     *            the pagseguro email account. Max length 60 characters.
+     * @param productionToken
+     *            the production pagseguro account security token. A sequence of 32 characters
+     * @param sandboxToken
+     *            the sandbox pagseguro account security token. A sequence of 32 characters
+     */
+    public AccountCredentials(String email, String productionToken, String sandboxToken) throws PagSeguroServiceException {
+
+        if (email == null || "".equals(email.trim()) 
+        || productionToken == null || "".equals(productionToken.trim())
+        || sandboxToken == null || "".equals(sandboxToken.trim())) {
+            throw new PagSeguroServiceException("Credentials not set.");
+        }
+
+        this.email = email.trim();
+        this.productionToken = productionToken.trim();
+        this.sandboxToken = sandboxToken.trim();
     }
 
     /**
@@ -77,27 +106,46 @@ public class AccountCredentials extends Credentials {
      * @return the account security token
      */
     public String getToken() {
-        return this.token;
+    	if(PagSeguroConfig.isSandboxEnvironment())
+    		return this.sandboxToken;
+    	return this.productionToken;
     }
 
     /**
      * @param token
      *            the account security token to set. A sequence of 32 characters
      */
-    public void setToken(String token) {
-        this.token = token;
+    public void setProductionToken(String productionToken) {
+        this.productionToken = productionToken;
+    }
+    
+    /**
+     * @param token
+     *            the account security token to set. A sequence of 32 characters
+     */
+    public void setSandboxToken(String sandboxToken) {
+        this.sandboxToken = sandboxToken;
     }
 
     /**
      * @return array a map of name value pairs that compose this set of credentials
+     * @throws PagSeguroServiceException 
      */
     @Override
-    public Map<Object, Object> getAttributes() {
+    public Map<Object, Object> getAttributes() throws PagSeguroServiceException {
 
         Map<Object, Object> attributeMap = new HashMap<Object, Object>(HASH_SIZE);
+        
         attributeMap.put("email", this.email);
-        attributeMap.put("token", this.token);
-
+        if(PagSeguroConfig.isSandboxEnvironment()) {
+        	if(this.sandboxToken == null || "".equals(this.sandboxToken)) {
+        		throw new PagSeguroServiceException("Sandbox credentials not set.");
+        	}
+        	attributeMap.put("token", this.sandboxToken);
+        } else {
+        	attributeMap.put("token", this.productionToken);
+        }
+        
         return attributeMap;
 
     }
@@ -107,6 +155,6 @@ public class AccountCredentials extends Credentials {
      */
     @Override
     public String toString() {
-        return this.email + " - " + this.token;
+        return this.email + " - " + this.productionToken + " (production token) - " + this.sandboxToken + " (sandbox token)";
     }
 }

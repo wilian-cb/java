@@ -28,6 +28,14 @@ import br.com.uol.pagseguro.exception.PagSeguroServiceException;
  */
 public class PagSeguroConfig {
 
+	private static final String PRODUCTION_ENVIRONMENT = "production";
+
+	private static final String SANDBOX_ENVIRONMENT = "sandbox";
+
+	private String environment;
+	
+	private static PagSeguroConfig instance;
+	
     private PagSeguroConfig() {
     }
 
@@ -52,6 +60,9 @@ public class PagSeguroConfig {
 
     static {
         resourceBundle = ResourceBundle.getBundle("pagseguro-config", Locale.getDefault());
+        if(instance==null)
+        	instance = new PagSeguroConfig();
+        instance.environment = resourceBundle.getString("environment");
     }
 
     /**
@@ -70,7 +81,7 @@ public class PagSeguroConfig {
 
     /**
      * Account credentials read from config file <b>pagseguro-config.properties</b> To read the account credentials from
-     * config, you have to set <b>credential.email</b> and <b>credential.token</b> in the
+     * config, you have to set <b>credential.email</b>, <b>credential.production.token</b> and <b>credential.sandbox.token</b> in the
      * <b>pagseguro-config.properties</b> file
      * 
      * @return the account credentials read from <b>pagseguro-config.properties</b> file.
@@ -80,21 +91,25 @@ public class PagSeguroConfig {
     public static AccountCredentials getAccountCredentials() throws PagSeguroServiceException {
 
         String email = resourceBundle.getString("credential.email");
-        String token = resourceBundle.getString("credential.token");
+        String productionToken = resourceBundle.getString("credential.production.token");
+        String sandboxToken = resourceBundle.getString("credential.sandbox.token");
 
         email = email == null ? null : email.trim();
-        token = token == null ? null : token.trim();
+        productionToken = productionToken == null ? null : productionToken.trim();
+        sandboxToken = sandboxToken == null ? null : sandboxToken.trim();
 
         // it is validated at this point to put a error message in the exception
-        if (email == null || "".equals(email) || token == null || "".equals(token)) {
+        if (email == null || "".equals(email) 
+         || productionToken == null || "".equals(productionToken)
+         || sandboxToken == null || "".equals(sandboxToken)) {
 
             throw new PagSeguroServiceException("To use credentials from config.properties file you must "
-                    + "configure the properties credential.email and credential.token. Currently "
-                    + "credential.email=[" + email + "] and credential.token=[" + token + "].");
+                    + "configure the properties credential.email, credential.production.token and credential.sandbox.token. Currently "
+                    + "credential.email=[" + email + "], credential.production.token=[" + productionToken + "] and credential.sandbox.token=[" + sandboxToken + "].");
 
         }
 
-        return new AccountCredentials(email, token);
+        return new AccountCredentials(email, productionToken, sandboxToken);
     }
 
     /**
@@ -103,7 +118,7 @@ public class PagSeguroConfig {
      * @return string
      */
     public static String getEnvironment() {
-        return resourceBundle.getString("environment.environment");
+        return instance.environment;
     }
 
     /**
@@ -148,5 +163,17 @@ public class PagSeguroConfig {
     public static boolean getLogActive() {
         return "true".equals(resourceBundle.getString("log.active"));
     }
+    
+    public static void setSandboxEnvironment(){
+    	instance.environment = SANDBOX_ENVIRONMENT;
+    }
+    
+    public static void setProductionEnvironment(){
+    	instance.environment = PRODUCTION_ENVIRONMENT;
+    }
+
+	public static boolean isSandboxEnvironment() {
+		return SANDBOX_ENVIRONMENT.equals(instance.environment);
+	}
 
 }

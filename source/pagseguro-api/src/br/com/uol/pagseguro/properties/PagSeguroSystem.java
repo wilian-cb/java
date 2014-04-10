@@ -41,7 +41,7 @@ public class PagSeguroSystem {
     }
 
     public static String getCheckoutUrl() {
-        return resourceBundle.getString("paymentService.checkoutUrl");
+        return resourceBundle.getString("paymentService." + PagSeguroConfig.getEnvironment() + ".checkoutUrl");
     }
 
     /**
@@ -50,16 +50,7 @@ public class PagSeguroSystem {
      * @return string
      */
     public static String getUrlProduction() {
-        return resourceBundle.getString("environment.production.webserviceUrl");
-    }
-
-    /**
-     * Get Url Payment Development
-     * 
-     * @return string
-     */
-    public static String getUrlDevelopment() {
-        return resourceBundle.getString("environment.development.webserviceUrl");
+        return resourceBundle.getString("environment." + PagSeguroConfig.getEnvironment() + ".webserviceUrl");
     }
 
     /**
@@ -76,7 +67,7 @@ public class PagSeguroSystem {
     }
 
     public static String getNotificationUrl() {
-        return resourceBundle.getString("notificationService.url");
+        return resourceBundle.getString("notificationService." + PagSeguroConfig.getEnvironment() + ".url");
     }
 
     public static String getUrlNotification() {
@@ -84,7 +75,7 @@ public class PagSeguroSystem {
     }
 
     public static String getTransactionSearchUrl() {
-        return resourceBundle.getString("transactionSearchService.url");
+        return resourceBundle.getString("transactionSearchService." + PagSeguroConfig.getEnvironment() + ".url");
     }
 
     public static String getUrlPaymentRedir() {
