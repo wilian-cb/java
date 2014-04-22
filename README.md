@@ -45,6 +45,10 @@ Changelog
 ---------
 ---
 
+2.1.2
+
+ - Adicionando environment *sandbox*. Obs.: Para utilizar o ambiente de testes é preciso cadastrar uma conta em https://www.sandbox.pagseguro.uol.com.br e alterar o environment no arquivo pagseguro-config.properties
+
 2.1.1
 
  - Correções de bugs.
