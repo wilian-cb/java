@@ -31,8 +31,6 @@ public class ConnectionData {
 
     private Credentials credentials;
 
-    private String environment;
-
     private String webServiceUrl;
 
     private String servicePath;
@@ -46,7 +44,6 @@ public class ConnectionData {
         this.credentials = credentials;
         this.serviceName = serviceName;
 
-        this.environment = PagSeguroConfig.getEnvironment();
         this.webServiceUrl = validUrlWebService();
         this.charset = PagSeguroConfig.getApplicationCharset();
 
@@ -82,11 +79,7 @@ public class ConnectionData {
      */
     private String validUrlWebService() {
         
-        String url = PagSeguroSystem.getUrlDevelopment();
-
-        if (getEnvironment().equals(PagSeguroConfig.getEnvironment())) {
-            url = PagSeguroSystem.getUrlProduction();
-        }
+        String url = PagSeguroSystem.getUrlProduction();
 
         return url + PagSeguroSystem.getServicePath();
         
@@ -120,21 +113,6 @@ public class ConnectionData {
      */
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName;
-    }
-
-    /**
-     * @return the environment
-     */
-    public String getEnvironment() {
-        return environment;
-    }
-
-    /**
-     * @param environment
-     *            the environment to set
-     */
-    public void setEnvironment(String environment) {
-        this.environment = environment;
     }
 
     /**

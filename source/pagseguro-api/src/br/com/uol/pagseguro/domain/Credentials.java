@@ -20,6 +20,8 @@ package br.com.uol.pagseguro.domain;
 
 import java.util.Map;
 
+import br.com.uol.pagseguro.exception.PagSeguroServiceException;
+
 /**
  * Abstract class that represents a PagSeguro credential
  */
@@ -28,7 +30,7 @@ public abstract class Credentials {
     /**
      * @return a map of name value pairs that compose this set of credentials
      */
-    public abstract Map<Object, Object> getAttributes();
+    public abstract Map<Object, Object> getAttributes() throws PagSeguroServiceException;
 
     /**
      * @return a string that represents the current object
