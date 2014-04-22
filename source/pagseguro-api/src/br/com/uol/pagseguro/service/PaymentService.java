@@ -101,8 +101,9 @@ public class PaymentService {
         try {
 
             httpCodeStatus = HttpStatus.fromCode(response.getResponseCode());
-
-            if (HttpURLConnection.HTTP_OK == httpCodeStatus.getCode().intValue()) {
+            if (httpCodeStatus == null){
+            	throw new PagSeguroServiceException("Connection Timeout");
+            } else if (HttpURLConnection.HTTP_OK == httpCodeStatus.getCode().intValue()) {
 
                 String paymentReturn = null;
                 String code = PaymentParser.readSuccessXml(response);
@@ -130,6 +131,7 @@ public class PaymentService {
                 throw exception;
 
             } else {
+            	
                 throw new PagSeguroServiceException(httpCodeStatus);    
             }
 
