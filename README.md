@@ -28,8 +28,8 @@ Instalação
   - incluindo o jar pagseguro-api-x.x.x.jar como dependência de seu projeto atual;
   - importando o diretório *pagseguro-api* como um novo projeto em sua IDE, e incluí-lo como dependência do seu projeto atual.
  - Opcionalmente você também pode importar o diretório *pagseguro-api-example* como um novo projeto em sua IDE para visualizar a utilização das classes da biblioteca de acordo com cada funcionalidade disponível.
- - Para finalizar você precisa exportar o certificado existente na página https://ws.pagseguro.uol.com.br/ e em seguida importar para sua JVM. Caso queira utilizar o ambiente de testes será preciso fazer o mesmo para o certificado disponível em https://ws.sandbox.pagseguro.uol.com.br.
-
+ Obs: em alguns poucos casos é necessário fazer a exportação do certificado existente na página https://ws.pagseguro.uol.com.br e/ou https://ws.sandbox.pagseguro.uol.com.br e em seguida importar para sua JVM. Em caso de dúvida acesse nosso [fórum].
+ 
 Configuração
 ------------
 ---
@@ -127,3 +127,4 @@ Achou e corrigiu um bug ou tem alguma feature em mente e deseja contribuir?
   [Java]: http://www.oracle.com/technetwork/java/index.html
   [GitHub]: https://github.com/pagseguro/java/
   [documentação oficial]: https://pagseguro.uol.com.br/v2/guia-de-integracao/tutorial-da-biblioteca-pagseguro-em-java.html
+  [fórum]: http://forum.pagseguro.uol.com.br/
