@@ -17,7 +17,9 @@
  */
 package br.com.uol.pagseguro.service;
 
+import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -202,12 +204,23 @@ public class TransactionSearchService {
 
         } catch (PagSeguroServiceException e) {
             throw e;
+        } catch (IOException e) {
+
+            TransactionSearchService.log.error(String.format(TransactionSearchService.SEARCH_BY_CODE, transactionCode,
+                    e.getMessage()));
+
+            	throw new PagSeguroServiceException("Error when reading response from network: " + e.getMessage(), e);
+
         } catch (Exception e) {
 
             TransactionSearchService.log.error(String.format(TransactionSearchService.SEARCH_BY_CODE, transactionCode,
                     e.getMessage()));
 
-            throw new PagSeguroServiceException(httpStatusCode, e);
+            if (httpStatusCode != null) {
+            	throw new PagSeguroServiceException(httpStatusCode, e);            	
+            } else {
+            	throw new PagSeguroServiceException(e.getMessage(), e);
+            }
 
         } finally {
             response.disconnect();
