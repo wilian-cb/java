@@ -215,11 +215,7 @@ public class TransactionSearchService {
             TransactionSearchService.log.error(String.format(TransactionSearchService.SEARCH_BY_CODE, transactionCode,
                     e.getMessage()));
 
-            if (httpStatusCode != null) {
-            	throw new PagSeguroServiceException(httpStatusCode, e);            	
-            } else {
-            	throw new PagSeguroServiceException(e.getMessage(), e);
-            }
+           	throw new PagSeguroServiceException(httpStatusCode, e);            	
 
         } finally {
             response.disconnect();
