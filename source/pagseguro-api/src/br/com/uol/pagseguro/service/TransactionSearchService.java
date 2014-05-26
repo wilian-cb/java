@@ -19,7 +19,6 @@ package br.com.uol.pagseguro.service;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
